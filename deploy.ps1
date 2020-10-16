@@ -16,21 +16,21 @@ Write-Host "================="
 Write-Host "Delete RG Backend"
 Write-Host "================="
 
-Remove-AzResourceGroup -Name apicobartco000000bga1gps -Force
+Remove-AzResourceGroup -Name apicobartco000000bga1gps -Force -ErrorAction SilentlyContinue
 
 Write-Host "================="
 Write-Host "Delete RG Data"
 Write-Host "================="
 
-Remove-AzResourceGroup -Name apicobartco000000dg01000 -Force
+Remove-AzResourceGroup -Name apicobartco000000dg01000 -Force -ErrorAction SilentlyContinue
 
 Write-Host "================="
 Write-Host "Set GitHub Token"
 Write-Host "================="
 
-$token = Get-Content "gittoken.txt"
+$token = Get-Content -Path gittoken.txt | Out-String
 
-Set-AzResource -PropertyObject @{ token = $token; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force
+Set-AzResource -PropertyObject @{ token = "$token"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force
 
 Write-Host "================="
 Write-Host "Create RG Backend"
