@@ -1,0 +1,612 @@
+{%- comment %} ================================= Transform OpenAPI to tests in  postman_collection.json ============================================= {% endcomment -%}
+{
+	"info": {
+		"_postman_id": "{{ x-apico-info.dpl.id }}",
+		"name": "Tests for {{ servers[0].description }}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+   	"item": [
+{%- comment %} ================================= Delete all commands ============================================= {% endcomment -%}
+        {%- for path in paths -%}
+		{%- for method in path[1] -%}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "m" and method[0] == "delete" %}
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}",
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
+		,
+{%- comment %} ================================= Delete views data ============================================= {% endcomment -%}
+        {%- for path in paths -%}
+		{%- for method in path[1] -%}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "r" and method[0] == "delete" %}
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}",
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor %}
+{%- comment %} ================================= Post collection without ID ============================================= {% endcomment -%}
+        {%- for path in paths -%}
+		{% assign pathindex = forloop.index %}
+		{%- for method in path[1] -%}
+		{% assign methodindex = forloop.index %}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "c" and method[0] == "post" -%}
+		,
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}",
+			{% if path[1].parameters[0] != nil -%}
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "{{ "now" | date: "%Y%m%d%H%M%S%m" }}{{ pathindex }}",
+						"exec": [
+							{%- for param in path[1].parameters %}
+							"pm.environment.set(\"{{ param.name }}\", \"{{ param.example | slice: 2 }}01{{ param.example | slice: 4, 32 }}\");"
+							{%- if forloop.last == false %},{% endif %}
+							{%- endfor %}
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			{% endif -%}
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					{%- assign b = method[1].requestBody.content.application/json.x-apico-test-bodies %}
+					{%- capture d %}"{% endcapture %}
+                    {%- capture e %}\"{% endcapture %}
+                    {%- capture f %}\{% endcapture %}
+					{% for c in b -%}
+					{%- if forloop.first == true -%}
+					"raw": "{{ c[1] | replace: d, e | replace "{", "{\n" | replace ",", ",\n" | replace "}", "\n}" }}",
+					{%- endif -%}
+					{%- endfor %}
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor %}
+
+{%- comment %} ================================= Post collection with ID ============================================= {% endcomment -%}
+        {%- for path in paths -%}
+		{% assign pathindex = forloop.index %}
+		{%- for method in path[1] -%}
+		{% assign methodindex = forloop.index %}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "c" and method[0] == "post" -%}
+		,
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}_with_id",
+			{% if path[1].parameters[0] != nil -%}
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "{{ "now" | date: "%Y%m%d%H%M%S%m" }}{{ pathindex }}",
+						"exec": [
+							{%- for param in path[1].parameters %}
+							"pm.environment.set(\"{{ param.name }}\", \"{{ param.example | slice: 2 }}01{{ param.example | slice: 4, 32 }}\");"
+							{%- if forloop.last == false %},{% endif %}
+							{%- endfor %}
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			{% endif -%}
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					{%- assign b = method[1].requestBody.content.application/json.x-apico-test-bodies %}
+					{%- capture d %}"{% endcapture %}
+                    {%- capture e %}\"{% endcapture %}
+                    {%- capture f %}\{% endcapture %}
+					{% for c in b -%}
+					{%- if forloop.index == 2 -%}
+					"raw": "{{ c[1] | replace: d, e | replace "{", "{\n" | replace ",", ",\n" | replace "}", "\n}" }}",
+					{%- endif -%}
+					{%- endfor %}
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor %}
+
+{%- comment %} ================================= POST instance ============================================= {% endcomment -%}
+        {%- for path in paths -%}
+		{% assign pathindex = forloop.index %}
+		{%- for method in path[1] -%}
+		{% assign methodindex = forloop.index %}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "o" and method[0] == "post" -%}
+		,
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}",
+			{% if path[1].parameters[0] != nil -%}
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "{{ "now" | date: "%Y%m%d%H%M%S%m" }}{{ pathindex }}",
+						"exec": [
+							{%- for param in path[1].parameters %}
+							"pm.environment.set(\"{{ param.name }}\", \"{{ param.example | slice: 2 }}04{{ param.example | slice: 4, 32 }}\");"
+							{%- if forloop.last == false %},{% endif %}
+							{%- endfor %}
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			{% endif -%}
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					{%- assign b = method[1].requestBody.content.application/json.x-apico-test-bodies %}
+					{%- capture d %}"{% endcapture %}
+                    {%- capture e %}\"{% endcapture %}
+                    {%- capture f %}\{% endcapture %}
+					{% for c in b -%}
+					{%- if forloop.first == true -%}
+					"raw": "{{ c[1] | replace: d, e | replace "{", "{\n" | replace ",", ",\n" | replace "}", "\n}" }}",
+					{%- endif -%}
+					{%- endfor %}
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor %}
+
+{%- comment %} ================================= Upsert data ============================================= {% endcomment -%}
+        {%- for path in paths -%}
+		{% assign pathindex = forloop.index %}
+		{%- for method in path[1] -%}
+		{% assign methodindex = forloop.index %}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "o" and method[0] == "put" -%}
+		,
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}",
+			{% if path[1].parameters[0] != nil -%}
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "{{ "now" | date: "%Y%m%d%H%M%S%m" }}{{ pathindex }}",
+						"exec": [
+							{%- for param in path[1].parameters %}
+							"pm.environment.set(\"{{ param.name }}\", \"{{ param.example | slice: 2 }}04{{ param.example | slice: 4, 32 }}\");"
+							{%- if forloop.last == false %},{% endif %}
+							{%- endfor %}
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			{% endif -%}
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-is-upsert",
+						"value": "True",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					{%- assign b = method[1].requestBody.content.application/json.x-apico-test-bodies %}
+					{%- capture d %}"{% endcapture %}
+                    {%- capture e %}\"{% endcapture %}
+                    {%- capture f %}\{% endcapture %}
+					{% for c in b -%}
+					{%- if forloop.first == true -%}
+					"raw": "{{ c[1] | replace: d, e | replace "{", "{\n" | replace ",", ",\n" | replace "}", "\n}" }}",
+					{%- endif -%}
+					{%- endfor %}
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor %}
+
+{%- comment %} ================================= Read data ============================================= {% endcomment -%}
+        {%- for path in paths -%}
+		{% assign pathindex = forloop.index %}
+		{%- for method in path[1] -%}
+		{% assign methodindex = forloop.index %}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "o" and method[0] == "get" -%}
+		,
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}",
+			{% if path[1].parameters[0] != nil -%}
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "{{ "now" | date: "%Y%m%d%H%M%S%m" }}{{ pathindex }}",
+						"exec": [
+							{%- for param in path[1].parameters %}
+							"pm.environment.set(\"{{ param.name }}\", \"{{ param.example | slice: 2 }}04{{ param.example | slice: 4, 32 }}\");"
+							{%- if forloop.last == false %},{% endif %}
+							{%- endfor %}
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			{% endif -%}
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor %}    
+
+{%- comment %} ================================= Update data ============================================= {% endcomment -%}
+        {%- for path in paths -%}
+		{% assign pathindex = forloop.index %}
+		{%- for method in path[1] -%}
+		{% assign methodindex = forloop.index %}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "o" and method[0] == "put" -%}
+		,
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}",
+			{% if path[1].parameters[0] != nil -%}
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "{{ "now" | date: "%Y%m%d%H%M%S%m" }}{{ pathindex }}",
+						"exec": [
+							{%- for param in path[1].parameters %}
+							"pm.environment.set(\"{{ param.name }}\", \"{{ param.example | slice: 2 }}04{{ param.example | slice: 4, 32 }}\");"
+							{%- if forloop.last == false %},{% endif %}
+							{%- endfor %}
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			{% endif -%}
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					{%- assign b = method[1].requestBody.content.application/json.x-apico-test-bodies %}
+					{%- capture d %}"{% endcapture %}
+                    {%- capture e %}\"{% endcapture %}
+                    {%- capture f %}\{% endcapture %}
+					{% for c in b -%}
+					{%- if forloop.index == 3 -%}
+					"raw": "{{ c[1] | replace: d, e | replace "{", "{\n" | replace ",", ",\n" | replace "}", "\n}" }}",
+					{%- endif -%}
+					{%- endfor %}
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor %}
+{%- comment %} ================================= Delete data ============================================= {% endcomment -%}
+        {%- for path in paths reversed -%}
+		{% assign pathindex = forloop.index %}
+		{%- for method in path[1] -%}
+		{% assign methodindex = forloop.index %}
+		{%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" -%}
+		{% if path[1].x-apico-path-type-code == "o" and method[0] == "delete" -%}
+		,
+		{
+			"name": "{{ x-apico-info.svc.nam | downcase }}_{{ x-apico-info.ver.pth }}{{ path[0] | replace: "(", "_" | remove: "{" | remove: ")" | remove: "}" | remove: "'" | remove: "-" | replace: "/", "_" }}_{{ method[0] }}",
+			{% if path[1].parameters[0] != nil -%}
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "{{ "now" | date: "%Y%m%d%H%M%S%m" }}{{ pathindex }}",
+						"exec": [
+							{%- for param in path[1].parameters %}
+							"pm.environment.set(\"{{ param.name }}\", \"{{ param.example | slice: 2 }}04{{ param.example | slice: 4, 32 }}\");"
+							{%- if forloop.last == false %},{% endif %}
+							{%- endfor %}
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			{% endif -%}
+			"request": {
+				"method": "{{ method[0] | upcase }}",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-test",
+						"value": "True",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-request-log-level",
+						"value": "Trace",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ servers[0].url }}{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}",
+					"protocol": "https",
+					"host": [
+						"{{ servers[0].url | remove: "https://"}}"
+					],
+					"path": [
+						"{{ path[0] | replace: "{", "{{" | replace: "}", "}_}"  | remove: "_" }}"
+					]
+				}
+			}
+		}
+		{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor %}
+	]
+}

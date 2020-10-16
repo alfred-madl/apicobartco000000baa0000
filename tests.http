@@ -1,0 +1,78 @@
+@hostname = apicobartco00nnnbfa01gps.azurewebsites.net
+@port = 443
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@tenantId = 84e3a325-9031-495b-98e6-4f7c67115c9c
+@tenantCode = apico
+
+DELETE https://{{host}}/core/v0/Commands HTTP/1.1
+
+###
+
+DELETE https://{{host}}/core/v0/ HTTP/1.1
+
+###
+
+PUT https://{{host}}/core/v0/tenants('84e3a325-9031-495b-98e6-4f7c67115c9c') HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "cod": "apico",
+    "nam": "APICo",
+    "cmt": "Comment"
+}
+
+###
+
+PUT https://{{host}}/core/v0/tenants('84e3a325-9031-495b-98e6-4f7c67115c9c')/users('84e3a325-9031-495b-98e6-4f7c67115c9e') HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "cod": "xxxx",
+    "nam": "XXXX",
+    "cmt": "Comment"
+}
+
+###
+
+
+PUT https://{{host}}/core/v0/tenants('84e3a325-9031-495b-98e6-4f7c67115c9d') HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "cod": "apic2",
+    "nam": "APICo2",
+    "cmt": "Comment2"
+}
+
+###
+
+@tenantId = 84e3a325-9031-495b-98e6-4f7c67115c9d
+
+PUT https://{{host}}/core/v0/tenants('{{tenantId}}') HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "cod": "apic4",
+    "nam": "APICo4",
+    "cmt": "Comment4"
+}
+
+###
+
+@tenantId = 84e3a325-9031-495b-98e6-4f7c67115c9d
+
+PUT https://{{host}}/core/v0/tenants('{{tenantId}}') HTTP/1.1
+Content-Type: {{contentType}}
+If-Match: "1a00bca2-0000-1800-0000-5f4620600001"
+
+{
+    "cod": "apic4",
+    "nam": "APICo4",
+    "cmt": "Comment5"
+}
+
+###
+
+https://apicobartco00nnnbfa01gps.azurewebsites.net/api/AzureCosmosDB-StoreAPICall-v2?code=jj8o7wxgV6ZxT55NXlZfKoZaxnlf/JUtfqcSazrgabqhabCwMajDOg==

@@ -1,0 +1,11 @@
+{
+  "CDBRD_Database": "apicobartco00nnnbcd01gps",
+  "CDBRD_Collection": "apicobartco00nnnrcc01gps",
+  "CDBRD_ConsistencyLevel": "session", 
+  "CDBRD_UseMultipleWriteLocations":false,
+  "CDBRD_IdPath": "/id",
+  "CDBRD_ResultPath": "/",
+  "CDBRD_checkEqual_/x-apico-deleted": false,
+  "CDBRD_checkArrayContains_/x-apico-update-users": "here goes the user"
+}
+	

@@ -1,0 +1,996 @@
+{
+	"info": {
+		"_postman_id": "fa1cf075-3c0b-436b-a024-e1d88ea9d3f0",
+		"name": "Tests for APICo Base Root Core 0.1.0 apicobartma-azr-evt-src-fpr-cdb-egd-v1.0.0 C2020xxxxx C2020xxxxx Dev-Plg-Maj-Int Green Primary SouthEastAsia ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+   	"item": [
+		{
+			"name": "core_v0_tenants_tenantid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "20200920072425094",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"cod\": \"apico\",\n\"nam\": \"APICo1\",\n\"cmt\": \"Comment1\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_users_userid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "20200920072425096",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"user-id\", \"92444901-967d-4472-ac6f-b35d9bcc90c7\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/users('{{user-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/users('{{user-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_groups_groupid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "20200920072425098",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"group-id\", \"92444902-967d-4472-ac6f-b35d9bcc90c7\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/groups('{{group-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_organizations_organizationid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250910",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"organization-id\", \"92444903-967d-4472-ac6f-b35d9bcc90c7\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/organizations('{{organization-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250912",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_categories_categoryid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250914",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"category-id\", \"63436201-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_speeds_speedid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250916",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"speed-id\", \"63436202-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_steps_stepid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250918",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"step-id\", \"63436203-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_lanes_laneid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250920",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"lane-id\", \"63436204-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_slots_slotid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250922",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"slot-id\", \"63436205-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_environments_environmentid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250924",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"environment-id\", \"63436206-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_regions_regionid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250926",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"region-id\", \"63436207-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_subscriptions_subscriptionid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250928",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"subscription-id\", \"63436208-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_projects_projectid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250930",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"project-id\", \"63436209-1ae5-4e18-b94e-cc66fd218655\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_projects_projectid_families_familyid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250932",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"project-id\", \"63436209-1ae5-4e18-b94e-cc66fd218655\");",
+							"pm.environment.set(\"family-id\", \"50461d01-5617-4b9b-830a-47ec6c633ec6\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_projects_projectid_families_familyid_instances_instanceid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250934",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"project-id\", \"63436209-1ae5-4e18-b94e-cc66fd218655\");",
+							"pm.environment.set(\"family-id\", \"50461d01-5617-4b9b-830a-47ec6c633ec6\");",
+							"pm.environment.set(\"instance-id\", \"3adf5501-8d3b-4d94-87fa-8f975f662bee\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_projects_projectid_families_familyid_instances_instanceid_generations_generationid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250936",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"project-id\", \"63436209-1ae5-4e18-b94e-cc66fd218655\");",
+							"pm.environment.set(\"family-id\", \"50461d01-5617-4b9b-830a-47ec6c633ec6\");",
+							"pm.environment.set(\"instance-id\", \"3adf5501-8d3b-4d94-87fa-8f975f662bee\");",
+							"pm.environment.set(\"generation-id\", \"5942e701-be7e-4aff-9ae1-b9c9cdb77755\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_projects_projectid_families_familyid_instances_instanceid_generations_generationid_deployments_deploymentid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250938",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"project-id\", \"63436209-1ae5-4e18-b94e-cc66fd218655\");",
+							"pm.environment.set(\"family-id\", \"50461d01-5617-4b9b-830a-47ec6c633ec6\");",
+							"pm.environment.set(\"instance-id\", \"3adf5501-8d3b-4d94-87fa-8f975f662bee\");",
+							"pm.environment.set(\"generation-id\", \"5942e701-be7e-4aff-9ae1-b9c9cdb77755\");",
+							"pm.environment.set(\"deployment-id\", \"076f9601-96e7-483e-95ae-35c64e8e8bdd\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_projects_projectid_services_serviceid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250940",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"project-id\", \"63436209-1ae5-4e18-b94e-cc66fd218655\");",
+							"pm.environment.set(\"service-id\", \"50461d02-5617-4b9b-830a-47ec6c633ec6\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')"
+					]
+				}
+			}
+		},
+		{
+			"name": "core_v0_tenants_tenantid_sets_setid_projects_projectid_services_serviceid_versions_versionid_put",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "202009200724250942",
+						"exec": [
+							"pm.environment.set(\"tenant-id\", \"c9c86401-7e4c-4427-ada8-aac34025fcfb\");",
+							"pm.environment.set(\"set-id\", \"92444904-967d-4472-ac6f-b35d9bcc90c7\");",
+							"pm.environment.set(\"project-id\", \"63436209-1ae5-4e18-b94e-cc66fd218655\");",
+							"pm.environment.set(\"service-id\", \"50461d02-5617-4b9b-830a-47ec6c633ec6\");",
+							"pm.environment.set(\"version-id\", \"3adf5501-8d3b-4d94-87fa-8f975f662bee\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-apico-is-upsert",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')"
+					]
+				}
+			}
+		}
+    ]
+}

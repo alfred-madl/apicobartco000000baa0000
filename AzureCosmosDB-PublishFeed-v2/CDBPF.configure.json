@@ -1,0 +1,10 @@
+{
+    "CDBPF_Event_TopicEndpoint":"https://apicobartco00nnnied01gps.southeastasia-1.eventgrid.azure.net/api/events",
+    "CDBPF_Event_Subject_Path" : "/headers/x-apico-event-subject",
+    "CDBPF_Event_Type_Path" : "/headers/x-apico-event-type",
+    "CDBPF_Event_ID_Path" : "/body/x-apico-event-id",
+    "CDBPF_Event_Time_Path" : "/body/x-apico-command-time",
+    "CDBPF_Event_Time_Prefix":"C",
+    "CDBPF_Event_DataVersion_Path":"/headers/x-apico-event-data-version",
+    "CDBPF_Event_Topic_Path":"/headers/x-apico-event-topic"
+}

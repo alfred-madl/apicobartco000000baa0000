@@ -1,0 +1,272 @@
+{
+    "openapi":"3.0.3",
+    "x-apico-info": {
+        "ten": {
+            "cod": "apico",
+            "nam": "APICo"
+        },
+        "set": {
+            "cod": "ba",
+            "nam": "Base",
+            "dom": "apico.io"
+        },
+        "prj": {
+            "cod": "rt",
+            "nam": "Root",
+            "sdm": "api"
+        },
+        "svc": {
+            "cod": "ma",
+            "nam": "Main",
+            "cmt": "The scaffolder - now using the first simple template for Azure Event Sourcing with a Function Proxy, CosmosDB and Event Grid Domain - V1"
+        },
+        "ver": {
+            "cod": "01",
+            "nam": "Version1",
+            "cmt": "Very first try",
+            "num": 1,
+            "pth": "v1"
+        },
+        "gen": {
+            "id": "af80036a-7999-4571-8875-e99c19998acb",
+            "tpl": "apicobartma-azr-evt-src-fpr-cdb-egd-v1.0.0",
+            "cti": "C2020xxxxx" 
+        },
+        "dpl": {
+            "id": "fa1cf075-3c0b-436b-a024-e1d88ea9d3f0",
+            "cti": "C2020xxxxx" 
+        },
+        "ins": {
+            "lan": {
+                "cod": "1",
+                "nam": "Dev-Plg-Maj-Upd",
+                "org": { "cod": "dev", "name": "Development"},
+                "cat": { "cod": "plg", "name": "Playground"},
+                "spd": { "cod": "maj", "name": "Major"},
+                "stp": { "cod": "upd", "name": "Update"}
+            },
+            "slt": {
+                "cod": "g",
+                "nam": "Green"
+            },
+            "env": {
+                "cod": "p",
+                "nam": "Primary"
+            },
+            "reg": {
+                "cod": "s",
+                "nam": "Southeast Asia"
+            },
+            "sub": {
+                "id": "aec9ffa0-e92d-492d-87b7-a26053b2e22c"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "tenants",
+            "description": "A strictly separated data area and collection of users in the SaaS environment",
+            "externalDocs": {
+                "description": "Documentation of the Tenant API",
+                "url": "http://docs.apico.io/api/collection/tenants"
+            }
+        },
+        {
+            "name": "sets",
+            "description": "A group of projects in a tenant",
+            "externalDocs": {
+                "description": "Documentation of the Sets API",
+                "url": "http://docs.apico.io/api/collection/sets"
+            }
+        }
+    ],
+    "info": {
+        "title":"APICo Base Root Main",
+        "description": "First try of generating the app",
+        "termsOfService": "https://www.apico.io/terms",
+        "contact": {
+            "email": "office@apico.io",
+            "name": "Office",
+            "url": "https://www.apico.io"
+        },
+        "license": {
+            "name": "GNU General Public License",
+            "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
+        },
+        "version":"0.1"
+    },
+    "servers": [
+        {
+            "url":"https://{subdomain}.{domain}/{basepath}/{versionpath}",
+            "description": "Production main server",
+            "variables": {
+                "subdomain": {
+                    "default": "api",
+                    "enum": ["api"],
+                    "description": "the API subdomain of the server"
+                },
+                "domain": {
+                    "default": "apico.io",
+                    "enum": ["apico.io"],
+                    "description": "The domain name of the server"
+                },
+                "basepath": {
+                    "default": "main",
+                    "enum": ["main"],
+                    "description": "The base path of the service"
+                },
+                "versionpath": {
+                    "default": "v1",
+                    "enum": ["v0","v1"],
+                    "description": "Main version of the service"
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/tenants": {
+            "description": "All strictly separated data areas and collections of users in the SaaS environment",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "t",
+            "x-apico-collection-name": "Tenants",
+            "x-apico-entity-code": "t",
+            "x-apico-entity-name": "Tenant",
+            "get": {
+                "description": "Search for a tenant",
+                "tags": ["tenants"],
+                "responses": {}
+            },
+            "post": {
+                "description": "Insert a new tenant",
+                "tags": ["tenants"],
+                "responses": {}
+            }
+        },
+        "/tenants/('{tenant-id}')": {
+            "description": "A strictly separated data area and collection of users in the SaaS environment",
+            "x-apico-path-type-code": "i",
+            "x-apico-path-type-name": "Instance",
+            "x-apico-collection-code": "t",
+            "x-apico-collection-name": "Tenants",
+            "x-apico-entity-code": "t",
+            "x-apico-entity-name": "Tenant",
+            "parameters": [
+                {
+                    "name": "tenant-id",
+                    "description": "The id (usually a GUID) of the tenant",
+                    "in": "path",
+                    "required": true,
+                    "x-apico-object-identifier": true
+                }
+            ],
+            "get": {
+                "description": "Read a tenant",
+                "tags": ["tenants"],
+                "responses": {}
+            },
+            "put": {
+                "description": "Upsert a tenant",
+                "tags": ["tenants"],
+                "responses": {}
+            },
+            "post": {
+                "description": "Create an identified tenant",
+                "tags": ["tenants"],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete a tenant",
+                "tags": ["tenants"],
+                "responses": {}
+            }
+        },
+        "/tenants/('{tenant-id}')/sets": {
+            "description": "All separated sets of projects",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "s",
+            "x-apico-collection-name": "Sets",
+            "x-apico-parent-collection-code": "t",
+            "x-apico-parent-collection-name": "Tenant",
+            "x-apico-parent-collection-absolute-path": "/tenants",
+            "x-apico-entity-code": "s",
+            "x-apico-entity-name": "Set",
+            "x-apico-parent-entity-code": "t",
+            "x-apico-parent-entity-name": "Tenant",
+            "x-apico-parent-partition-key": "/t",
+            "x-apico-parent-entity-path": ".tenants",
+            "parameters": [
+                {
+                    "name": "tenant-id",
+                    "description": "The id (usually a GUID) of the tenant",
+                    "in": "path",
+                    "required": true,
+                    "x-apico-parent-object-identifier": true
+                }
+            ],
+            "get": {
+                "description": "Search for a tenant",
+                "tags": ["sets"],
+                "responses": {}
+            },
+            "post": {
+                "description": "Insert a new tenant",
+                "tags": ["sets"],
+                "responses": {}
+            }
+        },
+        "/tenants/('{tenant-id}')/sets/('{set-id}')": {
+            "description": "A separate set of projects",
+            "x-apico-path-type-code": "o",
+            "x-apico-path-type-name": "object",
+            "x-apico-collection-code": "s",
+            "x-apico-collection-name": "Sets",
+            "x-apico-parent-collection-code": "t",
+            "x-apico-parent-collection-name": "Tenant",
+            "x-apico-parent-collection-absolute-path": "/tenants",
+            "x-apico-entity-code": "s",
+            "x-apico-entity-name": "Set",
+            "x-apico-parent-entity-code": "t",
+            "x-apico-parent-entity-name": "Tenant",
+            "x-apico-parent-partition-key": "/t",
+            "x-apico-parent-entity-path": ".tenants",
+            "parameters": [
+                {
+                    "name": "tenant-id",
+                    "description": "The id (usually a GUID) of the tenant",
+                    "in": "path",
+                    "required": true,
+                    "x-apico-parent-object-identifier": true                
+                },
+                {
+                    "name": "set-id",
+                    "description": "The id (usually a GUID) of the set in a tenant",
+                    "in": "path",
+                    "required": true,
+                    "x-apico-object-identifier": true
+                }
+            ],
+            "get": {
+                "description": "Read a set",
+                "tags": ["sets"],
+                "responses": {}
+            },
+            "put": {
+                "description": "Upsert a set",
+                "tags": ["sets"],
+                "responses": {}
+            },
+            "post": {
+                "description": "Create an identified set",
+                "tags": ["sets"],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete a set",
+                "tags": ["sets"],
+                "responses": {}
+            }
+        }
+    }
+}

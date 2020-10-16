@@ -1,0 +1,1031 @@
+{
+    "$schema": "http://apico.io/schemas/deploymodel/v1",
+    "x-apico-info": {
+        "ten": {
+            "cod": "apico",
+            "nam": "APICo"
+        },
+        "set": {
+            "cod": "ba",
+            "nam": "Base",
+            "dom": "apico.io"
+        },
+        "prj": {
+            "cod": "rt",
+            "nam": "Root",
+            "sdm": "api"
+        },
+        "svc": {
+            "cod": "co",
+            "nam": "Core",
+            "cmt": "The scaffolder - now using the first simple template for Azure Event Sourcing with a Function Proxy, CosmosDB and Event Grid Domain - V1",
+            "tit": "APICo Base Root Core",
+            "dsc": "First try of generating the app",
+            "tos": "https://www.apico.io/terms",
+            "con": {
+                "eml": "office@apico.io",
+                "nam": "Office",
+                "url": "https://www.apico.io"
+            },
+            "lic": {
+                "nam": "GNU General Public License",
+                "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
+            }
+        },
+        "ver": {
+            "cod": "0.1.0",
+            "nam": "Version0",
+            "cmt": "Very first try",
+            "maj": {
+                "cod": "00",
+                "num": 0,
+                "pth": "v0"
+            },
+            "min": 0,
+            "pat": 0,
+            "pth": "v0.1.0"
+        },
+        "gen": {
+            "cod": "????",
+            "id": "af80036a-7999-4571-8875-e99c19998acb",
+            "tpl": "apicobartma-azr-evt-src-fpr-cdb-egd-v1.0.0",
+            "cti": "C2020xxxxx",
+            "cmt": "xxxxxxxxxxx"
+        },
+        "dpl": {
+            "cod": "????",
+            "id": "fa1cf075-3c0b-436b-a024-e1d88ea9d3f0",
+            "cti": "C2020xxxxx",
+            "cmt": "xxxxxxxxxxx"
+        },
+        "ins": {
+            "cod": "1gps",
+            "nam": "Dev-Plg-Maj-Int-Green-Primary-SouthEastAsia",
+            "cmt": "Very first instance",
+            "fam": {
+                "cod": "1gp",
+                "nam": "Dev-Plg-Maj-Int-Green-Primary",
+                "lan": "1",
+                "slt": "g",
+                "env": "p"
+            },
+            "lan": {
+                "cod": "1",
+                "nam": "Dev-Plg-Maj-Int",
+                "cat": {
+                    "cod": "plg",
+                    "nam": "Playground"
+                },
+                "spd": {
+                    "cod": "maj",
+                    "nam": "Major"
+                },
+                "org": {
+                    "cod": "dev",
+                    "nam": "Development"
+                },
+                "stp": {
+                    "cod": "int",
+                    "nam": "Integration",
+                    "prd": false
+                },
+                "dom": ""
+            },
+            "slt": {
+                "cod": "g",
+                "nam": "Green"
+            },
+            "env": {
+                "cod": "p",
+                "nam": "Primary"
+            },
+            "reg": {
+                "cod": "s",
+                "nam": "SouthEastAsia"
+            },
+            "sbs": {
+                "cod": "subscr1",
+                "nam": "Subscription1",
+                "azure-id": "aec9ffa0-e92d-492d-87b7-a26053b2e22c",
+                "cmt": "xxxx"
+            }
+        }
+    },
+    "mdl": {
+        "roo": {
+            "cod": "0",
+            "nmi": "Root",
+            "nmc": "Root",
+            "dsc": "All collections",
+            "dsi": "All objects",
+            "ops": {
+                "in": true,
+                "li": true,
+                "rs": true,
+                "rm": true,
+                "cr": true,
+                "re": true,
+                "up": true,
+                "de": true
+            },
+            "sub": {
+                "cmd" : {
+                    "nmi": "Command",
+                    "nmc": "Commands",
+                    "dsc": "All commands",
+                    "dsi": "A command",
+                    "ops": {
+                        "in": true,
+                        "li": true,
+                        "rs": true,
+                        "rm": true,
+                        "cr": true,
+                        "re": true,
+                        "up": true,
+                        "de": true
+                    }
+                },
+                "src" : {
+                    "nmi": "Search",
+                    "nmc": "Searches",
+                    "dsc": "All searches",
+                    "dsi": "A search",
+                    "ops": {
+                        "in": true,
+                        "li": true,
+                        "rs": true,
+                        "rm": true,
+                        "cr": true,
+                        "re": true,
+                        "up": true,
+                        "de": true
+                    }
+                },
+                "use": {
+                    "nmi": "Usage",
+                    "nmc": "Usages",
+                    "dsc": "All usages",
+                    "dsi": "A usage",
+                    "ops": {
+                        "in": true,
+                        "li": true,
+                        "rs": true,
+                        "rm": true,
+                        "cr": true,
+                        "re": true,
+                        "up": true,
+                        "de": true
+                    }
+                },
+                "chg": {
+                    "nmi": "Change",
+                    "nmc": "Changes",
+                    "dsc": "All object changes",
+                    "dsi": "An object change",
+                    "ops": {
+                        "in": true,
+                        "li": true,
+                        "rs": true,
+                        "rm": true,
+                        "cr": true,
+                        "re": true,
+                        "up": true,
+                        "de": true
+                    },
+                    "sub": {
+                        "src" : {
+                            "nmi": "Search",
+                            "nmc": "Searches",
+                            "dsc": "All searches",
+                            "dsi": "A search",
+                            "ops": {
+                                "in": true,
+                                "li": true,
+                                "rs": true,
+                                "rm": true,
+                                "cr": true,
+                                "re": true,
+                                "up": true,
+                                "de": true
+                            }
+                        },
+                        "itm": {
+                            "nmi": "Item",
+                            "nmc": "Items",
+                            "dsc": "All changes to a single attribute...with path",
+                            "dsi": "A change to a single attribute",
+                            "ops": {
+                                "in": true,
+                                "li": true,
+                                "rs": true,
+                                "rm": true,
+                                "cr": true,
+                                "re": true,
+                                "up": true,
+                                "de": true
+                            },
+                            "sub": {
+                                "src" : {
+                                    "nmi": "Search",
+                                    "nmc": "Searches",
+                                    "dsc": "All searches",
+                                    "dsi": "A search",
+                                    "ops": {
+                                        "in": true,
+                                        "li": true,
+                                        "rs": true,
+                                        "rm": true,
+                                        "cr": true,
+                                        "re": true,
+                                        "up": true,
+                                        "de": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "ent": [
+            {
+                "cod": "t",
+                "nmi": "Tenant",
+                "nmc": "Tenants",
+                "dsc": "All strictly separated data areas and collections of users in the SaaS environment",
+                "dsi": "A strictly separated data area and collection of users in the SaaS environment",
+                "ops": {
+                    "in": true,
+                    "li": true,
+                    "rs": true,
+                    "rm": true,
+                    "cr": true,
+                    "re": true,
+                    "up": true,
+                    "de": true
+                },
+                "examples": {
+                    "Tenant1": "{\"cod\": \"apico\",\"nam\": \"APICo1\",\"cmt\": \"Comment1\"}",
+                    "Tenant2": "{\"cod\": \"apic2\",\"nam\": \"APICo2\",\"cmt\": \"Comment2\"}",
+                    "Tenant3": "{\"cod\": \"apic3\",\"nam\": \"APICo3\",\"cmt\": \"Comment3\"}"
+                },
+                "sub": {
+                    "cmd" : {
+                        "nmi": "Command",
+                        "nmc": "Commands",
+                        "dsc": "All commands",
+                        "dsi": "A command",
+                        "ops": {
+                            "in": true,
+                            "li": true,
+                            "rs": true,
+                            "rm": true,
+                            "cr": true,
+                            "re": true,
+                            "up": true,
+                            "de": true
+                        }
+                    },
+                    "src" : {
+                        "nmi": "Search",
+                        "nmc": "Searches",
+                        "dsc": "All searches",
+                        "dsi": "A search",
+                        "ops": {
+                            "in": true,
+                            "li": true,
+                            "rs": true,
+                            "rm": true,
+                            "cr": true,
+                            "re": true,
+                            "up": true,
+                            "de": true
+                        }
+                    },
+                    "use": {
+                        "nmi": "Usage",
+                        "nmc": "Usages",
+                        "dsc": "All usages",
+                        "dsi": "A usage",
+                        "ops": {
+                            "in": true,
+                            "li": true,
+                            "rs": true,
+                            "rm": true,
+                            "cr": true,
+                            "re": true,
+                            "up": true,
+                            "de": true
+                        }
+                    },
+                    "chg": {
+                        "nmi": "Change",
+                        "nmc": "Changes",
+                        "dsc": "All object changes",
+                        "dsi": "An object change",
+                        "ops": {
+                            "in": true,
+                            "li": true,
+                            "rs": true,
+                            "rm": true,
+                            "cr": true,
+                            "re": true,
+                            "up": true,
+                            "de": true
+                        },
+                        "sub": {
+                            "src" : {
+                                "nmi": "Search",
+                                "nmc": "Searches",
+                                "dsc": "All searches",
+                                "dsi": "A search",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                }
+                            },
+                            "itm": {
+                                "nmi": "Item",
+                                "nmc": "Items",
+                                "dsc": "All changes to a single attribute...with path",
+                                "dsi": "A change to a single attribute",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "sub": {
+                                    "src" : {
+                                        "nmi": "Search",
+                                        "nmc": "Searches",
+                                        "dsc": "All searches",
+                                        "dsi": "A search",
+                                        "ops": {
+                                            "in": true,
+                                            "li": true,
+                                            "rs": true,
+                                            "rm": true,
+                                            "cr": true,
+                                            "re": true,
+                                            "up": true,
+                                            "de": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ent": [
+                    {
+                        "cod": "u",
+                        "nmi": "User",
+                        "nmc": "Users",
+                        "dsc": "All users in a tenant",
+                        "dsi": "A user in a tenant",
+                        "ops": {
+                            "in": true,
+                            "li": true,
+                            "rs": true,
+                            "rm": true,
+                            "cr": true,
+                            "re": true,
+                            "up": true,
+                            "de": true
+                        },
+                        "examples": {
+                            "User1": "{\"cod\": \"user1\",\"nam\": \"User1\",\"cmt\": \"UserComment1\"}",
+                            "User2": "{\"cod\": \"user2\",\"nam\": \"User2\",\"cmt\": \"UserComment2\"}",
+                            "User3": "{\"cod\": \"user3\",\"nam\": \"User3\",\"cmt\": \"UserComment3\"}"
+                        }
+                    },
+                    {
+                        "cod": "g",
+                        "nmi": "Group",
+                        "nmc": "Groups",
+                        "dsc": "All groups of users in a tenant",
+                        "dsi": "A group of users in a tenant",
+                        "ops": {
+                            "in": true,
+                            "li": true,
+                            "rs": true,
+                            "rm": true,
+                            "cr": true,
+                            "re": true,
+                            "up": true,
+                            "de": true
+                        },
+                        "examples": {
+                            "Group1": "{\"cod\": \"group1\",\"nam\": \"Group1\",\"cmt\": \"GroupComment1\"}",
+                            "Group2": "{\"cod\": \"group2\",\"nam\": \"Group2\",\"cmt\": \"GroupComment2\"}",
+                            "Group3": "{\"cod\": \"group3\",\"nam\": \"Group3\",\"cmt\": \"GroupComment3\"}"
+                        }
+                    },
+                    {
+                        "cod": "z",
+                        "nmi": "Organization",
+                        "nmc": "Organizations",
+                        "dsc": "All lane organizations of a tenant",
+                        "dsi": "A lane organization in a tenant",
+                        "ops": {
+                            "in": true,
+                            "li": true,
+                            "rs": true,
+                            "rm": true,
+                            "cr": true,
+                            "re": true,
+                            "up": true,
+                            "de": true
+                        },
+                        "examples": {
+                            "Dev": "{\"cod\": \"dev\",\"nam\": \"Development\",\"cmt\": \"OrgComment1\"}",
+                            "Ops": "{\"cod\": \"ops\",\"nam\": \"Operation\",\"cmt\": \"OrgComment2\"}",
+                            "Prd": "{\"cod\": \"prd\",\"nam\": \"Production\",\"cmt\": \"OrgComment3\"}"
+                        }
+                    },
+                    {
+                        "cod": "s",
+                        "nmi": "Set",
+                        "nmc": "Sets",
+                        "dsc": "All sets of projects in a tenant",
+                        "dsi": "A set of projects in a tenant",
+                        "ops": {
+                            "in": true,
+                            "li": true,
+                            "rs": true,
+                            "rm": true,
+                            "cr": true,
+                            "re": true,
+                            "up": true,
+                            "de": true
+                        },
+                        "examples": {
+                            "Base": "{\"cod\": \"ba\",\"nam\": \"Base projects\",\"dom\": \"apico.io\",\"cmt\": \"SetComment1\"}",
+                            "Small": "{\"cod\": \"sm\",\"nam\": \"Small AddOns\",\"dom\": \"\",\"cmt\": \"SetComment2\"}",
+                            "Others": "{\"cod\": \"ot\",\"nam\": \"Other projects\",\"dom\": \"\",\"cmt\": \"SetComment3\"}"
+                        },
+                        "ent": [
+                            {
+                                "cod": "c",
+                                "nmi": "Category",
+                                "nmc": "Categories",
+                                "dsc": "All lane categories in a project set of a tenant",
+                                "dsi": "A lane category in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "Plg": "{\"cod\": \"plg\",\"nam\": \"Playground\",\"cmt\": \"CatComment1\"}",
+                                    "MMP": "{\"cod\": \"mmp\",\"nam\": \"MajorMinorPatch\",\"cmt\": \"CatComment2\"}",
+                                    "Prd": "{\"cod\": \"prd\",\"nam\": \"Production\",\"cmt\": \"CatComment3\"}"
+                                }
+                            },
+                            {
+                                "cod": "m",
+                                "nmi": "Speed",
+                                "nmc": "Speeds",
+                                "dsc": "All lane speeds in a project set of a tenant",
+                                "dsi": "A lane speed in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "Maj": "{\"cod\": \"maj\",\"nam\": \"Playground\",\"cmt\": \"SpeedComment1\"}",
+                                    "Min": "{\"cod\": \"min\",\"nam\": \"MajorMinorPatch\",\"cmt\": \"SpeedComment2\"}",
+                                    "Pat": "{\"cod\": \"pat\",\"nam\": \"Production\",\"cmt\": \"SpeedComment3\"}"
+                                }
+                            },
+                            {
+                                "cod": "h",
+                                "nmi": "Step",
+                                "nmc": "Steps",
+                                "dsc": "All lane steps in a project set of a tenant",
+                                "dsi": "A lane step in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "Int": "{\"cod\": \"int\",\"nam\": \"Integration\",\"prd\": false,\"cmt\": \"StepComment\"}",
+                                    "Tst": "{\"cod\": \"tst\",\"nam\": \"Test\",\"prd\": false,\"cmt\": \"StepComment\"}",
+                                    "Rel": "{\"cod\": \"rel\",\"nam\": \"Release\",\"prd\": false,\"cmt\": \"StepComment\"}",
+                                    "Liv": "{\"cod\": \"liv\",\"nam\": \"Live\",\"prd\": true,\"cmt\": \"StepComment\"}"
+                                }
+                            },
+                            {
+                                "cod": "l",
+                                "nmi": "Lane",
+                                "nmc": "Lanes",
+                                "dsc": "All lanes in a project set of a tenant",
+                                "dsi": "A lane (category,speed,org,step) in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "l1": "{\"cod\": \"1\",\"nam\": \"Dev-Plg-Maj-Int\",\"cat\": {\"cod\": \"plg\",\"nam\": \"Playground\"},\"spd\": {\"cod\": \"maj\",\"nam\": \"Major\"},\"org\": {\"cod\": \"dev\",\"nam\": \"Development\"},\"stp\": {\"cod\": \"int\",\"nam\": \"Integration\",\"prd\": false},\"dom\": \"\"}",
+                                    "l2": "{\"cod\": \"2\",\"nam\": \"Dev-Plg-Maj-Tst\",\"cat\": {\"cod\": \"plg\",\"nam\": \"Playground\"},\"spd\": {\"cod\": \"maj\",\"nam\": \"Major\"},\"org\": {\"cod\": \"dev\",\"nam\": \"Development\"},\"stp\": {\"cod\": \"tst\",\"nam\": \"Test\",\"prd\": false},\"dom\": \"\"}",
+                                    "l3": "{\"cod\": \"3\",\"nam\": \"Dev-Plg-Maj-Rel\",\"cat\": {\"cod\": \"plg\",\"nam\": \"Playground\"},\"spd\": {\"cod\": \"maj\",\"nam\": \"Major\"},\"org\": {\"cod\": \"dev\",\"nam\": \"Development\"},\"stp\": {\"cod\": \"rel\",\"nam\": \"Release\",\"prd\": false},\"dom\": \"\"}"
+                                }
+                            },
+                            {
+                                "cod": "t",
+                                "nmi": "Slot",
+                                "nmc": "Slots",
+                                "dsc": "All slots in a project set of a tenant",
+                                "dsi": "A slot in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "Green": "{\"cod\": \"g\",\"nam\": \"Green\",\"cmt\": \"MostUsers\"}",
+                                    "Blue": "{\"cod\": \"b\",\"nam\": \"Blue\",\"cmt\": \"SomeUsers\"}",
+                                    "Red": "{\"cod\": \"r\",\"nam\": \"Red\",\"cmt\": \"AdminsOnly\"}"
+                                }
+                            },
+                            {
+                                "cod": "e",
+                                "nmi": "Environment",
+                                "nmc": "Environments",
+                                "dsc": "All environments in a project set of a tenant",
+                                "dsi": "An environment in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "Primary": "{\"cod\": \"p\",\"nam\": \"Primary\",\"cmt\": \"Normally\"}",
+                                    "Secondary": "{\"cod\": \"s\",\"nam\": \"Secondary\",\"cmt\": \"Backup\"}",
+                                    "Tertiary": "{\"cod\": \"t\",\"nam\": \"Tertiary\",\"cmt\": \"Catastrophe\"}"
+                                }
+                            },
+                            {
+                                "cod": "o",
+                                "nmi": "Region",
+                                "nmc": "Regions",
+                                "dsc": "All regions in a project set of a tenant",
+                                "dsi": "A region in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "SouthEastAsia": "{\"cod\": \"s\",\"nam\": \"SouthEastAsia\",\"cmt\": \"Closest\"}",
+                                    "EastAsia": "{\"cod\": \"e\",\"nam\": \"EastAsia\",\"cmt\": \"Close\"}",
+                                    "CentralIndia": "{\"cod\": \"c\",\"nam\": \"CentralIndia\",\"cmt\": \"Away\"}",
+                                    "SouthIndia": "{\"cod\": \"i\",\"nam\": \"SouthIndia\",\"cmt\": \"Far\"}"
+                                }
+                            },
+                            {
+                                "cod": "b",
+                                "nmi": "Subscription",
+                                "nmc": "Subscriptions",
+                                "dsc": "All subscriptions in a project set of a tenant",
+                                "dsi": "A subscription in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "S1": "{\"cod\": \"subscr1\",\"nam\": \"Subscription1\",\"azure-id\": \"aec9ffa0-e91d-492d-87b7-a26053b2e22c\",\"cmt\": \"Subscr1\"}",
+                                    "S2": "{\"cod\": \"subscr2\",\"nam\": \"Subscription2\",\"azure-id\": \"aec9ffa0-e92d-492d-87b7-a26053b2e22c\",\"cmt\": \"Subscr2\"}",
+                                    "S3": "{\"cod\": \"subscr3\",\"nam\": \"Subscription3\",\"azure-id\": \"aec9ffa0-e93d-492d-87b7-a26053b2e22c\",\"cmt\": \"Subscr3\"}",
+                                    "S4": "{\"cod\": \"subscr4\",\"nam\": \"Subscription4\",\"azure-id\": \"aec9ffa0-e94d-492d-87b7-a26053b2e22c\",\"cmt\": \"Subscr4\"}"
+                                }
+                            },
+                            {
+                                "cod": "p",
+                                "nmi": "Project",
+                                "nmc": "Projects",
+                                "dsc": "All projects in a project set of a tenant",
+                                "dsi": "A project in a project set in a tenant",
+                                "ops": {
+                                    "in": true,
+                                    "li": true,
+                                    "rs": true,
+                                    "rm": true,
+                                    "cr": true,
+                                    "re": true,
+                                    "up": true,
+                                    "de": true
+                                },
+                                "examples": {
+                                    "rt": "{\"cod\": \"rt\",\"nam\": \"Root\",\"sdm\": \"api\",\"cmt\": \"PrjComment1\"}",
+                                    "p2": "{\"cod\": \"p2\",\"nam\": \"Project2\",\"sdm\": \"\",\"cmt\": \"PrjComment2\"}",
+                                    "p3": "{\"cod\": \"p3\",\"nam\": \"Project3\",\"sdm\": \"\",\"cmt\": \"PrjComment3\"}"
+                                },
+                                "sub": {
+                                    "cmd" : {
+                                        "nmi": "Command",
+                                        "nmc": "Commands",
+                                        "dsc": "All commands",
+                                        "dsi": "A command",
+                                        "ops": {
+                                            "in": true,
+                                            "li": true,
+                                            "rs": true,
+                                            "rm": true,
+                                            "cr": true,
+                                            "re": true,
+                                            "up": true,
+                                            "de": true
+                                        }
+                                    },
+                                    "src" : {
+                                        "nmi": "Search",
+                                        "nmc": "Searches",
+                                        "dsc": "All searches",
+                                        "dsi": "A search",
+                                        "ops": {
+                                            "in": true,
+                                            "li": true,
+                                            "rs": true,
+                                            "rm": true,
+                                            "cr": true,
+                                            "re": true,
+                                            "up": true,
+                                            "de": true
+                                        }
+                                    },
+                                    "use": {
+                                        "nmi": "Usage",
+                                        "nmc": "Usages",
+                                        "dsc": "All usages",
+                                        "dsi": "A usage",
+                                        "ops": {
+                                            "in": true,
+                                            "li": true,
+                                            "rs": true,
+                                            "rm": true,
+                                            "cr": true,
+                                            "re": true,
+                                            "up": true,
+                                            "de": true
+                                        }
+                                    },
+                                    "chg": {
+                                        "nmi": "Change",
+                                        "nmc": "Changes",
+                                        "dsc": "All object changes",
+                                        "dsi": "An object change",
+                                        "ops": {
+                                            "in": true,
+                                            "li": true,
+                                            "rs": true,
+                                            "rm": true,
+                                            "cr": true,
+                                            "re": true,
+                                            "up": true,
+                                            "de": true
+                                        },
+                                        "sub": {
+                                            "src" : {
+                                                "nmi": "Search",
+                                                "nmc": "Searches",
+                                                "dsc": "All searches",
+                                                "dsi": "A search",
+                                                "ops": {
+                                                    "in": true,
+                                                    "li": true,
+                                                    "rs": true,
+                                                    "rm": true,
+                                                    "cr": true,
+                                                    "re": true,
+                                                    "up": true,
+                                                    "de": true
+                                                }
+                                            },
+                                            "itm": {
+                                                "nmi": "Item",
+                                                "nmc": "Items",
+                                                "dsc": "All changes to a single attribute...with path",
+                                                "dsi": "A change to a single attribute",
+                                                "ops": {
+                                                    "in": true,
+                                                    "li": true,
+                                                    "rs": true,
+                                                    "rm": true,
+                                                    "cr": true,
+                                                    "re": true,
+                                                    "up": true,
+                                                    "de": true
+                                                },
+                                                "sub": {
+                                                    "src" : {
+                                                        "nmi": "Search",
+                                                        "nmc": "Searches",
+                                                        "dsc": "All searches",
+                                                        "dsi": "A search",
+                                                        "ops": {
+                                                            "in": true,
+                                                            "li": true,
+                                                            "rs": true,
+                                                            "rm": true,
+                                                            "cr": true,
+                                                            "re": true,
+                                                            "up": true,
+                                                            "de": true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "ent": [
+                                    {
+                                        "cod": "f",
+                                        "nmi": "Family",
+                                        "nmc": "Families",
+                                        "dsc": "All instance families (instance groups for generations and deployments) in a project in a projects set of a tenant",
+                                        "dsi": "An instance family (instance group) in a project in a project set in a tenant, basically a type of instance for multiple / all regions",
+                                        "ops": {
+                                            "in": true,
+                                            "li": true,
+                                            "rs": true,
+                                            "rm": true,
+                                            "cr": true,
+                                            "re": true,
+                                            "up": true,
+                                            "de": true,
+                                            "gn": true,
+                                            "dp": true
+                                        },
+                                        "examples": {
+                                            "f1gp": "{\"cod\": \"1gp\",\"nam\": \"Dev-Plg-Maj-Int-Green-Primary\",\"lan\": \"1\",\"slt\": \"g\",\"env\": \"p\",\"cmt\": \"Fam1\"}",
+                                            "f1bp": "{\"cod\": \"1bp\",\"nam\": \"Dev-Plg-Maj-Int-Blue-Primary\",\"lan\": \"1\",\"slt\": \"b\",\"env\": \"p\",\"cmt\": \"Fam2\"}",
+                                            "f1rp": "{\"cod\": \"1rp\",\"nam\": \"Dev-Plg-Maj-Int-Red-Primary\",\"lan\": \"1\",\"slt\": \"r\",\"env\": \"p\",\"cmt\": \"Fam3\"}"
+                                        },
+                                        "ent": [
+                                            {
+                                                "cod": "i",
+                                                "nmi": "Instance",
+                                                "nmc": "Instances",
+                                                "dsc": "All instances in a project in a projects set of a tenant",
+                                                "dsi": "An instance in a project in a project set in a tenant",
+                                                "ops": {
+                                                    "in": true,
+                                                    "li": true,
+                                                    "rs": true,
+                                                    "rm": true,
+                                                    "cr": true,
+                                                    "re": true,
+                                                    "up": true,
+                                                    "de": true,
+                                                    "gn": true,
+                                                    "dp": true
+                                                },
+                                                "examples": {
+                                                    "i1gps": "{\"cod\": \"1gp\",\"nam\": \"Dev-Plg-Maj-Int-Green-Primary-SouthEastAsia\",\"fam\": \"1gp\",\"reg\": \"s\",\"sbs\": \"subscr1\",\"cmt\": \"Instance11\"}",
+                                                    "i1bps": "{\"cod\": \"1gp\",\"nam\": \"Dev-Plg-Maj-Int-Blue-Primary-SouthEastAsia\",\"fam\": \"1bp\",\"reg\": \"s\",\"sbs\": \"subscr1\",\"cmt\": \"Instance12\"}",
+                                                    "i1gpe": "{\"cod\": \"1gp\",\"nam\": \"Dev-Plg-Maj-Int-Green-Primary-EastAsia\",\"fam\": \"1gp\",\"reg\": \"e\",\"sbs\": \"subscr1\",\"cmt\": \"Instance11\"}"
+                                                },
+                                                "sub": {
+                                                    "cmd" : {
+                                                        "nmi": "Command",
+                                                        "nmc": "Commands",
+                                                        "dsc": "All commands",
+                                                        "dsi": "A command",
+                                                        "ops": {
+                                                            "in": true,
+                                                            "li": true,
+                                                            "rs": true,
+                                                            "rm": true,
+                                                            "cr": true,
+                                                            "re": true,
+                                                            "up": true,
+                                                            "de": true
+                                                        }
+                                                    },
+                                                    "src" : {
+                                                        "nmi": "Search",
+                                                        "nmc": "Searches",
+                                                        "dsc": "All searches",
+                                                        "dsi": "A search",
+                                                        "ops": {
+                                                            "in": true,
+                                                            "li": true,
+                                                            "rs": true,
+                                                            "rm": true,
+                                                            "cr": true,
+                                                            "re": true,
+                                                            "up": true,
+                                                            "de": true
+                                                        }
+                                                    },
+                                                    "use": {
+                                                        "nmi": "Usage",
+                                                        "nmc": "Usages",
+                                                        "dsc": "All usages",
+                                                        "dsi": "A usage",
+                                                        "ops": {
+                                                            "in": true,
+                                                            "li": true,
+                                                            "rs": true,
+                                                            "rm": true,
+                                                            "cr": true,
+                                                            "re": true,
+                                                            "up": true,
+                                                            "de": true
+                                                        }
+                                                    }
+                                                },
+                                                "ent": [
+                                                    {
+                                                        "cod": "n",
+                                                        "nmi": "Generation",
+                                                        "nmc": "Generations",
+                                                        "dsc": "All generated outputs of a version of a service in a project in a project set of a tenant - for one service instance",
+                                                        "dsi": "A generated output of a version of a service in a project in a project set in a tenant - for one service instance",
+                                                        "ops": {
+                                                            "in": false,
+                                                            "li": true,
+                                                            "rs": true,
+                                                            "rm": true,
+                                                            "cr": false,
+                                                            "re": true,
+                                                            "up": true,
+                                                            "de": true,
+                                                            "dp": true
+                                                        },
+                                                        "ent": [
+                                                            {
+                                                                "cod": "d",
+                                                                "nmi": "Deployment",
+                                                                "nmc": "Deployments",
+                                                                "dsc": "All deployments of a generated output of a version of a service in a project in a project set of a tenant",
+                                                                "dsi": "A deployment of a generated output of a version of a service in a project in a project set in a tenant",
+                                                                "ops": {
+                                                                    "in": false,
+                                                                    "li": true,
+                                                                    "rs": true,
+                                                                    "rm": true,
+                                                                    "cr": false,
+                                                                    "re": true,
+                                                                    "up": true,
+                                                                    "de": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "cod": "r",
+                                        "nmi": "Service",
+                                        "nmc": "Services",
+                                        "dsc": "All services (API as OpenAPI) in a project in a project set of a tenant",
+                                        "dsi": "A service (API as OpenAPI) in a project in a project set in a tenant",
+                                        "ops": {
+                                            "in": true,
+                                            "li": true,
+                                            "rs": true,
+                                            "rm": true,
+                                            "cr": true,
+                                            "re": true,
+                                            "up": true,
+                                            "de": true
+                                        },
+                                        "sub": {
+                                            "cmd" : {
+                                                "nmi": "Command",
+                                                "nmc": "Commands",
+                                                "dsc": "All commands",
+                                                "dsi": "A command",
+                                                "ops": {
+                                                    "in": true,
+                                                    "li": true,
+                                                    "rs": true,
+                                                    "rm": true,
+                                                    "cr": true,
+                                                    "re": true,
+                                                    "up": true,
+                                                    "de": true
+                                                }
+                                            },
+                                            "src" : {
+                                                "nmi": "Search",
+                                                "nmc": "Searches",
+                                                "dsc": "All searches",
+                                                "dsi": "A search",
+                                                "ops": {
+                                                    "in": true,
+                                                    "li": true,
+                                                    "rs": true,
+                                                    "rm": true,
+                                                    "cr": true,
+                                                    "re": true,
+                                                    "up": true,
+                                                    "de": true
+                                                }
+                                            },
+                                            "use": {
+                                                "nmi": "Usage",
+                                                "nmc": "Usages",
+                                                "dsc": "All usages",
+                                                "dsi": "A usage",
+                                                "ops": {
+                                                    "in": true,
+                                                    "li": true,
+                                                    "rs": true,
+                                                    "rm": true,
+                                                    "cr": true,
+                                                    "re": true,
+                                                    "up": true,
+                                                    "de": true
+                                                }
+                                            }
+                                        },
+                                        "ent": [
+                                            {
+                                                "cod": "v",
+                                                "nmi": "Version",
+                                                "nmc": "Versions",
+                                                "dsc": "All versions of a service in a project in a project set of a tenant",
+                                                "dsi": "A version of a service in a project in a project set in a tenant",
+                                                "ops": {
+                                                    "in": true,
+                                                    "li": true,
+                                                    "rs": true,
+                                                    "rm": true,
+                                                    "cr": true,
+                                                    "re": true,
+                                                    "up": true,
+                                                    "de": true
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

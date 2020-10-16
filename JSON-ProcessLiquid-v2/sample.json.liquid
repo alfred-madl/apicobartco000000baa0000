@@ -1,0 +1,5 @@
+{
+  "MyName": "{{param1}}",
+  "Money": "{{param2}} Bath.",
+  "MyArray": [ {% for item in param5 -%} {% if forloop.index == (forloop.length - 1) %} "{{item}}" {% else %} "{{item}}", {% endif %} {% endfor -%} ]
+}

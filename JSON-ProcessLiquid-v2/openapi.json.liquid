@@ -1,0 +1,3273 @@
+---
+---
+{% if site.time == nil -%}
+{% assign mdl = mdl -%}
+{% assign xapicoinfo = x-apico-info -%}
+{% else -%}
+{% assign mdl = site.data.entities.mdl -%}
+{% assign xapicoinfo = site.data.entities.x-apico-info -%}
+{% endif -%}
+{%- comment %} ================================= Transform APICo nested entities to OpenAPI json ============================================= {% endcomment -%}
+{   
+    "openapi":"3.0.3",
+    {%- comment %} ================================= APICo Info ============================================= {% endcomment %}
+    "x-apico-info": {
+        "ten": {
+            "cod": "{{ xapicoinfo.ten.cod }}",
+            "nam": "{{ xapicoinfo.ten.nam }}"
+        },
+        "set": {
+            "cod": "{{ xapicoinfo.set.cod }}",
+            "nam": "{{ xapicoinfo.set.nam }}",
+            "dom": "{{ xapicoinfo.set.dom }}"
+        },
+        "prj": {
+            "cod": "{{ xapicoinfo.prj.cod }}",
+            "nam": "{{ xapicoinfo.prj.nam }}",
+            "sdm": "{{ xapicoinfo.prj.sdm }}"
+        },
+        "svc": {
+            "cod": "{{ xapicoinfo.svc.cod }}",
+            "nam": "{{ xapicoinfo.svc.nam }}",
+            "cmt": "{{ xapicoinfo.svc.cmt }}"
+        },
+        "ver": {
+            "cod": "{{ xapicoinfo.ver.maj.cod }}",
+            "nam": "{{ xapicoinfo.ver.nam }}",
+            "cmt": "{{ xapicoinfo.ver.cmt }}",
+            "maj": {
+                "cod": "{{ xapicoinfo.ver.maj.cod }}",
+                "num": "{{ xapicoinfo.ver.maj.num }}",
+                "pth": "{{ xapicoinfo.ver.maj.pth }}"
+            },
+            "min": "{{ xapicoinfo.ver.min }}",
+            "pat": "{{ xapicoinfo.ver.pat }}",
+            "pth": "{{ xapicoinfo.ver.pth }}"
+        },
+        "gen": {
+            "cod": "{{ xapicoinfo.gen.cod }}",
+            "id": "{{ xapicoinfo.gen.id }}",
+            "tpl": "{{ xapicoinfo.gen.tpl }}",
+            "cti": "{{ xapicoinfo.gen.cti }}" 
+        },
+        "dpl": {
+            "cod": "{{ xapicoinfo.dpl.cod }}",
+            "id": "{{ xapicoinfo.dpl.id }}",
+            "cti": "{{ xapicoinfo.dpl.cti }}" 
+        },
+        "ins": {
+            "cod": "{{ xapicoinfo.ins.cod }}",
+            "nam": "{{ xapicoinfo.ins.nam }}",
+            "cmt": "{{ xapicoinfo.ins.cmt }}",
+            "fam": {
+                "cod": "{{ xapicoinfo.ins.fam.cod }}",
+                "nam": "{{ xapicoinfo.ins.fam.nam }}",
+                "lan": "{{ xapicoinfo.ins.fam.lan }}",
+                "slt": "{{ xapicoinfo.ins.fam.slt }}",
+                "env": "{{ xapicoinfo.ins.fam.env }}"
+            },
+            "lan": {
+                "cod": "{{ xapicoinfo.ins.lan.cod }}",
+                "nam": "{{ xapicoinfo.ins.lan.nam }}",
+                "cat": { "cod": "{{ xapicoinfo.ins.lan.cat.cod }}", "nam": "{{ xapicoinfo.ins.lan.cat.nam }}"},
+                "spd": { "cod": "{{ xapicoinfo.ins.lan.spd.cod }}", "nam": "{{ xapicoinfo.ins.lan.spd.nam }}"},
+                "org": { "cod": "{{ xapicoinfo.ins.lan.org.cod }}", "nam": "{{ xapicoinfo.ins.lan.org.nam }}"},
+                "stp": { "cod": "{{ xapicoinfo.ins.lan.stp.cod }}", "nam": "{{ xapicoinfo.ins.lan.stp.nam }}", "prd": "{{ xapicoinfo.ins.lan.stp.prd }}"}
+            },
+            "slt": {
+                "cod": "{{ xapicoinfo.ins.slt.cod }}",
+                "nam": "{{ xapicoinfo.ins.slt.nam }}"
+            },
+            "env": {
+                "cod": "{{ xapicoinfo.ins.env.cod }}",
+                "nam": "{{ xapicoinfo.ins.env.nam }}"
+            },
+            "reg": {
+                "cod": "{{ xapicoinfo.ins.reg.cod }}",
+                "nam": "{{ xapicoinfo.ins.reg.nam }}"
+            },
+            "sbs": {
+                "cod": "{{ xapicoinfo.ins.sbs.cod }}",
+                "nam": "{{ xapicoinfo.ins.sbs.nam }}",
+                "azure-id": "{{ xapicoinfo.ins.sbs.azure-id }}",
+                "cmt": "{{ xapicoinfo.ins.sbs.cmt }}"
+            }
+        }
+    },
+    {%- comment %} ================================= tags ============================================= {% endcomment %}
+    "tags": [
+        {% if mdl.roo != nil -%}
+        {
+            "name": "{{ mdl.roo.nmc | downcase }}",
+            "description": "{{ mdl.roo.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ mdl.roo.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ mdl.roo.nmc | downcase }}"
+            }
+        }
+        ,
+        {% endif %}
+        {%- for entity01 in mdl.ent -%}
+        {
+            "name": "{{ entity01.nmc | downcase }}",
+            "description": "{{ entity01.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity01.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity01.nmc | downcase }}"
+            }
+        }
+        {%- for entity02 in entity01.ent -%}
+        ,
+        {
+            "name": "{{ entity02.nmc | downcase }}",
+            "description": "{{ entity02.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity02.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity02.nmc | downcase }}"
+            }
+        }
+        {%- for entity03 in entity02.ent -%}
+        ,
+        {
+            "name": "{{ entity03.nmc | downcase }}",
+            "description": "{{ entity03.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity03.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity03.nmc | downcase }}"
+            }
+        }
+        {%- for entity04 in entity03.ent -%}
+        ,
+        {
+            "name": "{{ entity04.nmc | downcase }}",
+            "description": "{{ entity04.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity04.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity04.nmc | downcase }}"
+            }
+        }
+        {%- for entity05 in entity04.ent -%}
+        ,
+        {
+            "name": "{{ entity05.nmc | downcase }}",
+            "description": "{{ entity05.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity05.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity05.nmc | downcase }}"
+            }
+        }
+        {%- for entity06 in entity05.ent -%}
+        ,
+        {
+            "name": "{{ entity06.nmc | downcase }}",
+            "description": "{{ entity06.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity06.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity06.nmc | downcase }}"
+            }
+        }
+        {%- for entity07 in entity06.ent -%}
+        ,
+        {
+            "name": "{{ entity07.nmc | downcase }}",
+            "description": "{{ entity07.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity07.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity07.nmc | downcase }}"
+            }
+        }
+        {%- for entity08 in entity07.ent -%}
+        ,
+        {
+            "name": "{{ entity08.nmc | downcase }}",
+            "description": "{{ entity08.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity08.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity08.nmc | downcase }}"
+            }
+        }
+        {%- for entity09 in entity08.ent -%}
+        ,
+        {
+            "name": "{{ entity09.nmc | downcase }}",
+            "description": "{{ entity09.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity09.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity09.nmc | downcase }}"
+            }
+        }
+        {%- for entity10 in entity09.ent -%}
+        ,
+        {
+            "name": "{{ entity10.nmc | downcase }}",
+            "description": "{{ entity10.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity10.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity10.nmc | downcase }}"
+            }
+        }
+        {%- for entity11 in entity10.ent -%}
+        ,
+        {
+            "name": "{{ entity11.nmc | downcase }}",
+            "description": "{{ entity11.dsi }}",
+            "externalDocs": {
+                "description": "Documentation of the {{ entity11.nmi }} API",
+                "url": "http://docs.apico.io/api/collection/{{ entity1.nmc | downcase }}"
+            }
+        }
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+    ],
+    {%- comment %} ================================= info ============================================= {% endcomment %}
+
+    "info": {
+        "title": "{{ xapicoinfo.svc.tit }}",
+        "description": "{{ xapicoinfo.svc.dsc }}",
+        "termsOfService": "{{ xapicoinfo.svc.tos }}",
+        "contact": {
+            "email": "{{ xapicoinfo.svc.con.eml }}",
+            "name": "{{ xapicoinfo.svc.con.nam }}",
+            "url": "{{ xapicoinfo.svc.con.url }}"
+        },
+        "license": {
+            "name": "{{ xapicoinfo.svc.lic.nam }}",
+            "url": "{{ xapicoinfo.svc.lic.url }}"
+        },
+        "version":"{{ xapicoinfo.ver.maj.num }}.{{ xapicoinfo.ver.min }}"
+    },
+    {%- comment %} ================================= servers ============================================= {% endcomment %}
+    "servers": [
+        {
+            {% if xapicoinfo.ins.lan.dom != "" -%}
+            "url": "https://{{ xapicoinfo.ins.lan.dom }}/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.maj.pth }}",
+            {% else -%}
+            "url": "https://{{ xapicoinfo.ten.cod }}{{ xapicoinfo.set.cod }}{{ xapicoinfo.prj.cod }}{{ xapicoinfo.svc.cod }}{{ xapicoinfo.ver.maj.cod }}nnnbfa0{{ xapicoinfo.ins.lan.cod }}{{ xapicoinfo.ins.slt.cod }}{{ xapicoinfo.ins.env.cod }}{{ xapicoinfo.ins.reg.cod }}.azurewebsites.net/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.maj.pth }}",
+            {% endif -%}
+            "description": "{{ xapicoinfo.ten.nam }} {{ xapicoinfo.set.nam }} {{ xapicoinfo.prj.nam }} {{ xapicoinfo.svc.nam }} {{ xapicoinfo.ver.cod }} {{ xapicoinfo.gen.tpl }} {{ xapicoinfo.gen.cti }} {{ xapicoinfo.dpl.cti }} {{ xapicoinfo.ins.lan.nam }} {{ xapicoinfo.ins.slt.nam }} {{ xapicoinfo.ins.env.nam }} {{ xapicoinfo.ins.reg.nam }} "
+        }
+    ],
+    {%- comment %} ================================= paths ============================================= {% endcomment %}
+    "paths": {
+    {%- comment %} ================================= root ============================================= {% endcomment %}
+        {% if mdl.roo != nil -%}
+        "/": {
+            "description": "{{ mdl.roo.dsc }}",
+            "x-apico-path-type-code": "r",
+            "x-apico-path-type-name": "Root",
+            "x-apico-collection-code": "{{ mdl.roo.cod }}",
+            "x-apico-collection-name": "{{ mdl.roo.nmc }}",
+            "x-apico-collection-absolute-path": "/",
+            "x-apico-entity-code": "{{ mdl.roo.cod }}",
+            "x-apico-entity-name": "{{ mdl.roo.nmi }}",
+            {% if mdl.roo.ops.rm == true -%}
+            "delete": {
+                "description": "Delete all objects in all collections",
+                "tags": ["root"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        },
+        {%- endif -%}
+    {%- comment %} ================================= Commands ============================================= {% endcomment %}
+        {% if mdl.roo.sub.cmd != nil %}
+        "/{{ mdl.roo.sub.cmd.nmc }}": {
+            "description": "{{ mdl.roo.sub.cmd.dsc }}",
+            "x-apico-path-type-code": "m",
+            "x-apico-path-type-name": "Command",
+            "x-apico-collection-code": "{{ mdl.roo.sub.cmd.cod }}",
+            "x-apico-collection-name": "{{ mdl.roo.sub.cmd.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ mdl.roo.sub.cmd.nmc }}",
+            "x-apico-entity-code": "{{ mdl.roo.cod }}",
+            "x-apico-entity-name": "{{ mdl.roo.nmi }}",
+            {% if mdl.roo.sub.cmd.ops.rm == true -%}
+            {% if xapicoinfo.ins.lan.stp.prd == false -%}
+            "delete": {
+                "description": "Delete all objects in all collections",
+                "tags": ["root"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+            {%- endif %}
+        },
+        {%- endif -%}
+        {%- for entity01 in mdl.ent %}{% assign loopindex01 = forloop.index %}
+    {%- comment %} ================================= path collection entity01 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}": {
+            "description": "{{ entity01.dsc }}",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "{{ entity01.cod }}",
+            "x-apico-collection-name": "{{ entity01.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}",
+            "x-apico-entity-code": "{{ entity01.cod }}",
+            "x-apico-entity-name": "{{ entity01.nmi }}",
+            {% if entity01.ops.li == true -%}
+            "get": {
+                "description": "List {{ entity01.nmc | downcase }}",
+                "tags": ["{{ entity01.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity01.ops.li == true and entity01.ops.in == true -%}
+            ,
+            {%- endif %}
+            {% if entity01.ops.in == true -%}
+            "post": {
+                "description": "Insert a new {{ entity01.nmi | downcase }}",
+                "tags": ["{{ entity01.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity01.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex01 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                    "value": {{ example[1] | replace: "{", i }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex01 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                "{{ example[0] }}": "{{ example[1] | replace: "{", i | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        },
+    {%- comment %} ================================= path instance entity01 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')": {
+            "description": "{{ entity01.dsi }}",
+            "x-apico-path-type-code": "o",
+            "x-apico-path-type-name": "Object",
+            "x-apico-collection-code": "{{ entity01.cod }}",
+            "x-apico-collection-name": "{{ entity01.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}",
+            "x-apico-entity-code": "{{ entity01.cod }}",
+            "x-apico-entity-name": "{{ entity01.nmi }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb",
+                    "x-apico-object-identifier": true
+                }
+            ],
+            {% if entity01.ops.re == true -%}
+            "get": {
+                "description": "Read a {{ entity01.nmi | downcase }}",
+                "tags": ["{{ entity01.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity01.ops.up == true -%}
+            {% if entity01.ops.re== true -%}
+            ,
+            {%- endif %}
+            "put": {
+                "description": "Update or Upsert a {{ entity01.nmi | downcase }}",
+                "tags": ["{{ entity01.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity01.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity01.ops.cr == true -%}
+            {% if entity01.ops.re == true or entity01.ops.up == true -%}
+            ,
+            {%- endif %}
+            "post": {
+                "description": "Create an identified {{ entity01.nmi | downcase }}",
+                "tags": ["{{ entity01.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity01.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity01.ops.de == true -%}
+            {% if entity01.ops.re == true or entity01.ops.up == true or entity01.ops.cr == true -%}
+            ,
+            {%- endif %}
+            "delete": {
+                "description": "Delete a {{ entity01.nmi | downcase }}",
+                "tags": ["{{ entity01.nmc | downcase }}"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        }
+        {%- for entity02 in entity01.ent -%}{% assign loopindex02 = forloop.index %}
+        ,
+    {%- comment %} ================================= path collection entity02 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}": {
+            "description": "{{ entity02.dsc }}",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "{{ entity02.cod }}",
+            "x-apico-collection-name": "{{ entity02.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}",
+            "x-apico-entity-code": "{{ entity02.cod }}",
+            "x-apico-entity-name": "{{ entity02.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity01.cod }}",
+            "x-apico-parent-collection-name": "{{ entity01.nmc }}",
+            "x-apico-parent-entity-code": "{{ entity01.cod }}",
+            "x-apico-parent-entity-name": "{{ entity01.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb",
+                    "x-apico-parent-object-identifier": true
+                }
+            ],
+            {% if entity02.ops.li == true -%}
+            "get": {
+                "description": "List {{ entity02.nmi | downcase }}",
+                "tags": ["{{ entity02.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity02.ops.li == true and entity02.ops.in == true -%}
+            ,
+            {%- endif %}
+            {% if entity02.ops.in == true -%}
+            "post": {
+                "description": "Insert a new {{ entity02.nmi | downcase }}",
+                "tags": ["{{ entity02.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity02.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity02.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex02 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                    "value": {{ example[1] | replace: "{", i }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex02 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                "{{ example[0] }}": "{{ example[1] | replace: "{", i | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        },
+    {%- comment %} ================================= path instance entity02 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')": {
+            "description": "{{ entity02.dsi }}",
+            "x-apico-path-type-code": "o",
+            "x-apico-path-type-name": "Object",
+            "x-apico-collection-code": "{{ entity02.cod }}",
+            "x-apico-collection-name": "{{ entity02.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}",
+            "x-apico-entity-code": "{{ entity02.cod }}",
+            "x-apico-entity-name": "{{ entity02.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity01.cod }}",
+            "x-apico-parent-collection-name": "{{ entity01.nmc }}",
+            "x-apico-parent-entity-code": "{{ entity01.cod }}",
+            "x-apico-parent-entity-name": "{{ entity01.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb",
+                    "x-apico-parent-object-identifier": true
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7",
+                    "x-apico-object-identifier": true
+                }
+            ],
+            {% if entity02.ops.re == true -%}
+            "get": {
+                "description": "Read a {{ entity02.nmi | downcase }}",
+                "tags": ["{{ entity02.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity02.ops.up == true -%}
+            {% if entity02.ops.re== true -%}
+            ,
+            {%- endif %}
+            "put": {
+                "description": "Update or Upsert a {{ entity02.nmi | downcase }}",
+                "tags": ["{{ entity02.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity02.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity02.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity02.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity02.ops.cr == true -%}
+            {% if entity02.ops.re == true or entity02.ops.up == true -%}
+            ,
+            {%- endif %}
+            "post": {
+                "description": "Create an identified {{ entity02.nmi | downcase }}",
+                "tags": ["{{ entity02.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity02.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity02.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity02.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity02.ops.de == true -%}
+            {% if entity02.ops.re == true or entity02.ops.up == true or entity02.ops.cr == true -%}
+            ,
+            {%- endif %}
+            "delete": {
+                "description": "Delete a {{ entity02.nmi | downcase }}",
+                "tags": ["{{ entity02.nmc | downcase }}"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        }
+        {%- for entity03 in entity02.ent -%}{% assign loopindex03 = forloop.index %}
+        ,
+    {%- comment %} ================================= path collection entity03 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}": {
+            "description": "{{ entity03.dsc }}",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "{{ entity03.cod }}",
+            "x-apico-collection-name": "{{ entity03.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}",
+            "x-apico-entity-code": "{{ entity03.cod }}",
+            "x-apico-entity-name": "{{ entity03.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity02.cod }}",
+            "x-apico-parent-collection-name": "{{ entity02.nmc }}",
+            "x-apico-parent-entity-code": "{{ entity02.cod }}",
+            "x-apico-parent-entity-name": "{{ entity02.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7",
+                    "x-apico-parent-object-identifier": true
+                }
+            ],
+            {% if entity03.ops.li == true -%}
+            "get": {
+                "description": "List {{ entity03.nmc | downcase }}",
+                "tags": ["{{ entity03.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity03.ops.li == true and entity03.ops.in == true -%}
+            ,
+            {%- endif %}
+            {% if entity03.ops.in == true -%}
+            "post": {
+                "description": "Insert a new {{ entity03.nmi | downcase }}",
+                "tags": ["{{ entity03.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity03.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity03.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex03 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                    "value": {{ example[1] | replace: "{", i }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex03 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                "{{ example[0] }}": "{{ example[1] | replace: "{", i | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        },
+    {%- comment %} ================================= path instance entity03 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')": {
+            "description": "{{ entity03.dsi }}",
+            "x-apico-path-type-code": "o",
+            "x-apico-path-type-name": "Object",
+            "x-apico-collection-code": "{{ entity03.cod }}",
+            "x-apico-collection-name": "{{ entity03.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}",
+            "x-apico-entity-code": "{{ entity03.cod }}",
+            "x-apico-entity-name": "{{ entity03.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity02.cod }}",
+            "x-apico-parent-collection-name": "{{ entity02.nmc }}",
+            "x-apico-parent-entity-code": "{{ entity02.cod }}",
+            "x-apico-parent-entity-name": "{{ entity02.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7",
+                    "x-apico-parent-object-identifier": true
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655",
+                    "x-apico-object-identifier": true
+                }
+            ],
+            {% if entity03.ops.re == true -%}
+            "get": {
+                "description": "Read a {{ entity03.nmi | downcase }}",
+                "tags": ["{{ entity03.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity03.ops.up == true -%}
+            {% if entity03.ops.re== true -%}
+            ,
+            {%- endif %}
+            "put": {
+                "description": "Update or Upsert a {{ entity03.nmi | downcase }}",
+                "tags": ["{{ entity03.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity03.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity03.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity03.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity03.ops.cr == true -%}
+            {% if entity03.ops.re == true or entity03.ops.up == true -%}
+            ,
+            {%- endif %}
+            "post": {
+                "description": "Create an identified {{ entity03.nmi | downcase }}",
+                "tags": ["{{ entity03.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity03.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity03.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity03.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity03.ops.de == true -%}
+            {% if entity03.ops.re == true or entity03.ops.up == true or entity03.ops.cr == true -%}
+            ,
+            {%- endif %}
+            "delete": {
+                "description": "Delete a {{ entity03.nmi | downcase }}",
+                "tags": ["{{ entity03.nmc | downcase }}"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        }        
+        {%- for entity04 in entity03.ent -%}{% assign loopindex04 = forloop.index %}
+        ,
+    {%- comment %} ================================= path collection entity04 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}": {
+            "description": "{{ entity04.dsc }}",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "{{ entity04.cod }}",
+            "x-apico-collection-name": "{{ entity04.nmc }}",
+            "x-apico-entity-code": "{{ entity04.cod }}",
+            "x-apico-entity-name": "{{ entity04.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity03.cod }}",
+            "x-apico-parent-collection-name": "{{ entity03.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}",
+            "x-apico-parent-entity-code": "{{ entity03.cod }}",
+            "x-apico-parent-entity-name": "{{ entity03.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}.{{ entity03.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7"
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655",
+                    "x-apico-parent-object-identifier": true
+                }
+            ],
+            {% if entity04.ops.li == true -%}
+            "get": {
+                "description": "List {{ entity04.nmc | downcase }}",
+                "tags": ["{{ entity04.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity04.ops.li == true and entity04.ops.in == true -%}
+            ,
+            {%- endif %}
+            {% if entity04.ops.in == true -%}
+            "post": {
+                "description": "Insert a new {{ entity04.nmi | downcase }}",
+                "tags": ["{{ entity04.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity04.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity04.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex04 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                    "value": {{ example[1] | replace: "{", i }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex04 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                "{{ example[0] }}": "{{ example[1] | replace: "{", i | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        },
+    {%- comment %} ================================= path instance entity04 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')": {
+            "description": "{{ entity04.dsi }}",
+            "x-apico-path-type-code": "o",
+            "x-apico-path-type-name": "Object",
+            "x-apico-collection-code": "{{ entity04.cod }}",
+            "x-apico-collection-name": "{{ entity04.nmc }}",
+            "x-apico-entity-code": "{{ entity04.cod }}",
+            "x-apico-entity-name": "{{ entity04.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity03.cod }}",
+            "x-apico-parent-collection-name": "{{ entity03.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}",
+            "x-apico-parent-entity-code": "{{ entity03.cod }}",
+            "x-apico-parent-entity-name": "{{ entity03.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}.{{ entity03.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7"
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655",
+                    "x-apico-parent-object-identifier": true
+                },
+                {
+                    "name": "{{ entity04.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity04.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "50461d{% if loopindex04 < 10 %}0{% endif %}{{ loopindex04 }}-5617-4b9b-830a-47ec6c633ec6",
+                    "x-apico-object-identifier": true
+                }
+            ],
+            {% if entity04.ops.re == true -%}
+            "get": {
+                "description": "Read a {{ entity04.nmi | downcase }}",
+                "tags": ["{{ entity04.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity04.ops.up == true -%}
+            {% if entity04.ops.re== true -%}
+            ,
+            {%- endif %}
+            "put": {
+                "description": "Update or Upsert a {{ entity04.nmi | downcase }}",
+                "tags": ["{{ entity04.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity04.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity04.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity04.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity04.ops.cr == true -%}
+            {% if entity04.ops.re == true or entity04.ops.up == true -%}
+            ,
+            {%- endif %}
+            "post": {
+                "description": "Create an identified {{ entity04.nmi | downcase }}",
+                "tags": ["{{ entity04.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity04.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity04.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity04.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity04.ops.de == true -%}
+            {% if entity04.ops.re == true or entity04.ops.up == true or entity04.ops.cr == true -%}
+            ,
+            {%- endif %}
+            "delete": {
+                "description": "Delete a {{ entity04.nmi | downcase }}",
+                "tags": ["{{ entity04.nmc | downcase }}"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        }        
+        {%- for entity05 in entity04.ent -%}{% assign loopindex05 = forloop.index %}
+        ,
+    {%- comment %} ================================= path collection entity05 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}": {
+            "description": "{{ entity05.dsc }}",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "{{ entity05.cod }}",
+            "x-apico-collection-name": "{{ entity05.nmc }}",
+            "x-apico-entity-code": "{{ entity05.cod }}",
+            "x-apico-entity-name": "{{ entity05.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity04.cod }}",
+            "x-apico-parent-collection-name": "{{ entity04.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}",
+            "x-apico-parent-entity-code": "{{ entity04.cod }}",
+            "x-apico-parent-entity-name": "{{ entity04.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}.{{ entity03.nmc | downcase }}.{{ entity04.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7"
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655"
+                },
+                {
+                    "name": "{{ entity04.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity04.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "50461d{% if loopindex04 < 10 %}0{% endif %}{{ loopindex04 }}-5617-4b9b-830a-47ec6c633ec6",
+                    "x-apico-parent-object-identifier": true
+                }
+            ],
+            {% if entity05.ops.li == true -%}
+            "get": {
+                "description": "List {{ entity05.nmc | downcase }}",
+                "tags": ["{{ entity05.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity05.ops.li == true and entity05.ops.in == true -%}
+            ,
+            {%- endif %}
+            {% if entity05.ops.in == true -%}
+            "post": {
+                "description": "Insert a new {{ entity05.nmi | downcase }}",
+                "tags": ["{{ entity05.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity05.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity05.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex05 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                    "value": {{ example[1] | replace: "{", i }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex05 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                "{{ example[0] }}": "{{ example[1] | replace: "{", i | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        },
+    {%- comment %} ================================= path instance entity05 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')": {
+            "description": "{{ entity05.dsi }}",
+            "x-apico-path-type-code": "o",
+            "x-apico-path-type-name": "Object",
+            "x-apico-collection-code": "{{ entity05.cod }}",
+            "x-apico-collection-name": "{{ entity05.nmc }}",
+            "x-apico-entity-code": "{{ entity05.cod }}",
+            "x-apico-entity-name": "{{ entity05.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity04.cod }}",
+            "x-apico-parent-collection-name": "{{ entity04.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}",
+            "x-apico-parent-entity-code": "{{ entity04.cod }}",
+            "x-apico-parent-entity-name": "{{ entity04.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}.{{ entity03.nmc | downcase }}.{{ entity04.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7"
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655"
+                },
+                {
+                    "name": "{{ entity04.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity04.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "50461d{% if loopindex04 < 10 %}0{% endif %}{{ loopindex04 }}-5617-4b9b-830a-47ec6c633ec6",
+                    "x-apico-parent-object-identifier": true
+                },
+                {
+                    "name": "{{ entity05.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity05.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "3adf55{% if loopindex05 < 10 %}0{% endif %}{{ loopindex05 }}-8d3b-4d94-87fa-8f975f662bee",
+                    "x-apico-object-identifier": true
+                }
+            ],
+            {% if entity05.ops.re == true -%}
+            "get": {
+                "description": "Read a {{ entity05.nmi | downcase }}",
+                "tags": ["{{ entity05.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity05.ops.up == true -%}
+            {% if entity05.ops.re== true -%}
+            ,
+            {%- endif %}
+            "put": {
+                "description": "Update or Upsert a {{ entity05.nmi | downcase }}",
+                "tags": ["{{ entity05.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity05.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity05.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity05.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity05.ops.cr == true -%}
+            {% if entity05.ops.re == true or entity05.ops.up == true -%}
+            ,
+            {%- endif %}
+            "post": {
+                "description": "Create an identified {{ entity05.nmi | downcase }}",
+                "tags": ["{{ entity05.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity05.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity05.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity05.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity05.ops.de == true -%}
+            {% if entity05.ops.re == true or entity05.ops.up == true or entity05.ops.cr == true -%}
+            ,
+            {%- endif %}
+            "delete": {
+                "description": "Delete a {{ entity05.nmi | downcase }}",
+                "tags": ["{{ entity05.nmc | downcase }}"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        }        
+        {%- for entity06 in entity05.ent -%}{% assign loopindex06 = forloop.index %}
+        ,
+    {%- comment %} ================================= path collection entity06 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}": {
+            "description": "{{ entity06.dsc }}",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "{{ entity06.cod }}",
+            "x-apico-collection-name": "{{ entity06.nmc }}",
+            "x-apico-entity-code": "{{ entity06.cod }}",
+            "x-apico-entity-name": "{{ entity06.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity05.cod }}",
+            "x-apico-parent-collection-name": "{{ entity05.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}",
+            "x-apico-parent-entity-code": "{{ entity05.cod }}",
+            "x-apico-parent-entity-name": "{{ entity05.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}.{{ entity03.nmc | downcase }}.{{ entity04.nmc | downcase }}.{{ entity05.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7"
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655"
+                },
+                {
+                    "name": "{{ entity04.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity04.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "50461d{% if loopindex04 < 10 %}0{% endif %}{{ loopindex04 }}-5617-4b9b-830a-47ec6c633ec6"
+                },
+                {
+                    "name": "{{ entity05.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity05.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "3adf55{% if loopindex05 < 10 %}0{% endif %}{{ loopindex05 }}-8d3b-4d94-87fa-8f975f662bee",
+                    "x-apico-parent-object-identifier": true
+                }
+            ],
+            {% if entity06.ops.li == true -%}
+            "get": {
+                "description": "List {{ entity06.nmc | downcase }}",
+                "tags": ["{{ entity06.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity06.ops.li == true and entity06.ops.in == true -%}
+            ,
+            {%- endif %}
+            {% if entity06.ops.in == true -%}
+            "post": {
+                "description": "Insert a new {{ entity06.nmi | downcase }}",
+                "tags": ["{{ entity06.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity06.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity06.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex06 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                    "value": {{ example[1] | replace: "{", i }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex06 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                "{{ example[0] }}": "{{ example[1] | replace: "{", i | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        },
+    {%- comment %} ================================= path instance entity06 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}('{ {{- entity06.nmi | downcase }}-id}')": {
+            "description": "{{ entity06.dsi }}",
+            "x-apico-path-type-code": "o",
+            "x-apico-path-type-name": "Object",
+            "x-apico-collection-code": "{{ entity06.cod }}",
+            "x-apico-collection-name": "{{ entity06.nmc }}",
+            "x-apico-entity-code": "{{ entity06.cod }}",
+            "x-apico-entity-name": "{{ entity06.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity05.cod }}",
+            "x-apico-parent-collection-name": "{{ entity05.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}",
+            "x-apico-parent-entity-code": "{{ entity05.cod }}",
+            "x-apico-parent-entity-name": "{{ entity05.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}.{{ entity03.nmc | downcase }}.{{ entity04.nmc | downcase }}.{{ entity05.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7"
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655"
+                },
+                {
+                    "name": "{{ entity04.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity04.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "50461d{% if loopindex04 < 10 %}0{% endif %}{{ loopindex04 }}-5617-4b9b-830a-47ec6c633ec6"
+                },
+                {
+                    "name": "{{ entity05.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity05.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "3adf55{% if loopindex05 < 10 %}0{% endif %}{{ loopindex05 }}-8d3b-4d94-87fa-8f975f662bee",
+                    "x-apico-parent-object-identifier": true
+                },
+                {
+                    "name": "{{ entity06.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity06.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "5942e7{% if loopindex06 < 10 %}0{% endif %}{{ loopindex06 }}-be7e-4aff-9ae1-b9c9cdb77755",
+                    "x-apico-object-identifier": true
+                }
+            ],
+            {% if entity06.ops.re == true -%}
+            "get": {
+                "description": "Read a {{ entity06.nmi | downcase }}",
+                "tags": ["{{ entity06.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity06.ops.up == true -%}
+            {% if entity06.ops.re== true -%}
+            ,
+            {%- endif %}
+            "put": {
+                "description": "Update or Upsert a {{ entity06.nmi | downcase }}",
+                "tags": ["{{ entity06.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity06.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity06.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity06.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity06.ops.cr == true -%}
+            {% if entity06.ops.re == true or entity06.ops.up == true -%}
+            ,
+            {%- endif %}
+            "post": {
+                "description": "Create an identified {{ entity06.nmi | downcase }}",
+                "tags": ["{{ entity06.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity06.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity06.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity06.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity06.ops.de == true -%}
+            {% if entity06.ops.re == true or entity06.ops.up == true or entity06.ops.cr == true -%}
+            ,
+            {%- endif %}
+            "delete": {
+                "description": "Delete a {{ entity06.nmi | downcase }}",
+                "tags": ["{{ entity06.nmc | downcase }}"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        }        
+        {%- for entity07 in entity06.ent -%}{% assign loopindex07 = forloop.index %}
+        ,
+    {%- comment %} ================================= path collection entity07 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}('{ {{- entity06.nmi | downcase }}-id}')/{{ entity07.nmc | downcase }}": {
+            "description": "{{ entity07.dsc }}",
+            "x-apico-path-type-code": "c",
+            "x-apico-path-type-name": "Collection",
+            "x-apico-collection-code": "{{ entity07.cod }}",
+            "x-apico-collection-name": "{{ entity07.nmc }}",
+            "x-apico-entity-code": "{{ entity07.cod }}",
+            "x-apico-entity-name": "{{ entity07.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity06.cod }}",
+            "x-apico-parent-collection-name": "{{ entity06.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}('{ {{- entity06.nmi | downcase }}-id}')/{{ entity07.nmc | downcase }}",
+            "x-apico-parent-entity-code": "{{ entity06.cod }}",
+            "x-apico-parent-entity-name": "{{ entity06.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}.{{ entity03.nmc | downcase }}.{{ entity04.nmc | downcase }}.{{ entity05.nmc | downcase }}.{{ entity06.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7"
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655"
+                },
+                {
+                    "name": "{{ entity04.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity04.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "50461d{% if loopindex04 < 10 %}0{% endif %}{{ loopindex04 }}-5617-4b9b-830a-47ec6c633ec6"
+                },
+                {
+                    "name": "{{ entity05.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity05.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "3adf55{% if loopindex05 < 10 %}0{% endif %}{{ loopindex05 }}-8d3b-4d94-87fa-8f975f662bee"
+                },
+                {
+                    "name": "{{ entity06.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity06.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "5942e7{% if loopindex06 < 10 %}0{% endif %}{{ loopindex06 }}-be7e-4aff-9ae1-b9c9cdb77755",
+                    "x-apico-parent-object-identifier": true
+                }
+            ],
+            {% if entity07.ops.li == true -%}
+            "get": {
+                "description": "List {{ entity07.nmc | downcase }}",
+                "tags": ["{{ entity07.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity07.ops.li == true and entity07.ops.in == true -%}
+            ,
+            {%- endif %}
+            {% if entity07.ops.in == true -%}
+            "post": {
+                "description": "Insert a new {{ entity07.nmi | downcase }}",
+                "tags": ["{{ entity07.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity07.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity07.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex07 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                    "value": {{ example[1] | replace: "{", i }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity01.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                    {%- if forloop.index != 1 -%}
+                                    {%- capture i %}{"id": "f430{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}{% if forloop.index < 10 %}0{% endif %}{{ loopindex07 }}-2f36-4657-a152-2e1c0da2c175",{% endcapture %}
+                                    {%- else %}
+                                    {%- assign i = "{" %}
+                                    {%- endif %}
+                                "{{ example[0] }}": "{{ example[1] | replace: "{", i | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        },
+    {%- comment %} ================================= path instance entity07 ============================================= {% endcomment %}
+        "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}('{ {{- entity06.nmi | downcase }}-id}')/{{ entity07.nmc | downcase }}('{ {{- entity07.nmi | downcase }}-id}')": {
+            "description": "{{ entity07.dsi }}",
+            "x-apico-path-type-code": "o",
+            "x-apico-path-type-name": "Object",
+            "x-apico-collection-code": "{{ entity07.cod }}",
+            "x-apico-collection-name": "{{ entity07.nmc }}",
+            "x-apico-entity-code": "{{ entity07.cod }}",
+            "x-apico-entity-name": "{{ entity07.nmi }}",
+            "x-apico-parent-collection-code": "{{ entity06.cod }}",
+            "x-apico-parent-collection-name": "{{ entity06.nmc }}",
+            "x-apico-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}('{ {{- entity06.nmi | downcase }}-id}')/{{ entity07.nmc | downcase }}",
+            "x-apico-parent-entity-code": "{{ entity06.cod }}",
+            "x-apico-parent-entity-name": "{{ entity06.nmi }}",
+            "x-apico-parent-collection-absolute-path": "/{{ entity01.nmc | downcase }}('{ {{- entity01.nmi | downcase }}-id}')/{{ entity02.nmc | downcase }}('{ {{- entity02.nmi | downcase }}-id}')/{{ entity03.nmc | downcase }}('{ {{- entity03.nmi | downcase }}-id}')/{{ entity04.nmc | downcase }}('{ {{- entity04.nmi | downcase }}-id}')/{{ entity05.nmc | downcase }}('{ {{- entity05.nmi | downcase }}-id}')/{{ entity06.nmc | downcase }}",
+            "x-apico-parent-entity-path": ".{{ entity01.nmc | downcase }}.{{ entity02.nmc | downcase }}.{{ entity03.nmc | downcase }}.{{ entity04.nmc | downcase }}.{{ entity05.nmc | downcase }}.{{ entity06.nmc | downcase }}",
+            "parameters": [
+                {
+                    "name": "{{ entity01.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity01.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "c9c864{% if loopindex01 < 10 %}0{% endif %}{{ loopindex01 }}-7e4c-4427-ada8-aac34025fcfb"
+                },
+                {
+                    "name": "{{ entity02.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity02.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "924449{% if loopindex02 < 10 %}0{% endif %}{{ loopindex02 }}-967d-4472-ac6f-b35d9bcc90c7"
+                },
+                {
+                    "name": "{{ entity03.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity03.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "634362{% if loopindex03 < 10 %}0{% endif %}{{ loopindex03 }}-1ae5-4e18-b94e-cc66fd218655"
+                },
+                {
+                    "name": "{{ entity04.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity04.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "50461d{% if loopindex04 < 10 %}0{% endif %}{{ loopindex04 }}-5617-4b9b-830a-47ec6c633ec6"
+                },
+                {
+                    "name": "{{ entity05.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity05.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "3adf55{% if loopindex05 < 10 %}0{% endif %}{{ loopindex05 }}-8d3b-4d94-87fa-8f975f662bee"
+                },
+                {
+                    "name": "{{ entity06.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity06.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "5942e7{% if loopindex06 < 10 %}0{% endif %}{{ loopindex06 }}-be7e-4aff-9ae1-b9c9cdb77755",
+                    "x-apico-parent-object-identifier": true
+                },
+                {
+                    "name": "{{ entity07.nmi | downcase }}-id",
+                    "description": "The id (usually a GUID) of the {{ entity07.nmi | downcase }}",
+                    "in": "path",
+                    "schema": {},
+                    "required": true,
+                    "example": "076f96{% if loopindex07 < 10 %}0{% endif %}{{ loopindex07 }}-96e7-483e-95ae-35c64e8e8bdd",
+                    "x-apico-object-identifier": true
+                }
+            ],
+            {% if entity07.ops.re == true -%}
+            "get": {
+                "description": "Read a {{ entity07.nmi | downcase }}",
+                "tags": ["{{ entity07.nmc | downcase }}"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity07.ops.up == true -%}
+            {% if entity07.ops.re== true -%}
+            ,
+            {%- endif %}
+            "put": {
+                "description": "Update or Upsert a {{ entity07.nmi | downcase }}",
+                "tags": ["{{ entity07.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity07.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity07.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity07.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity07.ops.cr == true -%}
+            {% if entity07.ops.re == true or entity07.ops.up == true -%}
+            ,
+            {%- endif %}
+            "post": {
+                "description": "Create an identified {{ entity07.nmi | downcase }}",
+                "tags": ["{{ entity07.nmc | downcase }}"],
+                "requestBody": {
+                    "description": "{{ entity07.dsi }}",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                            }
+                            {%- for example in entity07.examples %}{% if forloop.first == true -%}
+                            ,
+                            "examples": {
+                            {%- endif %}
+                                "{{ example[0] }}": {
+                                    "summary": "{{ example[0] }}",
+                                    "description": "{{ example[0] }}",
+                                    "value": {{ example[1] }}
+                                }
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                            {%- for example in entity07.examples %}{% if forloop.first == true -%}
+                            ,
+                            "x-apico-test-bodies": {
+                            {%- endif -%}
+                                {%- capture d %}"{% endcapture %}
+                                {%- capture e %}\"{% endcapture %}
+                                "{{ example[0] }}": "{{ example[1] | replace: d, e}}"
+                            {%- if forloop.last == true %}                            
+                            }
+                            {%- else -%}
+                            ,
+                            {%- endif -%}
+                            {% endfor %}
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif -%}
+            {% if entity07.ops.de == true -%}
+            {% if entity07.ops.re == true or entity07.ops.up == true or entity07.ops.cr == true -%}
+            ,
+            {%- endif %}
+            "delete": {
+                "description": "Delete a {{ entity07.nmi | downcase }}",
+                "tags": ["{{ entity07.nmc | downcase }}"],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "406": {
+                        "description": "Not Acceptable"
+                    },
+                    "412": {
+                        "description": "Precondition Failed"
+                    },
+                    "415": {
+                        "description": "Unsupported Media Type"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+            {%- endif %}
+        }        
+        {%- for entity08 in entity07.ent -%}{% assign loopindex08 = forloop.index %}
+        ,
+        {
+            "description": "8 not implemented yet"
+        }
+        {%- for entity09 in entity08.ent -%}{% assign loopindex09 = forloop.index %}
+        ,
+        {
+            "description": "9 not implemented yet"
+        }
+        {%- for entity10 in entity09.ent -%}{% assign loopindex10 = forloop.index %}
+        ,
+        {
+            "description": "10 not implemented yet"
+        }
+        {%- for entity11 in entity10.ent -%}{% assign loopindex11 = forloop.index %}
+        ,
+        {
+            "description": "11 not implemented yet"
+        }
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+        {%- endfor %}
+    }
+}

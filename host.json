@@ -1,0 +1,23 @@
+{
+  "version": "2.0",
+  "logging": {
+    "fileLoggingMode": "always",
+    "logLevel": {
+      "xdefault": "Trace",
+      "xHost.General": "Trace",
+      "xHost.Results": "Error",
+      "xHost.Aggregator": "Error",
+      "xHost.Executor": "Error",
+      "xHost.Triggers.CosmosDB": "Error",
+      "xFunction": "Trace",
+      "xFunction.AzureCosmosDB-StoreAPICall-v2": "Debug"
+    }
+  },
+  "extensionBundle": {
+    "id": "Microsoft.Azure.Functions.ExtensionBundle",
+    "version": "[1.*, 2.0.0)"
+  },
+  "extensions": {
+      "cosmosDb": {}
+  }
+}

@@ -1,0 +1,26 @@
+{
+    "statusCode": 400,
+    "headers": {
+        "Pragma": "no-cache",
+        "x-ms-request-id": "4786ada5-6303-45e3-8b7e-cd2e103bb4ea",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Timing-Allow-Origin": "*",
+        "x-ms-apihub-cached-response": "true",
+        "Cache-Control": "no-store, no-cache",
+        "Date": "Sun, 20 Sep 2020 02:45:01 GMT",
+        "Set-Cookie": "ARRAffinity=de3b10a934af9f1a63b114c049a04afeade855bfd755f5c58629d86d56d64502;Path=/;HttpOnly;Domain=documentdb-sea.azconn-sea.p.azurewebsites.net",
+        "Content-Length": "1019",
+        "Content-Type": "application/json",
+        "Expires": "-1"
+    },
+    "body": {
+        "status": 400,
+        "message": "Gateway Failed to Retrieve Query Plan: Message: {\"errors\":[{\"severity\":\"Error\",\"location\":{\"start\":24,\"end\":25},\"code\":\"SC1001\",\"message\":\"Syntax error, incorrect syntax near '['.\"}]}\r\nActivityId: b0c61493-e694-4639-8c94-0941a7a8ea9d, Microsoft.Azure.Documents.Common/2.11.0, Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.10.1 Host/64-bit MicrosoftWindowsNT/10.0.14393.0\r\nclientRequestId: 4786ada5-6303-45e3-8b7e-cd2e103bb4ea",
+        "error": {
+            "message": "Gateway Failed to Retrieve Query Plan: Message: {\"errors\":[{\"severity\":\"Error\",\"location\":{\"start\":24,\"end\":25},\"code\":\"SC1001\",\"message\":\"Syntax error, incorrect syntax near '['.\"}]}\r\nActivityId: b0c61493-e694-4639-8c94-0941a7a8ea9d, Microsoft.Azure.Documents.Common/2.11.0, Microsoft.Azure.Documents.Common/2.11.0, documentdb-dotnet-sdk/2.10.1 Host/64-bit MicrosoftWindowsNT/10.0.14393.0"
+        },
+        "source": "documentdb-sea.azconn-sea.p.azurewebsites.net"
+    }
+}

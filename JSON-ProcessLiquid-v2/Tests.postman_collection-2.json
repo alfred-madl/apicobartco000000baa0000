@@ -1,0 +1,3044 @@
+{
+	"info": {
+		"_postman_id": "6129f02c-3b5d-4f80-8eac-7f7ce53984aa",
+		"name": "Tests",
+		"description": "xxxxFirst try of generating some tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "tenants",
+			"item": [
+				{
+					"name": "/tenants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants"
+							]
+						},
+						"description": "List tenants"
+					},
+					"response": []
+				},
+				{
+					"name": "/tenants",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"schema type not provided\"",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tenants",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants"
+							]
+						},
+						"description": "Insert a new tenant"
+					},
+					"response": [
+						{
+							"name": "a pet to be returned",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"category\": {\n        \"id\": 1,\n        \"name\": \"cat\"\n    },\n    \"name\": \"fluffy\",\n    \"photoUrls\": [\n        \"http://example.com/path/to/cat/1.jpg\",\n        \"http://example.com/path/to/cat/2.jpg\"\n    ],\n    \"tags\": [\n        {\n            \"id\": 1,\n            \"name\": \"cat\"\n        }\n    ],\n    \"status\": \"available\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tenants",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "tenants('{tenant-id}')",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "/tenants('{{tenant-id}}')/users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"users"
+									]
+								},
+								"description": "List user"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/users",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"users"
+									]
+								},
+								"description": "Insert a new user"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "users('{user-id}')",
+					"item": [
+						{
+							"name": "/tenants('{{tenant-id}}')/users('{{user-id}}')",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/users('{{user-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"users('{{user-id}}')"
+									]
+								},
+								"description": "Read a user"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/users('{{user-id}}')",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/users('{{user-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"users('{{user-id}}')"
+									]
+								},
+								"description": "Update or Upsert a user"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/users('{{user-id}}')",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/users('{{user-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"users('{{user-id}}')"
+									]
+								},
+								"description": "Create an identified user"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/users('{{user-id}}')",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/users('{{user-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"users('{{user-id}}')"
+									]
+								},
+								"description": "Delete a user"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "groups",
+					"item": [
+						{
+							"name": "/tenants('{{tenant-id}}')/groups",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/groups",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"groups"
+									]
+								},
+								"description": "List group"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/groups",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/groups",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"groups"
+									]
+								},
+								"description": "Insert a new group"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "groups('{group-id}')",
+					"item": [
+						{
+							"name": "/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"groups('{{group-id}}')"
+									]
+								},
+								"description": "Read a group"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"groups('{{group-id}}')"
+									]
+								},
+								"description": "Update or Upsert a group"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"groups('{{group-id}}')"
+									]
+								},
+								"description": "Create an identified group"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/groups('{{group-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"groups('{{group-id}}')"
+									]
+								},
+								"description": "Delete a group"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "organizations",
+					"item": [
+						{
+							"name": "/tenants('{{tenant-id}}')/organizations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/organizations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"organizations"
+									]
+								},
+								"description": "List organization"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/organizations",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/organizations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"organizations"
+									]
+								},
+								"description": "Insert a new organization"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "organizations('{organization-id}')",
+					"item": [
+						{
+							"name": "/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"organizations('{{organization-id}}')"
+									]
+								},
+								"description": "Read a organization"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"organizations('{{organization-id}}')"
+									]
+								},
+								"description": "Update or Upsert a organization"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"organizations('{{organization-id}}')"
+									]
+								},
+								"description": "Create an identified organization"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/organizations('{{organization-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"organizations('{{organization-id}}')"
+									]
+								},
+								"description": "Delete a organization"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "sets",
+					"item": [
+						{
+							"name": "/tenants('{{tenant-id}}')/sets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"sets"
+									]
+								},
+								"description": "List set"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/sets",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"sets"
+									]
+								},
+								"description": "Insert a new set"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "sets('{set-id}')",
+					"item": [
+						{
+							"name": "categories",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"categories"
+											]
+										},
+										"description": "List categories"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"categories"
+											]
+										},
+										"description": "Insert a new category"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "categories('{category-id}')",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"categories('{{category-id}}')"
+											]
+										},
+										"description": "Read a category"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"categories('{{category-id}}')"
+											]
+										},
+										"description": "Update or Upsert a category"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"categories('{{category-id}}')"
+											]
+										},
+										"description": "Create an identified category"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/categories('{{category-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"categories('{{category-id}}')"
+											]
+										},
+										"description": "Delete a category"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "speeds",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"speeds"
+											]
+										},
+										"description": "List speeds"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"speeds"
+											]
+										},
+										"description": "Insert a new speed"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "speeds('{speed-id}')",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"speeds('{{speed-id}}')"
+											]
+										},
+										"description": "Read a speed"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"speeds('{{speed-id}}')"
+											]
+										},
+										"description": "Update or Upsert a speed"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"speeds('{{speed-id}}')"
+											]
+										},
+										"description": "Create an identified speed"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/speeds('{{speed-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"speeds('{{speed-id}}')"
+											]
+										},
+										"description": "Delete a speed"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "steps",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"steps"
+											]
+										},
+										"description": "List steps"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"steps"
+											]
+										},
+										"description": "Insert a new step"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "steps('{step-id}')",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"steps('{{step-id}}')"
+											]
+										},
+										"description": "Read a step"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"steps('{{step-id}}')"
+											]
+										},
+										"description": "Update or Upsert a step"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"steps('{{step-id}}')"
+											]
+										},
+										"description": "Create an identified step"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/steps('{{step-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"steps('{{step-id}}')"
+											]
+										},
+										"description": "Delete a step"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "lanes",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"lanes"
+											]
+										},
+										"description": "List lanes"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"lanes"
+											]
+										},
+										"description": "Insert a new lane"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "lanes('{lane-id}')",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"lanes('{{lane-id}}')"
+											]
+										},
+										"description": "Read a lane"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"lanes('{{lane-id}}')"
+											]
+										},
+										"description": "Update or Upsert a lane"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"lanes('{{lane-id}}')"
+											]
+										},
+										"description": "Create an identified lane"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/lanes('{{lane-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"lanes('{{lane-id}}')"
+											]
+										},
+										"description": "Delete a lane"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "slots",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"slots"
+											]
+										},
+										"description": "List slots"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"slots"
+											]
+										},
+										"description": "Insert a new slot"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "slots('{slot-id}')",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"slots('{{slot-id}}')"
+											]
+										},
+										"description": "Read a slot"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"slots('{{slot-id}}')"
+											]
+										},
+										"description": "Update or Upsert a slot"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"slots('{{slot-id}}')"
+											]
+										},
+										"description": "Create an identified slot"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/slots('{{slot-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"slots('{{slot-id}}')"
+											]
+										},
+										"description": "Delete a slot"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "environments",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"environments"
+											]
+										},
+										"description": "List environments"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"environments"
+											]
+										},
+										"description": "Insert a new environment"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "environments('{environment-id}')",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"environments('{{environment-id}}')"
+											]
+										},
+										"description": "Read a environment"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"environments('{{environment-id}}')"
+											]
+										},
+										"description": "Update or Upsert a environment"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"environments('{{environment-id}}')"
+											]
+										},
+										"description": "Create an identified environment"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/environments('{{environment-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"environments('{{environment-id}}')"
+											]
+										},
+										"description": "Delete a environment"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "regions",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"regions"
+											]
+										},
+										"description": "List regions"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"regions"
+											]
+										},
+										"description": "Insert a new region"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "regions('{region-id}')",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"regions('{{region-id}}')"
+											]
+										},
+										"description": "Read a region"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"regions('{{region-id}}')"
+											]
+										},
+										"description": "Update or Upsert a region"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"regions('{{region-id}}')"
+											]
+										},
+										"description": "Create an identified region"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/regions('{{region-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"regions('{{region-id}}')"
+											]
+										},
+										"description": "Delete a region"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "subscriptions",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"subscriptions"
+											]
+										},
+										"description": "List subscriptions"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"subscriptions"
+											]
+										},
+										"description": "Insert a new subscription"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "subscriptions('{subscription-id}')",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"subscriptions('{{subscription-id}}')"
+											]
+										},
+										"description": "Read a subscription"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"subscriptions('{{subscription-id}}')"
+											]
+										},
+										"description": "Update or Upsert a subscription"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"subscriptions('{{subscription-id}}')"
+											]
+										},
+										"description": "Create an identified subscription"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/subscriptions('{{subscription-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"subscriptions('{{subscription-id}}')"
+											]
+										},
+										"description": "Delete a subscription"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "projects",
+							"item": [
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"projects"
+											]
+										},
+										"description": "List projects"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"projects"
+											]
+										},
+										"description": "Insert a new project"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "projects('{project-id}')",
+							"item": [
+								{
+									"name": "families",
+									"item": [
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"families"
+													]
+												},
+												"description": "List families"
+											},
+											"response": []
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"families"
+													]
+												},
+												"description": "Insert a new family"
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "families('{family-id}')",
+									"item": [
+										{
+											"name": "instances",
+											"item": [
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances",
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"families('{{family-id}}')",
+																"instances"
+															]
+														},
+														"description": "List instances"
+													},
+													"response": []
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances",
+													"request": {
+														"method": "POST",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"families('{{family-id}}')",
+																"instances"
+															]
+														},
+														"description": "Insert a new instance"
+													},
+													"response": []
+												}
+											],
+											"protocolProfileBehavior": {},
+											"_postman_isSubFolder": true
+										},
+										{
+											"name": "instances('{instance-id}')",
+											"item": [
+												{
+													"name": "generations",
+													"item": [
+														{
+															"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations",
+															"request": {
+																"method": "GET",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"tenants('{{tenant-id}}')",
+																		"sets('{{set-id}}')",
+																		"projects('{{project-id}}')",
+																		"families('{{family-id}}')",
+																		"instances('{{instance-id}}')",
+																		"generations"
+																	]
+																},
+																"description": "List generations"
+															},
+															"response": []
+														},
+														{
+															"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations",
+															"request": {
+																"method": "POST",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"tenants('{{tenant-id}}')",
+																		"sets('{{set-id}}')",
+																		"projects('{{project-id}}')",
+																		"families('{{family-id}}')",
+																		"instances('{{instance-id}}')",
+																		"generations"
+																	]
+																},
+																"description": "Insert a new generation"
+															},
+															"response": []
+														}
+													],
+													"protocolProfileBehavior": {},
+													"_postman_isSubFolder": true
+												},
+												{
+													"name": "generations('{generation-id}')",
+													"item": [
+														{
+															"name": "deployments",
+															"item": [
+																{
+																	"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments",
+																	"request": {
+																		"method": "GET",
+																		"header": [],
+																		"url": {
+																			"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"tenants('{{tenant-id}}')",
+																				"sets('{{set-id}}')",
+																				"projects('{{project-id}}')",
+																				"families('{{family-id}}')",
+																				"instances('{{instance-id}}')",
+																				"generations('{{generation-id}}')",
+																				"deployments"
+																			]
+																		},
+																		"description": "List deployments"
+																	},
+																	"response": []
+																},
+																{
+																	"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments",
+																	"request": {
+																		"method": "POST",
+																		"header": [],
+																		"url": {
+																			"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"tenants('{{tenant-id}}')",
+																				"sets('{{set-id}}')",
+																				"projects('{{project-id}}')",
+																				"families('{{family-id}}')",
+																				"instances('{{instance-id}}')",
+																				"generations('{{generation-id}}')",
+																				"deployments"
+																			]
+																		},
+																		"description": "Insert a new deployment"
+																	},
+																	"response": []
+																}
+															],
+															"protocolProfileBehavior": {},
+															"_postman_isSubFolder": true
+														},
+														{
+															"name": "deployments('{deployment-id}')",
+															"item": [
+																{
+																	"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+																	"request": {
+																		"method": "GET",
+																		"header": [],
+																		"url": {
+																			"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"tenants('{{tenant-id}}')",
+																				"sets('{{set-id}}')",
+																				"projects('{{project-id}}')",
+																				"families('{{family-id}}')",
+																				"instances('{{instance-id}}')",
+																				"generations('{{generation-id}}')",
+																				"deployments('{{deployment-id}}')"
+																			]
+																		},
+																		"description": "Read a deployment"
+																	},
+																	"response": []
+																},
+																{
+																	"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+																	"request": {
+																		"method": "PUT",
+																		"header": [],
+																		"url": {
+																			"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"tenants('{{tenant-id}}')",
+																				"sets('{{set-id}}')",
+																				"projects('{{project-id}}')",
+																				"families('{{family-id}}')",
+																				"instances('{{instance-id}}')",
+																				"generations('{{generation-id}}')",
+																				"deployments('{{deployment-id}}')"
+																			]
+																		},
+																		"description": "Update or Upsert a deployment"
+																	},
+																	"response": []
+																},
+																{
+																	"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+																	"request": {
+																		"method": "POST",
+																		"header": [],
+																		"url": {
+																			"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"tenants('{{tenant-id}}')",
+																				"sets('{{set-id}}')",
+																				"projects('{{project-id}}')",
+																				"families('{{family-id}}')",
+																				"instances('{{instance-id}}')",
+																				"generations('{{generation-id}}')",
+																				"deployments('{{deployment-id}}')"
+																			]
+																		},
+																		"description": "Create an identified deployment"
+																	},
+																	"response": []
+																},
+																{
+																	"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+																	"request": {
+																		"method": "DELETE",
+																		"header": [],
+																		"url": {
+																			"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')/deployments('{{deployment-id}}')",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"tenants('{{tenant-id}}')",
+																				"sets('{{set-id}}')",
+																				"projects('{{project-id}}')",
+																				"families('{{family-id}}')",
+																				"instances('{{instance-id}}')",
+																				"generations('{{generation-id}}')",
+																				"deployments('{{deployment-id}}')"
+																			]
+																		},
+																		"description": "Delete a deployment"
+																	},
+																	"response": []
+																}
+															],
+															"protocolProfileBehavior": {},
+															"_postman_isSubFolder": true
+														},
+														{
+															"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+															"request": {
+																"method": "GET",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"tenants('{{tenant-id}}')",
+																		"sets('{{set-id}}')",
+																		"projects('{{project-id}}')",
+																		"families('{{family-id}}')",
+																		"instances('{{instance-id}}')",
+																		"generations('{{generation-id}}')"
+																	]
+																},
+																"description": "Read a generation"
+															},
+															"response": []
+														},
+														{
+															"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+															"request": {
+																"method": "PUT",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"tenants('{{tenant-id}}')",
+																		"sets('{{set-id}}')",
+																		"projects('{{project-id}}')",
+																		"families('{{family-id}}')",
+																		"instances('{{instance-id}}')",
+																		"generations('{{generation-id}}')"
+																	]
+																},
+																"description": "Update or Upsert a generation"
+															},
+															"response": []
+														},
+														{
+															"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+															"request": {
+																"method": "POST",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"tenants('{{tenant-id}}')",
+																		"sets('{{set-id}}')",
+																		"projects('{{project-id}}')",
+																		"families('{{family-id}}')",
+																		"instances('{{instance-id}}')",
+																		"generations('{{generation-id}}')"
+																	]
+																},
+																"description": "Create an identified generation"
+															},
+															"response": []
+														},
+														{
+															"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+															"request": {
+																"method": "DELETE",
+																"header": [],
+																"url": {
+																	"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')/generations('{{generation-id}}')",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"tenants('{{tenant-id}}')",
+																		"sets('{{set-id}}')",
+																		"projects('{{project-id}}')",
+																		"families('{{family-id}}')",
+																		"instances('{{instance-id}}')",
+																		"generations('{{generation-id}}')"
+																	]
+																},
+																"description": "Delete a generation"
+															},
+															"response": []
+														}
+													],
+													"protocolProfileBehavior": {},
+													"_postman_isSubFolder": true
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"families('{{family-id}}')",
+																"instances('{{instance-id}}')"
+															]
+														},
+														"description": "Read a instance"
+													},
+													"response": []
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+													"request": {
+														"method": "PUT",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"families('{{family-id}}')",
+																"instances('{{instance-id}}')"
+															]
+														},
+														"description": "Update or Upsert a instance"
+													},
+													"response": []
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+													"request": {
+														"method": "POST",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"families('{{family-id}}')",
+																"instances('{{instance-id}}')"
+															]
+														},
+														"description": "Create an identified instance"
+													},
+													"response": []
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')/instances('{{instance-id}}')",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"families('{{family-id}}')",
+																"instances('{{instance-id}}')"
+															]
+														},
+														"description": "Delete a instance"
+													},
+													"response": []
+												}
+											],
+											"protocolProfileBehavior": {},
+											"_postman_isSubFolder": true
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"families('{{family-id}}')"
+													]
+												},
+												"description": "Read a family"
+											},
+											"response": []
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"families('{{family-id}}')"
+													]
+												},
+												"description": "Update or Upsert a family"
+											},
+											"response": []
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"families('{{family-id}}')"
+													]
+												},
+												"description": "Create an identified family"
+											},
+											"response": []
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/families('{{family-id}}')",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"families('{{family-id}}')"
+													]
+												},
+												"description": "Delete a family"
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "services",
+									"item": [
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"services"
+													]
+												},
+												"description": "List services"
+											},
+											"response": []
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"services"
+													]
+												},
+												"description": "Insert a new service"
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "services('{service-id}')",
+									"item": [
+										{
+											"name": "versions",
+											"item": [
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions",
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"services('{{service-id}}')",
+																"versions"
+															]
+														},
+														"description": "List versions"
+													},
+													"response": []
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions",
+													"request": {
+														"method": "POST",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"services('{{service-id}}')",
+																"versions"
+															]
+														},
+														"description": "Insert a new version"
+													},
+													"response": []
+												}
+											],
+											"protocolProfileBehavior": {},
+											"_postman_isSubFolder": true
+										},
+										{
+											"name": "versions('{version-id}')",
+											"item": [
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"services('{{service-id}}')",
+																"versions('{{version-id}}')"
+															]
+														},
+														"description": "Read a version"
+													},
+													"response": []
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+													"request": {
+														"method": "PUT",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"services('{{service-id}}')",
+																"versions('{{version-id}}')"
+															]
+														},
+														"description": "Update or Upsert a version"
+													},
+													"response": []
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+													"request": {
+														"method": "POST",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"services('{{service-id}}')",
+																"versions('{{version-id}}')"
+															]
+														},
+														"description": "Create an identified version"
+													},
+													"response": []
+												},
+												{
+													"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')/versions('{{version-id}}')",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"tenants('{{tenant-id}}')",
+																"sets('{{set-id}}')",
+																"projects('{{project-id}}')",
+																"services('{{service-id}}')",
+																"versions('{{version-id}}')"
+															]
+														},
+														"description": "Delete a version"
+													},
+													"response": []
+												}
+											],
+											"protocolProfileBehavior": {},
+											"_postman_isSubFolder": true
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"services('{{service-id}}')"
+													]
+												},
+												"description": "Read a service"
+											},
+											"response": []
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"services('{{service-id}}')"
+													]
+												},
+												"description": "Update or Upsert a service"
+											},
+											"response": []
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"services('{{service-id}}')"
+													]
+												},
+												"description": "Create an identified service"
+											},
+											"response": []
+										},
+										{
+											"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')/services('{{service-id}}')",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"tenants('{{tenant-id}}')",
+														"sets('{{set-id}}')",
+														"projects('{{project-id}}')",
+														"services('{{service-id}}')"
+													]
+												},
+												"description": "Delete a service"
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"projects('{{project-id}}')"
+											]
+										},
+										"description": "Read a project"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"projects('{{project-id}}')"
+											]
+										},
+										"description": "Update or Upsert a project"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"projects('{{project-id}}')"
+											]
+										},
+										"description": "Create an identified project"
+									},
+									"response": []
+								},
+								{
+									"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')/projects('{{project-id}}')",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tenants('{{tenant-id}}')",
+												"sets('{{set-id}}')",
+												"projects('{{project-id}}')"
+											]
+										},
+										"description": "Delete a project"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"sets('{{set-id}}')"
+									]
+								},
+								"description": "Read a set"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"sets('{{set-id}}')"
+									]
+								},
+								"description": "Update or Upsert a set"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"sets('{{set-id}}')"
+									]
+								},
+								"description": "Create an identified set"
+							},
+							"response": []
+						},
+						{
+							"name": "/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/tenants('{{tenant-id}}')/sets('{{set-id}}')",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tenants('{{tenant-id}}')",
+										"sets('{{set-id}}')"
+									]
+								},
+								"description": "Delete a set"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/tenants('{{tenant-id}}')",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants('{{tenant-id}}')",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants('{{tenant-id}}')"
+							]
+						},
+						"description": "Read a tenant"
+					},
+					"response": []
+				},
+				{
+					"name": "/tenants('{{tenant-id}}')",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5969a434-66a7-4b81-b236-edfb2e2a44d5",
+								"exec": [
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.value).to.eql(100);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a4106a4f-7684-405b-9ce8-6b5bce9ae183",
+								"exec": [
+									"pm.environment.set(\"variable_key\", \"variable_value\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants('{{tenant-id}}')",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants('{{tenant-id}}')"
+							]
+						},
+						"description": "Update or Upsert a tenant"
+					},
+					"response": []
+				},
+				{
+					"name": "/tenants('{{tenant-id}}')",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants('{{tenant-id}}')",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants('{{tenant-id}}')"
+							]
+						},
+						"description": "Create an identified tenant"
+					},
+					"response": []
+				},
+				{
+					"name": "/tenants('{{tenant-id}}')",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants('{{tenant-id}}')",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants('{{tenant-id}}')"
+							]
+						},
+						"description": "Delete a tenant"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Delete all objects in all collections"
+			},
+			"response": []
+		},
+		{
+			"name": "/Commands",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/Commands",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"Commands"
+					]
+				},
+				"description": "Delete all objects in all collections"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "https://apicobartco00nnnbfa01gps.azurewebsites.net",
+			"type": "string"
+		},
+		{
+			"id": "tenant-id",
+			"key": "tenant-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the tenant",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "user-id",
+			"key": "user-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the user",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "group-id",
+			"key": "group-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the group",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "organization-id",
+			"key": "organization-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the organization",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "set-id",
+			"key": "set-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the set",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "category-id",
+			"key": "category-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the category",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "speed-id",
+			"key": "speed-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the speed",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "step-id",
+			"key": "step-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the step",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "lane-id",
+			"key": "lane-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the lane",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "slot-id",
+			"key": "slot-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the slot",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "environment-id",
+			"key": "environment-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the environment",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "region-id",
+			"key": "region-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the region",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "subscription-id",
+			"key": "subscription-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the subscription",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "project-id",
+			"key": "project-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the project",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "family-id",
+			"key": "family-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the family",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "instance-id",
+			"key": "instance-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the instance",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "generation-id",
+			"key": "generation-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the generation",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "deployment-id",
+			"key": "deployment-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the deployment",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "service-id",
+			"key": "service-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the service",
+				"type": "text/plain"
+			}
+		},
+		{
+			"id": "version-id",
+			"key": "version-id",
+			"value": "",
+			"type": "any",
+			"description": {
+				"content": "The id (usually a GUID) of the version",
+				"type": "text/plain"
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

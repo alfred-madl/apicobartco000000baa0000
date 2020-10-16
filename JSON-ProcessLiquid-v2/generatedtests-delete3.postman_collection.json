@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "fa1cf075-3c0b-436b-a024-e1d88ea9d3f0",
+		"name": "Tests for APICo Base Root Core 0.1.0 apicobartma-azr-evt-src-fpr-cdb-egd-v1.0.0 C2020xxxxx C2020xxxxx Dev-Plg-Maj-Int Green Primary SouthEastAsia ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+   	"item": [
+		{
+			"name": "core_v0_Commands_delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-apico-test-flag",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apicobartco00nnnbfa01gps.azurewebsites.net/core/v0/Commands",
+					"protocol": "https",
+					"host": [
+						"apicobartco00nnnbfa01gps.azurewebsites.net/core/v0"
+					],
+					"path": [
+						"/Commands"
+					]
+				}
+			}
+		}
+    ]
+}

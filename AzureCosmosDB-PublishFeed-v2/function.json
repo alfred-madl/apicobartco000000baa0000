@@ -1,0 +1,17 @@
+{
+  "bindings": [
+    {
+      "type": "cosmosDBTrigger",
+      "name": "documents",
+      "direction": "in",
+      "connectionStringSetting": "CDBPF_ConnectionString",
+      "databaseName": "apicobartco00nnnbcd01gps",
+      "collectionName": "apicobartco00nnnbcc01gps",
+      "leaseCollectionName": "apicobartco00nnnbcl01gps",
+      "createLeaseCollectionIfNotExists": true,
+      "leaseCollectionPrefix": "apicobartco00nnnicl01gps",
+      "feedPollDelay": 1000
+    }
+  ],
+  "disabled": false
+}

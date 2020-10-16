@@ -1,0 +1,10 @@
+String: {{param1}}
+Int: {{param2}}
+Boolean: {{param3}}
+Double: {{param4}}
+StringArray: {% for item in param5 -%} -{{item}}- {% endfor -%}  
+IntArray: {% for item in param6 -%} -{{item}}- {% endfor -%}  
+BooleanArray: {% for item in param7 -%} -{{item}}- {% endfor -%}  
+DoubleArray: {% for item in param8 -%} -{{item}}- {% endfor -%}  
+JSON_String: {{user.name}}
+JSON_Array: {% for item in user.tasks -%} -{{item.name}}- {% endfor -%}  

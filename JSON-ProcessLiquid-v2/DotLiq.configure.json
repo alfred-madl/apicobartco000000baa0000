@@ -1,0 +1,26 @@
+{
+  "data": {
+    "user": {
+      "name": "Kunakorn",
+      "tasks": [
+        { "name": "Anat" },
+        { "name": "Phonthip" }
+      ]
+    },
+    "param1": "Kunakorn",
+    "param2": 10,
+    "param3": true,
+    "param4": 20.22,
+    "param5": [ "Anat", 1, true, 20.22 ],
+    "param6": [ 1, 2, 3 ],
+    "param7": [ true, false ],
+    "param8": [ 1.11, 2.22, 3.33 ]
+  },
+  "data_SettingName": "DotLiq_DEFAULT_data",
+  "liquidTemplate": "default.json",
+  "liquidTemplate_SettingName": "DotLiq_DEFAULT_liquidTemplate",
+  "outputType": "json",
+  "outputType_SettingName": "DotLiq_DEFAULT_outputType",
+  "lang": "",
+  "lang_SettingName": "DotLiq_DEFAULT_lang"
+}
