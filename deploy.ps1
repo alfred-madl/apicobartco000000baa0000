@@ -13,6 +13,13 @@
 #Set-AzContext $context
 
 Write-Host "================="
+Write-Host "Stop Function"
+Write-Host "================="
+
+Stop-AzFunctionApp -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -Force -ErrorAction SilentlyContinue
+
+
+Write-Host "================="
 Write-Host "Delete RG Backend"
 Write-Host "================="
 
@@ -25,18 +32,36 @@ Write-Host "================="
 Remove-AzResourceGroup -Name apicobartco000000dg01000 -Force -ErrorAction SilentlyContinue
 
 Write-Host "================="
+Write-Host "Delete RG Commands"
+Write-Host "================="
+
+Remove-AzResourceGroup -Name apicobartco000c00cg01gps -Force -ErrorAction SilentlyContinue
+
+Write-Host "================="
 Write-Host "Set GitHub Token"
 Write-Host "================="
 
 $token = Get-Content -Path gittoken.txt | Out-String
 
-Set-AzResource -PropertyObject @{ token = "$token"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force
+Set-AzResource -PropertyObject @{ token = "$token"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force | Out-Null
 
 Write-Host "================="
 Write-Host "Create RG Backend"
 Write-Host "================="
 
 New-AzResourceGroup -Name apicobartco000000bga1gps -Location 'Southeast Asia'
+
+Write-Host "================="
+Write-Host "Create RG Data"
+Write-Host "================="
+
+New-AzResourceGroup -Name apicobartco000000dg01000 -Location 'Southeast Asia'
+
+Write-Host "================="
+Write-Host "Create RG Commands"
+Write-Host "================="
+
+New-AzResourceGroup -Name apicobartco000c00cg01gps -Location 'Southeast Asia'
 
 Write-Host "================="
 Write-Host "Create Plan"
@@ -51,16 +76,16 @@ Write-Host "================="
 New-AzResourceGroupDeployment -ResourceGroupName apicobartco000000bga1gps -TemplateFile ./storageaccount.template.json
 
 Write-Host "================="
-Write-Host "Create RG Data"
-Write-Host "================="
-
-New-AzResourceGroup -Name apicobartco000000dg01000 -Location 'Southeast Asia'
-
-Write-Host "================="
 Write-Host "Create CDB"
 Write-Host "================="
 
 New-AzResourceGroupDeployment -ResourceGroupName apicobartco000000dg01000 -TemplateFile ./cosmosdb.template.json
+
+Write-Host "================="
+Write-Host "Create EGD"
+Write-Host "================="
+
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile ./eventgriddomain.template.json
 
 Write-Host "================="
 Write-Host "Create Function"
