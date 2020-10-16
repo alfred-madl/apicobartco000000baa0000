@@ -1,18 +1,11 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "databaseAccounts_apicobartco000000dc01000_name": {
-            "defaultValue": "apicobartco000000dc01000",
-            "type": "String"
-        }
-    },
-    "variables": {},
     "resources": [
         {
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "apiVersion": "2020-06-01-preview",
-            "name": "[parameters('databaseAccounts_apicobartco000000dc01000_name')]",
+            "name": "apicobartco000000dc01000",
             "location": "Southeast Asia",
             "tags": {
                 "defaultExperience": "Core (SQL)",
@@ -62,9 +55,9 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
             "apiVersion": "2020-06-01-preview",
-            "name": "[concat(parameters('databaseAccounts_apicobartco000000dc01000_name'), '/apicobartco000000dd01000')]",
+            "name": "apicobartco000000dc01000/apicobartco000000dd01000",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_apicobartco000000dc01000_name'))]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', 'apicobartco000000dc01000')]"
             ],
             "properties": {
                 "resource": {
@@ -78,10 +71,10 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2020-06-01-preview",
-            "name": "[concat(parameters('databaseAccounts_apicobartco000000dc01000_name'), '/apicobartco000000dd01000/apicobartco000000roo1gps')]",
+            "name": "apicobartco000000dc01000/apicobartco000000dd01000/apicobartco000000roo1gps",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('databaseAccounts_apicobartco000000dc01000_name'), 'apicobartco000000dd01000')]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_apicobartco000000dc01000_name'))]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', 'apicobartco000000dc01000', 'apicobartco000000dd01000')]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', 'apicobartco000000dc01000')]"
             ],
             "properties": {
                 "resource": {
@@ -127,10 +120,10 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2020-06-01-preview",
-            "name": "[concat(parameters('databaseAccounts_apicobartco000000dc01000_name'), '/apicobartco000000dd01000/apicobartco000c00coc1000')]",
+            "name": "apicobartco000000dc01000/apicobartco000000dd01000/apicobartco000c00coc1000",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('databaseAccounts_apicobartco000000dc01000_name'), 'apicobartco000000dd01000')]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_apicobartco000000dc01000_name'))]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', 'apicobartco000000dc01000', 'apicobartco000000dd01000')]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', 'apicobartco000000dc01000')]"
             ],
             "properties": {
                 "resource": {
@@ -180,10 +173,10 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2020-06-01-preview",
-            "name": "[concat(parameters('databaseAccounts_apicobartco000000dc01000_name'), '/apicobartco000000dd01000/apicobartco000cpbcol1gps')]",
+            "name": "apicobartco000000dc01000/apicobartco000000dd01000/apicobartco000cpbcol1gps",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('databaseAccounts_apicobartco000000dc01000_name'), 'apicobartco000000dd01000')]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_apicobartco000000dc01000_name'))]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', 'apicobartco000000dc01000', 'apicobartco000000dd01000')]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', 'apicobartco000000dc01000')]"
             ],
             "properties": {
                 "resource": {

@@ -1,39 +1,28 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "sites_apicobartco000000baa1gps_name": {
-            "defaultValue": "apicobartco000000baa1gps",
-            "type": "String"
-        },
-        "serverfarms_apicobartco000000bpa1gps_externalid": {
-            "defaultValue": "/subscriptions/aec9ffa0-e92d-492d-87b7-a26053b2e22c/resourceGroups/apicobartco000000bga1gps/providers/Microsoft.Web/serverfarms/apicobartco000000bpa1gps",
-            "type": "String"
-        }
-    },
-    "variables": {},
     "resources": [
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2018-11-01",
-            "name": "[parameters('sites_apicobartco000000baa1gps_name')]",
+            "name": "['apicobartco000000baa1gps']",
             "location": "Southeast Asia",
             "kind": "functionapp",
             "properties": {
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_apicobartco000000baa1gps_name'), '.azurewebsites.net')]",
+                        "name": "apicobartco000000baa1gps.azurewebsites.net",
                         "sslState": "Disabled",
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_apicobartco000000baa1gps_name'), '.scm.azurewebsites.net')]",
+                        "name": "apicobartco000000baa1gps.scm.azurewebsites.net",
                         "sslState": "Disabled",
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "[parameters('serverfarms_apicobartco000000bpa1gps_externalid')]",
+                "serverFarmId": "/subscriptions/aec9ffa0-e92d-492d-87b7-a26053b2e22c/resourceGroups/apicobartco000000bga1gps/providers/Microsoft.Web/serverfarms/apicobartco000000bpa1gps",
                 "reserved": false,
                 "isXenon": false,
                 "hyperV": false,
@@ -67,10 +56,10 @@
         {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_apicobartco000000baa1gps_name'), '/web')]",
+            "name": "apicobartco000000baa1gps/web",
             "location": "Southeast Asia",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_apicobartco000000baa1gps_name'))]"
+                "[resourceId('Microsoft.Web/sites', 'apicobartco000000baa1gps')]"
             ],
             "properties": {
                 "numberOfWorkers": 1,
@@ -146,10 +135,10 @@
         {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_apicobartco000000baa1gps_name'), '/', parameters('sites_apicobartco000000baa1gps_name'), '.azurewebsites.net')]",
+            "name": "apicobartco000000baa1gps/', 'apicobartco000000baa1gps.azurewebsites.net",
             "location": "Southeast Asia",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_apicobartco000000baa1gps_name'))]"
+                "[resourceId('Microsoft.Web/sites', 'apicobartco000000baa1gps')]"
             ],
             "properties": {
                 "siteName": "apicobartco000000baa1gps",
