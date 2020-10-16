@@ -24,11 +24,13 @@ Write-Host "================="
 
 Remove-AzResourceGroup -Name apicobartco000000dg01000 -Force
 
-#Write-Host "================="
-#Write-Host "Set GitHub Token"
-#Write-Host "================="
+Write-Host "================="
+Write-Host "Set GitHub Token"
+Write-Host "================="
 
-#Set-AzResource -PropertyObject @{ token = "xxxxx"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force
+$token = Get-Content "gittoken.txt"
+
+Set-AzResource -PropertyObject @{ token = $token; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force
 
 Write-Host "================="
 Write-Host "Create RG Backend"

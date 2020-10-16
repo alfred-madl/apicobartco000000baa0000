@@ -1,18 +1,11 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-        "storageAccounts_apicobartco000000bsa1gps_name": {
-            "defaultValue": "apicobartco000000bsa1gps",
-            "type": "String"
-        }
-    },
-    "variables": {},
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-06-01",
-            "name": "[parameters('storageAccounts_apicobartco000000bsa1gps_name')]",
+            "name": "apicobartco000000bsa1gps",
             "location": "southeastasia",
             "sku": {
                 "name": "Standard_LRS",
@@ -45,9 +38,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "2019-06-01",
-            "name": "[concat(parameters('storageAccounts_apicobartco000000bsa1gps_name'), '/default')]",
+            "name": "apicobartco000000bsa1gps/default",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apicobartco000000bsa1gps_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', 'apicobartco000000bsa1gps')]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -65,9 +58,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/fileServices",
             "apiVersion": "2019-06-01",
-            "name": "[concat(parameters('storageAccounts_apicobartco000000bsa1gps_name'), '/default')]",
+            "name": "apicobartco000000bsa1gps/default",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apicobartco000000bsa1gps_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', 'apicobartco000000bsa1gps')]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -82,9 +75,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/queueServices",
             "apiVersion": "2019-06-01",
-            "name": "[concat(parameters('storageAccounts_apicobartco000000bsa1gps_name'), '/default')]",
+            "name": "apicobartco000000bsa1gps/default",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apicobartco000000bsa1gps_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', 'apicobartco000000bsa1gps')]"
             ],
             "properties": {
                 "cors": {
@@ -95,9 +88,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/tableServices",
             "apiVersion": "2019-06-01",
-            "name": "[concat(parameters('storageAccounts_apicobartco000000bsa1gps_name'), '/default')]",
+            "name": "apicobartco000000bsa1gps/default",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apicobartco000000bsa1gps_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', 'apicobartco000000bsa1gps')]"
             ],
             "properties": {
                 "cors": {
@@ -108,10 +101,10 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
             "apiVersion": "2019-06-01",
-            "name": "[concat(parameters('storageAccounts_apicobartco000000bsa1gps_name'), '/default/azure-webjobs-hosts')]",
+            "name": "apicobartco000000bsa1gps/default/azure-webjobs-hosts",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_apicobartco000000bsa1gps_name'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apicobartco000000bsa1gps_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', 'apicobartco000000bsa1gps', 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', 'apicobartco000000bsa1gps')]"
             ],
             "properties": {
                 "defaultEncryptionScope": "$account-encryption-key",
@@ -122,10 +115,10 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
             "apiVersion": "2019-06-01",
-            "name": "[concat(parameters('storageAccounts_apicobartco000000bsa1gps_name'), '/default/azure-webjobs-secrets')]",
+            "name": "apicobartco000000bsa1gps/default/azure-webjobs-secrets",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_apicobartco000000bsa1gps_name'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apicobartco000000bsa1gps_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', 'apicobartco000000bsa1gps', 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', 'apicobartco000000bsa1gps')]"
             ],
             "properties": {
                 "defaultEncryptionScope": "$account-encryption-key",
