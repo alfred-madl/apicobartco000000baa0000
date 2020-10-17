@@ -88,7 +88,7 @@
         {%- for path in pths %}{% for method in path[1] %}
         {%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" %}
         {%- comment %} ================================= Proxy name ============================================= {% endcomment %}
-        "{{ xapicoinfo.svc.nam | downcase }}_{{ xapicoinfo.ver.pth -}}
+        "{{ xapicoinfo.svc.nam | downcase }}_{{ xapicoinfo.ver.maj.pth -}}
             {{- path[0] | replace: "(", "_" | remove: a | remove: ")" | remove: b | remove: d | remove: "-" | replace: c, "_" | downcase -}}
             {% if path[0] == "/" %}root{% endif %}_{{ method[0] }}": {
             {%- comment %} ================================= Proxy description ============================================= {% endcomment %}
@@ -96,7 +96,7 @@
                 "{{ method[1].description }}"
             ],
             "matchCondition": {
-                "route": "/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.pth }}{{ path[0] }}",
+                "route": "/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.maj.pth }}{{ path[0] }}",
                 "methods": [
                     "{{ method[0] | upcase }}"
                 ]
@@ -166,20 +166,20 @@
                 "backend.request.headers.x-apico-app-reg-aad-ten-id": "%apico-app-reg-aad-ten-id%",
                 {%- endcomment %}
                 "backend.request.headers.x-apico-app-home": "https://{{ xapicoinfo.prj.sdm }}.{{ xapicoinfo.set.dom }}",
-                "backend.request.headers.x-apico-prx-match-route": "/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.pth }}{{ path[0] }}",
+                "backend.request.headers.x-apico-prx-match-route": "/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.maj.pth }}{{ path[0] }}",
                 "backend.request.headers.x-apico-prx-match-methods": "{{ method[0] }}",
                 "backend.request.headers.x-apico-event-subject": "https://
                     {{- xapicoinfo.prj.sdm }}.
                     {{- xapicoinfo.set.dom }}/
                     {{- xapicoinfo.svc.nam | downcase }}/
-                    {{- xapicoinfo.ver.pth }}
+                    {{- xapicoinfo.ver.maj.pth }}
                     {{- path[0] }}",
                 "backend.request.headers.x-apico-event-type": "
                     {{- xapicoinfo.ten.nam | downcase }}.
                     {{- xapicoinfo.set.nam | downcase }}.
                     {{- xapicoinfo.prj.nam | downcase }}.
                     {{- xapicoinfo.svc.nam | downcase }}.
-                    {{- xapicoinfo.ver.pth }}
+                    {{- xapicoinfo.ver.maj.pth }}
                     {{- path[1].x-apico-parent-entity-path }}.
                     {{- path[1].x-apico-collection-name | downcase }}.
                     {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}
@@ -250,7 +250,7 @@
                 "backend.request.headers.x-apico-version-name": "{{ xapicoinfo.ver.nam }}",
                 "backend.request.headers.x-apico-version-key": "{{ xapicoinfo.ver.nam | downcase }}",
                 "backend.request.headers.x-apico-version-number": "{{ xapicoinfo.ver.num }}",
-                "backend.request.headers.x-apico-version-path": "{{ xapicoinfo.ver.pth }}",
+                "backend.request.headers.x-apico-version-path": "{{ xapicoinfo.ver.maj.pth }}",
                 "backend.request.headers.x-apico-generation-id": "{{ xapicoinfo.gen.id }}",
                 "backend.request.headers.x-apico-generation-wt": "{{ xapicoinfo.gen.cti }}",
                 "backend.request.headers.x-apico-generation-template": "{{ xapicoinfo.gen.tpl }}",
@@ -268,7 +268,7 @@
                     {{- xapicoinfo.prj.sdm }}.
                     {{- xapicoinfo.set.dom }}/
                     {{- xapicoinfo.svc.nam | downcase }}/
-                    {{- xapicoinfo.ver.pth }}
+                    {{- xapicoinfo.ver.maj.pth }}
                     {{- path[1].x-apico-collection-absolute-path }}",
                 "backend.request.headers.x-apico-parent-collection-code": "{{ path[1].x-apico-parent-collection-code }}",
                 "backend.request.headers.x-apico-parent-collection-name": "{{ path[1].x-apico-parent-collection-name }}",
