@@ -135,7 +135,7 @@
         {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2018-11-01",
-            "name": "apicobartco000000baa1gps/', 'apicobartco000000baa1gps.azurewebsites.net",
+            "name": "apicobartco000000baa1gps/apicobartco000000baa1gps.azurewebsites.net",
             "location": "Southeast Asia",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', 'apicobartco000000baa1gps')]"

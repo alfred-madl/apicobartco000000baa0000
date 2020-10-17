@@ -328,7 +328,7 @@
             "x-apico-entity-code": "0",
             "x-apico-entity-name": "Root",
             "delete": {
-                "description": "Delete all objects in all collections",
+                "description": "Delete all commands",
                 "tags": ["root"],
                 "responses": {
                     "202": {
