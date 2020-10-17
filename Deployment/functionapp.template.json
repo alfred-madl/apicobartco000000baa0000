@@ -5,7 +5,7 @@
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2018-11-01",
-            "name": "['apicobartco000000baa1gps']",
+            "name": "apicobartco000000baa1gps",
             "location": "Southeast Asia",
             "kind": "functionapp",
             "properties": {
