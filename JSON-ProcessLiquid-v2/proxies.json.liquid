@@ -157,6 +157,8 @@
                 {%- endif -%}
                     -functions-key%",
                 {% endcomment %}
+                "backend.request.headers.x-apico-prx-request-method": "{request.method}",
+                "backend.request.method": "POST",
                 "backend.request.headers.Authorization": "",
                 "backend.request.headers.x-apico-prx-request-headers-Authorization": "{request.headers.Authorization}",
                 {%- comment %}
@@ -166,7 +168,6 @@
                 "backend.request.headers.x-apico-app-home": "https://{{ xapicoinfo.prj.sdm }}.{{ xapicoinfo.set.dom }}",
                 "backend.request.headers.x-apico-prx-match-route": "/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.pth }}{{ path[0] }}",
                 "backend.request.headers.x-apico-prx-match-methods": "{{ method[0] }}",
-                "backend.request.headers.x-apico-prx-request-method": "{request.method}",
                 "backend.request.headers.x-apico-event-subject": "https://
                     {{- xapicoinfo.prj.sdm }}.
                     {{- xapicoinfo.set.dom }}/
