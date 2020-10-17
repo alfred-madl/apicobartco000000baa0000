@@ -12,6 +12,7 @@
 {
     "$schema": "http://json.schemastore.org/proxies",
     "proxies": {
+        {%- comment %}
         "directory_signup": {
             "desc": [
                 "Browser URL to the entry point to signup a new B2C user"
@@ -78,6 +79,7 @@
                 "response.body": "Redirecting..."
             }
         },
+        {%- endcomment %}
         {%- comment %} ================================= Special chars ============================================= {% endcomment -%}
         {%- assign a = "{" -%}
         {%- assign b = "}" -%} 
