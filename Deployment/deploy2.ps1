@@ -8,6 +8,8 @@ Write-Host "================="
 Write-Host "Logic Apps"
 Write-Host "================="
 
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile ../Logic/apicobartco000ccrcle1gps.template.json
+
 New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile ../Logic/apicobartco000ccrclh1gps.template.json
 $commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName "apicobartco000c00cg01gps" -Name "apicobartco000ccrclh1gps" -TriggerName "manual").Value.TrimStart("https:").TrimStart("/")
 
