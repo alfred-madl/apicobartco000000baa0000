@@ -5,6 +5,8 @@
 #    Install-Module -Name Az -AllowClobber -Scope AllUsers
 #}
 
+#Install-Module -Name Az.CosmosDB
+
 #Connect-AzAccount
 
 #Get-AzSubscription
