@@ -5,11 +5,11 @@
       "name": "documents",
       "direction": "in",
       "connectionStringSetting": "CDBPF_ConnectionString",
-      "databaseName": "apicobartco00nnnbcd01gps",
-      "collectionName": "apicobartco00nnnbcc01gps",
-      "leaseCollectionName": "apicobartco00nnnbcl01gps",
+      "databaseName": "%CDBPF_DatabaseName%",
+      "collectionName":  "%CDBPF_CollectionName%",
+      "leaseCollectionName":  "%CDBPF_LeaseCollectionName%",
       "createLeaseCollectionIfNotExists": true,
-      "leaseCollectionPrefix": "apicobartco00nnnicl01gps",
+      "leaseCollectionPrefix":  "%CDBPF_LeaseCollectionPrefix%",
       "feedPollDelay": 1000
     }
   ],

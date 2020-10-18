@@ -5,6 +5,8 @@
 #    Install-Module -Name Az -AllowClobber -Scope AllUsers
 #}
 
+#Install-Module -Name Az.CosmosDB
+
 #Connect-AzAccount
 
 #Get-AzSubscription
@@ -92,6 +94,12 @@ Write-Host "Create Function"
 Write-Host "================="
 
 New-AzResourceGroupDeployment -ResourceGroupName apicobartco000000bga1gps -TemplateFile ./functionapp.template.json
+
+Write-Host "====================="
+Write-Host "Create CDB Connection"
+Write-Host "====================="
+
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile ../Logic//apicobartco000ccrcte1gps.template.json
 
 #Write-Host "================="
 #Write-Host "Stop Function"

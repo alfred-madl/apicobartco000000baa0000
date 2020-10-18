@@ -11,29 +11,49 @@
                 "state": "Enabled",
                 "definition": {
                     "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "actions": {
+                        "Response": {
+                            "inputs": {
+                                "body": "@body('apicobartco000ccrcle1gps')",
+                                "headers": "@outputs('apicobartco000ccrcle1gps')?['headers']",
+                                "statusCode": "@outputs('apicobartco000ccrcle1gps')?['statusCode']"
+                            },
+                            "kind": "Http",
+                            "operationOptions": "Asynchronous",
+                            "runAfter": {
+                                "apicobartco000ccrcle1gps": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Response"
+                        },
+                        "apicobartco000ccrcle1gps": {
+                            "inputs": {
+                                "body": "@triggerBody()",
+                                "headers": "@triggerOutputs()?['headers']",
+                                "host": {
+                                    "triggerName": "manual",
+                                    "workflow": {
+                                        "id": "/subscriptions/aec9ffa0-e92d-492d-87b7-a26053b2e22c/resourceGroups/apicobartco000c00cg01gps/providers/Microsoft.Logic/workflows/apicobartco000ccrcle1gps"
+                                    }
+                                }
+                            },
+                            "runAfter": {},
+                            "type": "Workflow"
+                        }
+                    },
                     "contentVersion": "1.0.0.0",
+                    "outputs": {},
                     "parameters": {},
                     "triggers": {
                         "manual": {
-                            "type": "Request",
-                            "kind": "Http",
                             "inputs": {
                                 "schema": {}
-                            }
-                        }
-                    },
-                    "actions": {
-                        "Response": {
-                            "runAfter": {},
-                            "type": "Response",
-                            "kind": "Http",
-                            "inputs": {
-                                "statusCode": 200
                             },
-                            "operationOptions": "Asynchronous"
+                            "kind": "Http",
+                            "type": "Request"
                         }
-                    },
-                    "outputs": {}
+                    }
                 },
                 "parameters": {}
             }
