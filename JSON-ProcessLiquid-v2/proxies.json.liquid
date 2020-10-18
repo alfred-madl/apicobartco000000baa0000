@@ -219,15 +219,15 @@
                 "backend.request.headers.x-apico-event-topic": "
                     {{- xapicoinfo.ten.cod }}{{ xapicoinfo.set.cod }}{{ xapicoinfo.prj.cod }}
                     {{- xapicoinfo.svc.cod }}{{ xapicoinfo.ver.cod }}
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}00lil
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}0cpbc
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}00rer
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}0cpbc
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}0cpbc
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}0cpbc
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}0cpbc
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}0cpbc
-                    {%- endif %}b0{{ xapicoinfo.ins.lan.cod }}{{ xapicoinfo.ins.slt.cod -}}
+                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}00lilb0
+                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}0cpbcb0
+                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}00rerb0
+                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}0cpbcb0
+                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}0cpbcb0
+                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}0cpbcb0
+                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}0cpbcb0
+                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}0cclcb0
+                    {%- endif %}{{ xapicoinfo.ins.lan.cod }}{{ xapicoinfo.ins.slt.cod -}}
                     {{ xapicoinfo.ins.env.cod }}{{ xapicoinfo.ins.reg.cod }}",
                 "backend.request.headers.x-apico-event-data-version": "1",
                 "backend.request.headers.x-apico-tenant-code": "{{ xapicoinfo.ten.cod }}",

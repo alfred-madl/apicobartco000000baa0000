@@ -41,6 +41,11 @@ Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName ap
 Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_LeaseCollectionName" = "apicobartco000cpbcol1gps"} -Force | Out-Null
 Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_LeaseCollectionPrefix" = "apicobartco000cpbcp01gps"} -Force | Out-Null
 
+$egdkey = (Get-AzEventGridDomainKey -ResourceGroupName apicobartco000c00cg01gps -Name apicobartco000cpbce01gps).Key1
+$egdendpoint = (Get-AzEventGridDomain -ResourceGroupName apicobartco000c00cg01gps -Name apicobartco000cpbce01gps).Endpoint
+Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_Event_TopicEndpoint" = "$egdendpoint"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_Event_TopicKey" = "$egdkey"} -Force | Out-Null
+
 Write-Host "================="
 Write-Host "Start Function"
 Write-Host "================="

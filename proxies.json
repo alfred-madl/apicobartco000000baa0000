@@ -118,7 +118,7 @@
                 "backend.request.headers.x-apico-prx-match-methods": "delete",
                 "backend.request.headers.x-apico-event-subject": "https://api.apico.io/core/v0/Commands",
                 "backend.request.headers.x-apico-event-type": "apico.base.root.core.v0.commands.command.clear",
-                "backend.request.headers.x-apico-event-topic": "apicobartco000cpbcb01gps",
+                "backend.request.headers.x-apico-event-topic": "apicobartco000cclcb01gps",
                 "backend.request.headers.x-apico-event-data-version": "1",
                 "backend.request.headers.x-apico-tenant-code": "apico",
                 "backend.request.headers.x-apico-tenant-name": "APICo",
