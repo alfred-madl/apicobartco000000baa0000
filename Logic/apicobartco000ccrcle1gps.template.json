@@ -18,7 +18,7 @@
                 ],
                 "parameterValues": {
                     "databaseAccount": "apicobartco000000dc01000",
-                     "accessKey": "[listKeys('/subscriptions/aec9ffa0-e92d-492d-87b7-a26053b2e22c/resourceGroups/apicobartco000000dg01000/providers/Microsoft.DocumentDB/databaseAccounts/apicobartco000000dc01000', '2015-04-08').primaryMasterKey]"
+                    "accessKey": "[listKeys('/subscriptions/aec9ffa0-e92d-492d-87b7-a26053b2e22c/resourceGroups/apicobartco000000dg01000/providers/Microsoft.DocumentDB/databaseAccounts/apicobartco000000dc01000', '2015-04-08').primaryMasterKey]"
                 },
                 "api": {
                     "id": "/subscriptions/aec9ffa0-e92d-492d-87b7-a26053b2e22c/providers/Microsoft.Web/locations/southeastasia/managedApis/documentdb"
@@ -126,6 +126,9 @@
                             "runAfter": {
                                 "Create_or_update_document": [
                                     "Failed"
+                                ],
+                                "Response": [
+                                    "Skipped"
                                 ]
                             },
                             "type": "ApiConnection"
