@@ -103,7 +103,7 @@
             },
             {%- comment %} ================================= Proxy backend url ============================================= {% endcomment %}
             "backendUri": "https://%x-apico-operation-url-
-                {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}se
+                {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}li
                 {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}in
                 {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}rm
                 {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}cl
@@ -216,21 +216,19 @@
                     {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}
                         delete
                     {%- endif %}",
-                {%- comment %}
                 "backend.request.headers.x-apico-event-topic": "
                     {{- xapicoinfo.ten.cod }}{{ xapicoinfo.set.cod }}{{ xapicoinfo.prj.cod }}
-                    {{- xapicoinfo.svc.cod }}{{ xapicoinfo.ver.cod }}n
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}qu
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}co
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}qu
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}co
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}co
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}co
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}co
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}co
-                    {%- endif %}iet0{{ xapicoinfo.ins.lan.cod }}{{ xapicoinfo.ins.slt.cod -}}
+                    {{- xapicoinfo.svc.cod }}{{ xapicoinfo.ver.cod }}
+                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}00lil
+                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}0cpbc
+                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}00rer
+                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}0cpbc
+                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}0cpbc
+                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}0cpbc
+                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}0cpbc
+                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}0cpbc
+                    {%- endif %}b0{{ xapicoinfo.ins.lan.cod }}{{ xapicoinfo.ins.slt.cod -}}
                     {{ xapicoinfo.ins.env.cod }}{{ xapicoinfo.ins.reg.cod }}",
-                {%- endcomment %}
                 "backend.request.headers.x-apico-event-data-version": "1",
                 "backend.request.headers.x-apico-tenant-code": "{{ xapicoinfo.ten.cod }}",
                 "backend.request.headers.x-apico-tenant-name": "{{ xapicoinfo.ten.nam }}",
@@ -287,7 +285,7 @@
                 "backend.request.headers.x-apico-root-object-id": "00000000-0000-0000-0000-000000000000",
                 "backend.request.headers.x-apico-root-partition-key": "/",
                 "backend.request.headers.x-apico-operation-code": "
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}se
+                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}li
                     {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}in
                     {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}rm
                     {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}cl
