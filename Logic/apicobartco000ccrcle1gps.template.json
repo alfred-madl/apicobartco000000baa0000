@@ -38,13 +38,34 @@
                         "Create_or_update_document": {
                             "inputs": {
                                 "body": {
-                                    "_pk": "xxx",
-                                    "id": "yyy"
+                                    "_ci": "@{coalesce(triggerOutputs()?['headers']?['X-Correlation-ID'],triggerOutputs()?['headers']?['x-ms-client-tracking-id'],variables('guid'))}",
+                                    "_cx": "@workflow()",
+                                    "_dv": "1.0",
+                                    "_ei": "@{triggerOutputs()['headers']?['x-apico-entity-id']}",
+                                    "_gi": "@{coalesce(triggerOutputs()?['headers']?['X-Event-Group-ID'],variables('guid'))}",
+                                    "_oi": "@{variables('guid')}",
+                                    "_ot": "*",
+                                    "_pf": "yyyyMMddHHZ",
+                                    "_pk": "@{concat('C',variables('partitionkey'))}",
+                                    "_pp": "C",
+                                    "_ri": "@{coalesce(triggerOutputs()?['headers']?['X-Request-ID'],triggerOutputs()?['headers']?['x-ms-client-request-id'],variables('guid'))}",
+                                    "_rq": {
+                                        "_bj": "@{triggerBody()}",
+                                        "_hd": "@triggerOutputs()['headers']",
+                                        "_ho": "@{triggerOutputs()['headers']?['x-apico-prx-request-headers-Host']}",
+                                        "_ip": "@{triggerOutputs()['headers']?['x-apico-prx-request-headers-CLIENT-IP']}",
+                                        "_mt": "@{triggerOutputs()['headers']?['x-apico-prx-request-method']}",
+                                        "_pt": "@{triggerOutputs()['headers']?['x-apico-prx-match-route']}"
+                                    },
+                                    "_vi": "@{coalesce(triggerOutputs()?['headers']?['X-Event-ID'],variables('guid'))}",
+                                    "_wp": "C",
+                                    "_wt": "@{concat('C',variables('now'))}",
+                                    "id": "@{variables('guid')}"
                                 },
                                 "headers": {
-                                    "x-ms-activity-id": "yyy",
+                                    "x-ms-activity-id": "@{coalesce(triggerOutputs()?['headers']?['X-Request-ID'],triggerOutputs()?['headers']?['x-ms-client-request-id'],variables('guid'))}",
                                     "x-ms-documentdb-is-upsert": false,
-                                    "x-ms-documentdb-raw-partitionkey": "\"xxx\""
+                                    "x-ms-documentdb-raw-partitionkey": "\"@{concat('C',variables('partitionkey'))}\""
                                 },
                                 "host": {
                                     "connection": {
@@ -54,22 +75,136 @@
                                 "method": "post",
                                 "path": "/dbs/@{encodeURIComponent('apicobartco000000dd01000')}/colls/@{encodeURIComponent('apicobartco000c00coc1000')}/docs"
                             },
-                            "runAfter": {},
+                            "runAfter": {
+                                "set_variable_guid": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection"
+                        },
+                        "Create_or_update_document_2": {
+                            "inputs": {
+                                "body": {
+                                    "_ci": "@{coalesce(triggerOutputs()?['headers']?['X-Correlation-ID'],triggerOutputs()?['headers']?['x-ms-client-tracking-id'],variables('guid'))}",
+                                    "_cx": "@workflow()",
+                                    "_di": "@{coalesce(triggerOutputs()?['headers']?['X-Request-ID'],triggerOutputs()?['headers']?['x-ms-client-request-id'],variables('guid'))}",
+                                    "_dv": "1.0",
+                                    "_ei": "@{triggerOutputs()['headers']?['x-apico-entity-id']}",
+                                    "_gi": "@{coalesce(triggerOutputs()?['headers']?['X-Event-Group-ID'],variables('guid'))}",
+                                    "_oi": "@{variables('guid')}",
+                                    "_ot": "*",
+                                    "_pf": "yyyyMMddHHZ",
+                                    "_pk": "@{concat('C',variables('partitionkey'))}",
+                                    "_pp": "C",
+                                    "_ri": "@{variables('guid')}",
+                                    "_rq": {
+                                        "_bj": "@{triggerBody()}",
+                                        "_hd": "@triggerOutputs()['headers']",
+                                        "_ho": "@{triggerOutputs()['headers']?['x-apico-prx-request-headers-Host']}",
+                                        "_ip": "@{triggerOutputs()['headers']?['x-apico-prx-request-headers-CLIENT-IP']}",
+                                        "_mt": "@{triggerOutputs()['headers']?['x-apico-prx-request-method']}",
+                                        "_pt": "@{triggerOutputs()['headers']?['x-apico-prx-match-route']}"
+                                    },
+                                    "_vi": "@{coalesce(triggerOutputs()?['headers']?['X-Event-ID'],variables('guid'))}",
+                                    "_wp": "C",
+                                    "_wt": "@{concat('C',variables('now'))}",
+                                    "id": "@{variables('guid')}"
+                                },
+                                "headers": {
+                                    "x-ms-activity-id": "@{coalesce(triggerOutputs()?['headers']?['X-Request-ID'],triggerOutputs()?['headers']?['x-ms-client-request-id'],variables('guid'))}",
+                                    "x-ms-documentdb-is-upsert": false,
+                                    "x-ms-documentdb-raw-partitionkey": "\"@{concat('C',variables('partitionkey'))}\""
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['apicobartco000ccrcte1gps']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/dbs/@{encodeURIComponent('apicobartco000000dd01000')}/colls/@{encodeURIComponent('apicobartco000c00coc1000')}/docs"
+                            },
+                            "runAfter": {
+                                "Create_or_update_document": [
+                                    "Failed"
+                                ]
+                            },
                             "type": "ApiConnection"
                         },
                         "Response": {
                             "inputs": {
                                 "body": "@body('Create_or_update_document')",
-                                "statusCode": 202
+                                "statusCode": "@outputs('Create_or_update_document')?['statusCode']"
                             },
                             "kind": "Http",
                             "operationOptions": "Asynchronous",
                             "runAfter": {
                                 "Create_or_update_document": [
+                                    "Succeeded",
+                                    "TimedOut"
+                                ]
+                            },
+                            "type": "Response"
+                        },
+                        "Response_2": {
+                            "inputs": {
+                                "body": "@body('Create_or_update_document_2')",
+                                "statusCode": "@outputs('Create_or_update_document_2')?['statusCode']"
+                            },
+                            "kind": "Http",
+                            "operationOptions": "Asynchronous",
+                            "runAfter": {
+                                "Create_or_update_document_2": [
                                     "Succeeded"
                                 ]
                             },
                             "type": "Response"
+                        },
+                        "Set_variable_now": {
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "now",
+                                        "type": "string",
+                                        "value": "@{utcNow()}"
+                                    }
+                                ]
+                            },
+                            "runAfter": {},
+                            "type": "InitializeVariable"
+                        },
+                        "Set_variable_partitionkey": {
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "partitionkey",
+                                        "type": "string",
+                                        "value": "@{convertFromUtc(variables('now'),'UTC','yyyyMMddHHZ')}"
+                                    }
+                                ]
+                            },
+                            "runAfter": {
+                                "Set_variable_now": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable"
+                        },
+                        "set_variable_guid": {
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "guid",
+                                        "type": "string",
+                                        "value": "@{guid()}"
+                                    }
+                                ]
+                            },
+                            "runAfter": {
+                                "Set_variable_partitionkey": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable"
                         }
                     },
                     "contentVersion": "1.0.0.0",

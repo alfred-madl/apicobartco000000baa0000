@@ -7,6 +7,9 @@
 @tenantCode = apico
 
 DELETE https://{{host}}/core/v0/Commands HTTP/1.1
+x-ms-client-tracking-id: huhu
+x-ms-client-request-id: 998
+
 
 ###
 
