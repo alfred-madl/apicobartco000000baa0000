@@ -1,28 +1,51 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        },
+        "plan": {
+            "type": "String"
+        },
+        "plansubscription": {
+            "type": "String"
+        },
+        "plangroup": {
+            "type": "String"
+        },
+        "repo": {
+            "type": "String"
+        },
+        "branch": {
+            "type": "String"
+        }
+    },
     "resources": [
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2018-11-01",
-            "name": "apicobartco000000baa1gps",
-            "location": "Southeast Asia",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
             "kind": "functionapp",
             "properties": {
-                "enabled": true,
+                "enabled": false,
                 "hostNameSslStates": [
                     {
-                        "name": "apicobartco000000baa1gps.azurewebsites.net",
+                        "name": "[concat(parameters('name'),'.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Standard"
                     },
                     {
-                        "name": "apicobartco000000baa1gps.scm.azurewebsites.net",
+                        "name": "[concat(parameters('name'),'.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "/subscriptions/aec9ffa0-e92d-492d-87b7-a26053b2e22c/resourceGroups/apicobartco000000bga1gps/providers/Microsoft.Web/serverfarms/apicobartco000000bpa1gps",
+                "serverFarmId": "[concat('/subscriptions/',parameters('plansubscription'),'/resourceGroups/',parameters('plangroup'),'/providers/Microsoft.Web/serverfarms/',parameters('plan'))]",
                 "reserved": false,
                 "isXenon": false,
                 "hyperV": false,
@@ -43,11 +66,11 @@
                     "name": "web",
                     "type": "sourcecontrols",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Web/sites/', 'apicobartco000000baa1gps')]"
+                        "[resourceId('Microsoft.Web/sites/', parameters('name'))]"
                     ],
                     "properties": {
-                        "RepoUrl": "https://github.com/alfred-madl/apicobartco000000baa0000.git",
-                        "branch": "apicobartco000000baa1gps",
+                        "RepoUrl": "[parameters('repo')]",
+                        "branch": "[parameters('branch')]",
                         "IsManualIntegration": false
                     }
                 }
@@ -56,10 +79,10 @@
         {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2018-11-01",
-            "name": "apicobartco000000baa1gps/web",
+            "name": "[concat(parameters('name'),'/web')]",
             "location": "Southeast Asia",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', 'apicobartco000000baa1gps')]"
+                "[resourceId('Microsoft.Web/sites', parameters('name'))]"
             ],
             "properties": {
                 "numberOfWorkers": 1,
@@ -81,7 +104,7 @@
                 "httpLoggingEnabled": false,
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$apicobartco000000baa1gps",
+                "publishingUsername": "$noideawhatthatis",
                 "azureStorageAccounts": {},
                 "scmType": "GitHub",
                 "use32BitWorkerProcess": true,
@@ -135,13 +158,13 @@
         {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2018-11-01",
-            "name": "apicobartco000000baa1gps/apicobartco000000baa1gps.azurewebsites.net",
+            "name": "[concat(parameters('name'),'/',parameters('name'),'.azurewebsites.net')]",
             "location": "Southeast Asia",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', 'apicobartco000000baa1gps')]"
+                "[resourceId('Microsoft.Web/sites', parameters('name'))]"
             ],
             "properties": {
-                "siteName": "apicobartco000000baa1gps",
+                "siteName": "[parameters('name')]",
                 "hostNameType": "Verified"
             }
         }

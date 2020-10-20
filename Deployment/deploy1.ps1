@@ -69,37 +69,73 @@ Write-Host "================="
 Write-Host "Create Plan"
 Write-Host "================="
 
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000000bga1gps -TemplateFile ./appserviceplan.template.json
+New-AzResourceGroupDeployment `
+    -ResourceGroupName apicobartco000000bga1gps `
+    -TemplateFile ./0000bpa.template.json `
+    -TemplateObject @{ name = "apicobartco000000bpa1gps";  location = "Southeast Asia"; }
 
 Write-Host "================="
 Write-Host "Create Storage"
 Write-Host "================="
 
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000000bga1gps -TemplateFile ./storageaccount.template.json
+New-AzResourceGroupDeployment `
+    -ResourceGroupName apicobartco000000bga1gps `
+    -TemplateFile ./0000bsa.template.json `
+    -TemplateObject @{ name = "apicobartco000000bsa1gps";  location = "southeastasia"; }
+
 
 Write-Host "================="
 Write-Host "Create CDB"
 Write-Host "================="
 
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000000dg01000 -TemplateFile ./cosmosdb.template.json
+New-AzResourceGroupDeployment `
+    -ResourceGroupName apicobartco000000dg01000 `
+    -TemplateFile ./0000dc0.template.json `
+    -TemplateObject @{ name = "apicobartco000000dc01000";  location = "Southeast Asia"; `
+            database = "apicobartco000000dd01000"; readcollection = "apicobartco000000roo1gps"; `
+            commandcollection = "apicobartco000c00coc1000"; leasecollection = "apicobartco000cpbcol1gps"; }
 
 Write-Host "================="
 Write-Host "Create EGD"
 Write-Host "================="
 
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile ./eventgriddomain.template.json
+New-AzResourceGroupDeployment `
+    -ResourceGroupName apicobartco000c00cg01gps `
+    -TemplateFile ./0cpbce0.template.json `
+    -TemplateObject @{ name = "apicobartco000cpbce01gps";  location = "southeastasia"; }
 
 Write-Host "================="
 Write-Host "Create Function"
 Write-Host "================="
 
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000000bga1gps -TemplateFile ./functionapp.template.json
+New-AzResourceGroupDeployment `
+    -ResourceGroupName apicobartco000000bga1gps `
+    -TemplateFile ./functionapp.template.json `
+    -TemplateObject @{ name = "apicobartco000000baa1gps";  location = "Southeast Asia"; `
+            plan = "apicobartco000000bpa1gps"; plansubscription = "aec9ffa0-e92d-492d-87b7-a26053b2e22c"; `
+            plangroup = "apicobartco000000bga1gps"; repo = "https://github.com/alfred-madl/apicobartco000000baa0000.git"; `
+            branch = "apicobartco000000baa1gps"; }
 
-Write-Host "====================="
-Write-Host "Create CDB Connection"
-Write-Host "====================="
+Write-Host "========================="
+Write-Host "Create CDB API Connection"
+Write-Host "========================="
 
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile ../Logic//apicobartco000ccrcte1gps.template.json
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps `
+    -TemplateFile Logic//cdbapiconn.template.json `
+    -TemplateObject @{ name = "apicobartco000ccrcte1gps";  location = "southeastasia"; `
+            account = "apicobartco000000dc01000"; subscription = "aec9ffa0-e92d-492d-87b7-a26053b2e22c"; `
+            group = "apicobartco000000dg01000"; }
+
+
+Write-Host "========================="
+Write-Host "Create EGD API Connection"
+Write-Host "========================="
+
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps `
+    -TemplateFile Logic//egdapiconn.template.json `
+    -TemplateObject @{ name = "apicobartco0000clctg1gps";  location = "southeastasia"; subscription = "aec9ffa0-e92d-492d-87b7-a26053b2e22c"; `
+            clientId = ""; clientSecret = ""; `
+            tenantId = ""; }
 
 #Write-Host "================="
 #Write-Host "Stop Function"

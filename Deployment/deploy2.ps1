@@ -4,14 +4,28 @@ Write-Host "================="
 
 Stop-AzFunctionApp -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -Force
 
-Write-Host "================="
-Write-Host "Logic Apps"
-Write-Host "================="
+Write-Host "=========================="
+Write-Host "Logic Apps Command Storage"
+Write-Host "=========================="
 
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile ../Logic/apicobartco000ccrcle1gps.template.json
-
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile ../Logic/apicobartco000ccrclh1gps.template.json
+# Execute
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000ccrcle1gps.template.json
+# HTTP Trigger
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000ccrclh1gps.template.json
+# Get URL for Proxy App Settings
 $commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName "apicobartco000c00cg01gps" -Name "apicobartco000ccrclh1gps" -TriggerName "manual").Value.TrimStart("https:").TrimStart("/")
+
+Write-Host "========================="
+Write-Host "Logic Apps Clear Commands"
+Write-Host "========================="
+
+# Execute
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000cclcle1gps.template.json
+#HTTP Trigger
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000cclclh1gps.template.json
+# Grid Trigger
+New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000cclclg1gps.template.json
+
 
 Write-Host "================="
 Write-Host "Function Settings"

@@ -1,12 +1,20 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        }
+    },
     "resources": [
         {
             "type": "Microsoft.EventGrid/domains",
             "apiVersion": "2020-06-01",
-            "name": "apicobartco000cpbce01gps",
-            "location": "southeastasia",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
             "properties": {
                 "inputSchema": "EventGridSchema",
                 "publicNetworkAccess": "Enabled"

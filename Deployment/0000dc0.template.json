@@ -1,12 +1,32 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "String"
+        },
+        "database": {
+            "type": "String"
+        },
+        "readcollection": {
+            "type": "String"
+        },
+        "commandcollection": {
+            "type": "String"
+        },
+        "leasecollection": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        }
+    },
     "resources": [
         {
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "apiVersion": "2020-06-01-preview",
-            "name": "apicobartco000000dc01000",
-            "location": "Southeast Asia",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
             "tags": {
                 "defaultExperience": "Core (SQL)",
                 "hidden-cosmos-mmspecial": "",
@@ -34,7 +54,7 @@
                 },
                 "locations": [
                     {
-                        "locationName": "Southeast Asia",
+                        "locationName": "[parameters('location')]",
                         "provisioningState": "Succeeded",
                         "failoverPriority": 0,
                         "isZoneRedundant": false
@@ -55,13 +75,13 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
             "apiVersion": "2020-06-01-preview",
-            "name": "apicobartco000000dc01000/apicobartco000000dd01000",
+            "name": "[concat(parameters('name'),'/',parameters('database'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', 'apicobartco000000dc01000')]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('name'))]"
             ],
             "properties": {
                 "resource": {
-                    "id": "apicobartco000000dd01000"
+                    "id": "[parameters('database')]"
                 },
                 "options": {
                     "throughput": 400
@@ -71,14 +91,14 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2020-06-01-preview",
-            "name": "apicobartco000000dc01000/apicobartco000000dd01000/apicobartco000000roo1gps",
+            "name": "[concat(parameters('name'),'/',parameters('database'),'/',parameters('readcollection'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', 'apicobartco000000dc01000', 'apicobartco000000dd01000')]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', 'apicobartco000000dc01000')]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('name'), parameters('database'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('name'))]"
             ],
             "properties": {
                 "resource": {
-                    "id": "apicobartco000000roo1gps",
+                    "id": "[parameters('readcollection')]",
                     "indexingPolicy": {
                         "indexingMode": "consistent",
                         "automatic": true,
@@ -120,14 +140,14 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2020-06-01-preview",
-            "name": "apicobartco000000dc01000/apicobartco000000dd01000/apicobartco000c00coc1000",
+            "name": "[concat(parameters('name'),'/',parameters('database'),'/',parameters('commandcollection'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', 'apicobartco000000dc01000', 'apicobartco000000dd01000')]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', 'apicobartco000000dc01000')]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('name'), parameters('database'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('name'))]"
             ],
             "properties": {
                 "resource": {
-                    "id": "apicobartco000c00coc1000",
+                    "id": "[parameters('commandcollection')]",
                     "indexingPolicy": {
                         "indexingMode": "consistent",
                         "automatic": true,
@@ -173,14 +193,14 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2020-06-01-preview",
-            "name": "apicobartco000000dc01000/apicobartco000000dd01000/apicobartco000cpbcol1gps",
+            "name": "[concat(parameters('name'),'/',parameters('database'),'/',parameters('leasecollection'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', 'apicobartco000000dc01000', 'apicobartco000000dd01000')]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', 'apicobartco000000dc01000')]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('name'), parameters('database'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('name'))]"
             ],
             "properties": {
                 "resource": {
-                    "id": "apicobartco000cpbcol1gps",
+                    "id": "[parameters('leasecollection')]",
                     "indexingPolicy": {
                         "indexingMode": "consistent",
                         "automatic": true,
