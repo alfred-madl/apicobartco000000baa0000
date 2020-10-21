@@ -8,13 +8,7 @@
         "database": {
             "type": "String"
         },
-        "readcollection": {
-            "type": "String"
-        },
-        "commandcollection": {
-            "type": "String"
-        },
-        "leasecollection": {
+        "collection": {
             "type": "String"
         },
         "location": {
@@ -91,63 +85,14 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2020-06-01-preview",
-            "name": "[concat(parameters('name'),'/',parameters('database'),'/',parameters('readcollection'))]",
+            "name": "[concat(parameters('name'),'/',parameters('database'),'/',parameters('collection'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('name'), parameters('database'))]",
                 "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('name'))]"
             ],
             "properties": {
                 "resource": {
-                    "id": "[parameters('readcollection')]",
-                    "indexingPolicy": {
-                        "indexingMode": "consistent",
-                        "automatic": true,
-                        "includedPaths": [
-                            {
-                                "path": "/*"
-                            }
-                        ],
-                        "excludedPaths": [
-                            {
-                                "path": "/\"_etag\"/?"
-                            }
-                        ]
-                    },
-                    "partitionKey": {
-                        "paths": [
-                            "/_pk"
-                        ],
-                        "kind": "Hash",
-                        "version": 2
-                    },
-                    "uniqueKeyPolicy": {
-                        "uniqueKeys": [
-                            {
-                                "paths": [
-                                    "/_oi"
-                                ]
-                            }
-                        ]
-                    },
-                    "conflictResolutionPolicy": {
-                        "mode": "LastWriterWins",
-                        "conflictResolutionPath": "/_ts"
-                    }
-                },
-                "options": {}
-            }
-        },
-        {
-            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
-            "apiVersion": "2020-06-01-preview",
-            "name": "[concat(parameters('name'),'/',parameters('database'),'/',parameters('commandcollection'))]",
-            "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('name'), parameters('database'))]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('name'))]"
-            ],
-            "properties": {
-                "resource": {
-                    "id": "[parameters('commandcollection')]",
+                    "id": "[parameters('collection')]",
                     "indexingPolicy": {
                         "indexingMode": "consistent",
                         "automatic": true,
@@ -189,49 +134,6 @@
                 },
                 "options": {}
             }
-        },
-        {
-            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
-            "apiVersion": "2020-06-01-preview",
-            "name": "[concat(parameters('name'),'/',parameters('database'),'/',parameters('leasecollection'))]",
-            "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('name'), parameters('database'))]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('name'))]"
-            ],
-            "properties": {
-                "resource": {
-                    "id": "[parameters('leasecollection')]",
-                    "indexingPolicy": {
-                        "indexingMode": "consistent",
-                        "automatic": true,
-                        "includedPaths": [
-                            {
-                                "path": "/*"
-                            }
-                        ],
-                        "excludedPaths": [
-                            {
-                                "path": "/\"_etag\"/?"
-                            }
-                        ]
-                    },
-                    "partitionKey": {
-                        "paths": [
-                            "/id"
-                        ],
-                        "kind": "Hash"
-                    },
-                    "uniqueKeyPolicy": {
-                        "uniqueKeys": []
-                    },
-                    "conflictResolutionPolicy": {
-                        "mode": "LastWriterWins",
-                        "conflictResolutionPath": "/_ts"
-                    }
-                },
-                "options": {}
-            }
         }
-
     ]
 }
