@@ -43,12 +43,16 @@ $fnctemplate=-join('00','00','0','a','0','.template.json')
 $fncname = `
     -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
 
-$fncrepo = `
-    -join($gitpath, $tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0','0','0','0','0','.git')
+#$fncrepo = `
+#    -join($gitpath, $tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0','0','0','0','0','.git')
 
-$fncbranch=
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
+$fncrepo = 'apicobartco000cpbca00000'
+
+#$fncbranch = `
+#    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
     
+$fncbranch = 'apicobartco000cpbca01gps'
+
 Write-Host "==========================="
 Write-Host "Delete RG Command Handling"
 Write-Host "==========================="
@@ -83,12 +87,12 @@ Write-Host "================="
 Write-Host "Set GitHub Token"
 Write-Host "================="
 
-if ($token -eq '') {
-    $token = Get-Content -Path gittoken.txt | Out-String
+if ($gittoken -eq '') {
+    $gittoken = Get-Content -Path gittoken.txt | Out-String
 } else {
 }
 
-Set-AzResource -PropertyObject @{ token = "$token"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force #| Out-Null
+Set-AzResource -PropertyObject @{ token = "$gittoken"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force #| Out-Null
 
 
 Write-Host "==============================="

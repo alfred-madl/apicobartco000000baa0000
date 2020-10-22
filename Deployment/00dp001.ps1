@@ -13,14 +13,14 @@ if (Get-Module -Name Az.CosmosDB -ListAvailable) {
     Install-Module -Name Az.CosmosDB -AllowClobber -Scope AllUsers
 }
 
-if (Get-Module -Name PowerShellForGitHub -ListAvailable) {
-    Write-Host -Message ('PowerShellForGitHub module already installed.')
-} else {
-    Install-Module -Name PowerShellForGitHub -AllowClobber -Scope AllUsers
-}
-
 $context = Get-AzSubscription -SubscriptionId $subscription
 Set-AzContext $context
+
+
+if ($gittoken -eq '') {
+    $gittoken = Get-Content -Path gittoken.txt | Out-String
+} else {
+}
 
 # Stop API Function App
 & "./00spa01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion
