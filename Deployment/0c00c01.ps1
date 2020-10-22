@@ -1,5 +1,5 @@
 # Deploy CDB Commands...slot environment and region is covered by CDB redundancy mechanisms
-param ($tenant='apico', $set='ba', $project='rt', $service='co', $version='00', $lane='1', $slot='g', $environment='p', $region='s', $defaultregion='s', $subscription='aec9ffa0-e92d-492d-87b7-a26053b2e22c')
+param ($tenant='apico', $set='ba', $project='rt', $service='co', $version='00', $lane='1', $slot='g', $environment='p', $region='s', $defaultregion='s', $subscription='aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken='', $gitpath='https://github.com/alfred-madl/')
 
 $objecttype = '0c'
 # Publish commands
@@ -25,35 +25,99 @@ $cdbtemplate=-join('00','00','0','c','0','.template.json')
 
 $egdtemplate=-join('00','00','0','e','0','.template.json')
 
+$egdname = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'e','0',$lane,$slot,$environment,$region)
+
+$plntemplate=-join('00','00','0','p','0','.template.json')
+
+$plnname = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'p','0',$lane,$slot,$environment,$region)
+    
+$sactemplate=-join('00','00','0','s','0','.template.json')
+
+$sacname = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'s','0',$lane,$slot,$environment,$region)
+
+$fnctemplate=-join('00','00','0','a','0','.template.json')
+
+$fncname = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
+
+$fncrepo = `
+    -join($gitpath, $tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0','0','0','0','0','.git')
+
+$fncbranch=
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
+    
 Write-Host "==========================="
-Write-Host "Delete RG Commands Handling"
+Write-Host "Delete RG Command Handling"
 Write-Host "==========================="
 
 Remove-AzResourceGroup -Name $group -Force -ErrorAction SilentlyContinue
 
 
 Write-Host "==========================="
-Write-Host "Create RG Commands Handling"
+Write-Host "Create RG Command Handling"
 Write-Host "==========================="
 
 New-AzResourceGroup -Name $group -Location $location
 
 Write-Host "================================="
-Write-Host "Create CDB Commands Publish Lease"
+Write-Host "Create CDB Command Publish Lease"
 Write-Host "================================="
 
 New-AzResourceGroupDeployment -ResourceGroupName $group -TemplateFile $cdbtemplate -TemplateParameterObject @{ name = $cdbaccount;  location = $location; database = $database; collection = $leasecollection; }
 
 
-
-$egdname = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'e','0',$lane,$slot,$environment,$region)
-
 Write-Host "==========================="
-Write-Host "Create EGD Commands Publish"
+Write-Host "Create EGD Command Publish"
 Write-Host "==========================="
 
 New-AzResourceGroupDeployment `
     -ResourceGroupName $group `
     -TemplateFile $egdtemplate `
     -TemplateParameterObject @{ name = $egdname;  location = $location; }
+
+
+Write-Host "================="
+Write-Host "Set GitHub Token"
+Write-Host "================="
+
+if ($token -eq '') {
+    $token = Get-Content -Path gittoken.txt | Out-String
+} else {
+}
+
+Set-AzResource -PropertyObject @{ token = "$token"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force #| Out-Null
+
+
+Write-Host "==============================="
+Write-Host "Create Command Publish App Plan"
+Write-Host "==============================="
+
+New-AzResourceGroupDeployment `
+    -ResourceGroupName $group `
+    -TemplateFile $plntemplate `
+    -TemplateParameterObject @{ name = $plnname;  location = $location; }
+
+Write-Host "=================================="
+Write-Host "Create Command Publish App Storage"
+Write-Host "=================================="
+
+New-AzResourceGroupDeployment `
+    -ResourceGroupName $group `
+    -TemplateFile $sactemplate `
+    -TemplateParameterObject @{ name = $sacname;  location = $location; }
+
+
+Write-Host "==============================="
+Write-Host "Create Command Publish Function"
+Write-Host "==============================="
+
+New-AzResourceGroupDeployment `
+    -ResourceGroupName $group `
+    -TemplateFile $fnctemplate `
+    -TemplateObject @{ name = $fncname;  location = $location; `
+            plan = $plnname; plansubscription = $subscription; `
+            plangroup = $group; repo = $fncrepo; `
+            branch = $fncpath; }
