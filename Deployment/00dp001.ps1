@@ -24,9 +24,9 @@ if ($gittoken -eq '') {
 
 # Stop API Function App
 & "./00spa01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion
-# Deploy CDB Commands Data
+# Deploy CDB Commands Data Storage
 & "./0c00d01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -defaultregion $defaultregion
-# Deploy Command Processing
+# Deploy Commands Processing
 & "./0c00c01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription -gittoken $gittoken
 # Deploy API Function App
 # & "./0000b01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
