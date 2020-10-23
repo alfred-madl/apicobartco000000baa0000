@@ -5,6 +5,9 @@
         "name": {
             "type": "String"
         },
+        "location": {
+            "type": "String"
+        },
         "account": {
             "type": "String"
         },
