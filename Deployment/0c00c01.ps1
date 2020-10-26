@@ -1,5 +1,4 @@
-# Deploy CDB Commands...slot environment and region is covered by CDB redundancy mechanisms
-param ($tenant='apico', $set='ba', $project='rt', $service='co', $version='00', $lane='1', $slot='g', $environment='p', $region='s', $defaultregion='s', $subscription='aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken='', $gitpath='https://github.com/alfred-madl/', $tenantid='36459f7c-f2a9-49f0-845f-eead0c94bd39')
+param ($tenant='apico', $set='ba', $project='rt', $service='co', $version='00', $lane='1', $slot='g', $environment='p', $region='s', $subscription='aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken='', $gitpath='https://github.com/alfred-madl/', $tenantid='36459f7c-f2a9-49f0-845f-eead0c94bd39')
 
 $objecttype = '0c'
 # Publish commands
@@ -40,16 +39,6 @@ $cmdcontemplate=-join('00','00','0','t','c','.template.json')
 $group = `
     -join($tenant,$set,$project,$service,$version,$objecttype,'00',$area,'g','0',$lane,$slot,$environment,$region)
 
-$defaultlocation = switch($defaultregion) {
-        's' {'Southeast Asia'; break} 
-        'e' {'East Asia'; break} 
-    }
-    
-$defaultlocationkey = switch($defaultregion) {
-        's' {'southeastasia'; break} 
-        'e' {'eastasia'; break} 
-    }
-    
 $location = switch($region) {
     's' {'Southeast Asia'; break} 
     'e' {'East Asia'; break} 
@@ -91,10 +80,6 @@ $fncrepo = -join($gitpath,'apicobartco000cpbca00000','.git')
 #    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
     
 $fncbranch = 'apicobartco000cpbca01gps'
-
-# EGD API connection for Clear Command processing Logic App Trigger
-$egdconname = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'t','g',$lane,$slot,$environment,$region)
 
 
 Write-Host "==========================="
@@ -202,7 +187,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $group `
     -TemplateParameterObject @{ name = $httptriggersublogicname;  location = $location; `
         locationkey = $locationkey; 
         accountsubscription = $subscription; `
-        accountgroup = $group; accountconnection=$cmdconname; `
+        accountgroup = $cmdgroup; accountconnection=$cmdconname; `
         database = $cmddatabase; collection=$cmdcollection; }
 
 # HTTP Trigger
@@ -213,91 +198,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $group `
         logicgroup = $group; }
 
 # Get URL for Proxy App Settings
-$commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName $group -Name $httptriggerlogicname -TriggerName "manual").Value.TrimStart("https:").TrimStart("/")
-
-
-
-Write-Host "==========================================================================================="
-Write-Host "Create AAD Application for Event Grid Domain API Connection for Logic App to Clear Commands"
-Write-Host "==========================================================================================="
-
-
-$aadappname = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'r','g',$lane,$slot,$environment,$region)
-
-Remove-AzADApplication -DisplayName $aadappname -Force -ErrorAction SilentlyContinue
-
-$aadappuri = -join('https://',$aadappname,'.apico.io')
-
-$aadapp = New-AzADApplication -DisplayName $aadappname -IdentifierUris $aadappuri
-
-$aadappid = $aadapp.ApplicationId.Guid
-$aadappid
-
-$aadapppwd =  [guid]::NewGuid().Guid
-$aadapppwd
-
-$aadapppwdsecure = ConvertTo-SecureString -String $aadapppwd -AsPlainText -Force 
-
-$aadappstart = get-date 
-
-$aadappend = $aadappstart.AddYears(2)  
-
-$aadappcred = New-AzADAppCredential -ObjectId $aadapp.ObjectID -Password $aadapppwdsecure -startDate $aadappstart -enddate $aadappend
-
-Get-AzADApplication -ObjectId $aadapp.ObjectID | New-AzADServicePrincipal -startDate $aadappstart -enddate $aadappend 
-
-$egdcontemplate=-join('00','00','0','t','g','.template.json')
-
-New-AzResourceGroupDeployment -ResourceGroupName $group `
-    -TemplateFile $egdcontemplate `
-    -TemplateParameterObject @{ name = $egdconname;  location = $location; locationkey = $locationkey; subscription = $subscription; `
-            clientId = $aadappid; clientSecret = $aadapppwd; `
-            tenantId = $tenantid; }
-
-<#
-
-Write-Host "============================"
-Write-Host "Logic Apps to Clear Commands"
-Write-Host "============================"
-
-$httptriggerlogictemplate2=-join('00','00','0','l','h','.template.json')
-
-$egdtriggerlogictemplate2=-join('00','00','0','l','g','.template.json')
-
-$sublogictemplate2=-join('0c','cl','c','l','e','.template.json')
-
-$httptriggerlogicname2 = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','h',$lane,$slot,$environment,$region)
-
-$egdtriggerlogicname2 = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','g',$lane,$slot,$environment,$region)
-
-$httptriggersublogicname2 = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','e',$lane,$slot,$environment,$region)
-
-# Execute
-New-AzResourceGroupDeployment -ResourceGroupName $group `
-    -TemplateFile $sublogictemplate2 `
-    -TemplateParameterObject @{ name = $httptriggersublogicname2;  location = $location; `
-        locationkey = $locationkey; 
-        accountsubscription = $subscription; }
-
-# HTTP Trigger
-New-AzResourceGroupDeployment -ResourceGroupName $group `
-    -TemplateFile $httptriggerlogictemplate2 `
-    -TemplateParameterObject @{ name = $httptriggerlogicname2;  location = $location; `
-        logicname = $httptriggersublogicname2; logicsubscription = $subscription; `
-        logicgroup = $group; }
-
-# EGD Trigger
-New-AzResourceGroupDeployment -ResourceGroupName $group `
-    -TemplateFile $egdtriggerlogictemplate2 `
-    -TemplateParameterObject @{ name = $egdtriggerlogicname2;  location = $location; `
-        logicname = $httptriggersublogicname2; logicsubscription = $subscription; `
-        logicgroup = $group; }
-#>
-
+# $commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName $group -Name $httptriggerlogicname -TriggerName "manual").Value.TrimStart("https:").TrimStart("/")
 
 Write-Host "============================="
 Write-Host "Stop Command Publish Function"
