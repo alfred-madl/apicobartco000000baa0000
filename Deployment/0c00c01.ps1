@@ -1,5 +1,5 @@
 # Deploy CDB Commands...slot environment and region is covered by CDB redundancy mechanisms
-param ($tenant='apico', $set='ba', $project='rt', $service='co', $version='00', $lane='1', $slot='g', $environment='p', $region='s', $defaultregion='s', $subscription='aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken='', $gitpath='https://github.com/alfred-madl/')
+param ($tenant='apico', $set='ba', $project='rt', $service='co', $version='00', $lane='1', $slot='g', $environment='p', $region='s', $defaultregion='s', $subscription='aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken='', $gitpath='https://github.com/alfred-madl/', $tenantid='36459f7c-f2a9-49f0-845f-eead0c94bd39')
 
 $objecttype = '0c'
 # Publish commands
@@ -7,21 +7,60 @@ $operation = 'pb'
 # Commands handling
 $area = 'c'
 $leasecdbaccount = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'c','0',$lane,$slot,$environment,$region)
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'c','l',$lane,$slot,$environment,$region)
 $leasedatabase = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'d','0',$lane,$slot,$environment,$region)
-# Lease collection
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'d','l',$lane,$slot,$environment,$region)
 $leasecollection = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'l','0',$lane,$slot,$environment,$region)
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'o','l',$lane,$slot,$environment,$region)
+$leasecollectionprefix = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'p','l',$lane,$slot,$environment,$region)
+
+
+$cmdslot='0'
+$cmdenvironment='0'
+$cmdregion='0'
+
+$cmdobjecttype = '0c'
+$cmdoperation = '00'
+$cmdarea = 'd'
+$cmdcdbaccount = `
+    -join($tenant,$set,$project,$service,$version,$cmdobjecttype,$cmdoperation,$cmdarea,'c','0',$lane,$cmdslot,$cmdenvironment,$cmdregion)
+$cmddatabase = `
+    -join($tenant,$set,$project,$service,$version,$cmdobjecttype,$cmdoperation,$cmdarea,'d','0',$lane,$cmdslot,$cmdenvironment,$cmdregion)
+$cmdcollection = `
+    -join($tenant,$set,$project,$service,$version,$cmdobjecttype,$cmdoperation,$cmdarea,'o','0',$lane,$cmdslot,$cmdenvironment,$cmdregion)
+$cmdgroup = `
+    -join($tenant,$set,$project,$service,$version,$cmdobjecttype,$cmdoperation,$cmdarea,'g','0',$lane,$cmdslot,$cmdenvironment,$cmdregion)
+
+$cmdconname = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,'cr',$area,'t','e',$lane,$slot,$environment,$region)
+
+$cmdcontemplate=-join('00','00','0','t','c','.template.json')
+
 $group = `
     -join($tenant,$set,$project,$service,$version,$objecttype,'00',$area,'g','0',$lane,$slot,$environment,$region)
 
-$location = switch($defaultregion) {
+$defaultlocation = switch($defaultregion) {
+        's' {'Southeast Asia'; break} 
+        'e' {'East Asia'; break} 
+    }
+    
+$defaultlocationkey = switch($defaultregion) {
+        's' {'southeastasia'; break} 
+        'e' {'eastasia'; break} 
+    }
+    
+$location = switch($region) {
     's' {'Southeast Asia'; break} 
     'e' {'East Asia'; break} 
- }
+}
 
-$cdbtemplate=-join('00','00','0','c','0','.template.json')
+ $locationkey = switch($region) {
+    's' {'southeastasia'; break} 
+    'e' {'eastasia'; break} 
+}
+
+$cdbleasetemplate=-join('00','00','0','c','l','.template.json')
 
 $egdtemplate=-join('00','00','0','e','0','.template.json')
 
@@ -75,7 +114,7 @@ Write-Host "================================="
 Write-Host "Create CDB Command Publish Lease"
 Write-Host "================================="
 
-New-AzResourceGroupDeployment -ResourceGroupName $group -TemplateFile $cdbtemplate -TemplateParameterObject @{ name = $leasecdbaccount;  location = $location; database = $leasedatabase; collection = $leasecollection; }
+New-AzResourceGroupDeployment -ResourceGroupName $group -TemplateFile $cdbleasetemplate -TemplateParameterObject @{ name = $leasecdbaccount;  location = $location; database = $leasedatabase; collection = $leasecollection; }
 
 
 Write-Host "==========================="
@@ -136,77 +175,135 @@ Write-Host "============================================================="
 Write-Host "Create CosmosDB API Connection for Logic App to Store Command"
 Write-Host "============================================================="
 
-
-
-$cmdslot='0'
-$cmdenvironment='0'
-$cmdregion='0'
-
-$cmdobjecttype = '0c'
-$cmdoperation = '00'
-$cmdarea = 'd'
-$cmdaccountname = `
-    -join($tenant,$set,$project,$service,$version,$cmdobjecttype,$cmdoperation,$cmdarea,'c','0',$lane,$cmdslot,$cmdenvironment,$cmdregion)
-$cmddatabase = `
-    -join($tenant,$set,$project,$service,$version,$cmdobjecttype,$cmdoperation,$cmdarea,'d','0',$lane,$cmdslot,$cmdenvironment,$cmdregion)
-$cmdcollection = `
-    -join($tenant,$set,$project,$service,$version,$cmdobjecttype,$cmdoperation,$cmdarea,'o','0',$lane,$cmdslot,$cmdenvironment,$cmdregion)
-$cmdgroup = `
-    -join($tenant,$set,$project,$service,$version,$cmdobjecttype,$cmdoperation,$cmdarea,'g','0',$lane,$cmdslot,$cmdenvironment,$cmdregion)
-
-$cmdconname = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cr',$area,'t','e',$lane,$slot,$environment,$region)
-
-$cmdcontemplate=-join('00','00','0','t','c','.template.json')
-
 New-AzResourceGroupDeployment -ResourceGroupName $group `
     -TemplateFile $cmdcontemplate `
-    -TemplateParameterObject @{ name = $cmdconname;  location = $location; `
-            account = $cmdaccountname; accountsubscription = $subscription; `
+    -TemplateParameterObject @{ name = $cmdconname;  location = $location; locationkey = $locationkey; `
+            account = $cmdcdbaccount; accountsubscription = $subscription; `
             accountgroup = $cmdgroup; }
 
-<#
 
 Write-Host "==========================="
 Write-Host "Logic Apps to Store Command"
 Write-Host "==========================="
 
+$httptriggerlogictemplate=-join('00','00','0','l','h','.template.json')
+
+$sublogictemplate=-join('0c','cr','c','l','e','.template.json')
+
+$httptriggerlogicname = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,'cr',$area,'l','h',$lane,$slot,$environment,$region)
+
+$httptriggersublogicname = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,'cr',$area,'l','e',$lane,$slot,$environment,$region)
+
 # Execute
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000ccrcle1gps.template.json
+New-AzResourceGroupDeployment -ResourceGroupName $group `
+    -TemplateFile $sublogictemplate `
+    -TemplateParameterObject @{ name = $httptriggersublogicname;  location = $location; `
+        locationkey = $locationkey; 
+        accountsubscription = $subscription; `
+        accountgroup = $group; accountconnection=$cmdconname; `
+        database = $cmddatabase; collection=$cmdcollection; }
+
 # HTTP Trigger
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000ccrclh1gps.template.json
+New-AzResourceGroupDeployment -ResourceGroupName $group `
+    -TemplateFile $httptriggerlogictemplate `
+    -TemplateParameterObject @{ name = $httptriggerlogicname;  location = $location; `
+        logicname = $httptriggersublogicname; logicsubscription = $subscription; `
+        logicgroup = $group; }
+
 # Get URL for Proxy App Settings
-$commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName "apicobartco000c00cg01gps" -Name "apicobartco000ccrclh1gps" -TriggerName "manual").Value.TrimStart("https:").TrimStart("/")
+$commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName $group -Name $httptriggerlogicname -TriggerName "manual").Value.TrimStart("https:").TrimStart("/")
 
 
-Write-Host "======================================================================="
-Write-Host "Create Event Grid Domain API Connection for Logic App to Clear Commands"
-Write-Host "======================================================================="
 
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps `
-    -TemplateFile Logic//egdapiconn.template.json `
-    -TemplateObject @{ name = "apicobartco0000clctg1gps";  location = "southeastasia"; subscription = "aec9ffa0-e92d-492d-87b7-a26053b2e22c"; `
-            clientId = ""; clientSecret = ""; `
-            tenantId = ""; }
+Write-Host "==========================================================================================="
+Write-Host "Create AAD Application for Event Grid Domain API Connection for Logic App to Clear Commands"
+Write-Host "==========================================================================================="
 
+
+$aadappname = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'r','g',$lane,$slot,$environment,$region)
+
+Remove-AzADApplication -DisplayName $aadappname -Force -ErrorAction SilentlyContinue
+
+$aadappuri = -join('https://',$aadappname,'.apico.io')
+
+$aadapp = New-AzADApplication -DisplayName $aadappname -IdentifierUris $aadappuri
+
+$aadappid = $aadapp.ApplicationId.Guid
+$aadappid
+
+$aadapppwd =  [guid]::NewGuid().Guid
+$aadapppwd
+
+$aadapppwdsecure = ConvertTo-SecureString -String $aadapppwd -AsPlainText -Force 
+
+$aadappstart = get-date 
+
+$aadappend = $aadappstart.AddYears(2)  
+
+$aadappcred = New-AzADAppCredential -ObjectId $aadapp.ObjectID -Password $aadapppwdsecure -startDate $aadappstart -enddate $aadappend
+
+Get-AzADApplication -ObjectId $aadapp.ObjectID | New-AzADServicePrincipal -startDate $aadappstart -enddate $aadappend 
+
+$egdcontemplate=-join('00','00','0','t','g','.template.json')
+
+New-AzResourceGroupDeployment -ResourceGroupName $group `
+    -TemplateFile $egdcontemplate `
+    -TemplateParameterObject @{ name = $egdconname;  location = $location; locationkey = $locationkey; subscription = $subscription; `
+            clientId = $aadappid; clientSecret = $aadapppwd; `
+            tenantId = $tenantid; }
+
+<#
 
 Write-Host "============================"
 Write-Host "Logic Apps to Clear Commands"
 Write-Host "============================"
 
+$httptriggerlogictemplate2=-join('00','00','0','l','h','.template.json')
+
+$egdtriggerlogictemplate2=-join('00','00','0','l','g','.template.json')
+
+$sublogictemplate2=-join('0c','cl','c','l','e','.template.json')
+
+$httptriggerlogicname2 = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','h',$lane,$slot,$environment,$region)
+
+$egdtriggerlogicname2 = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','g',$lane,$slot,$environment,$region)
+
+$httptriggersublogicname2 = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','e',$lane,$slot,$environment,$region)
+
 # Execute
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000cclcle1gps.template.json
-#HTTP Trigger
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000cclclh1gps.template.json
-# Grid Trigger
-New-AzResourceGroupDeployment -ResourceGroupName apicobartco000c00cg01gps -TemplateFile Logic/apicobartco000cclclg1gps.template.json
+New-AzResourceGroupDeployment -ResourceGroupName $group `
+    -TemplateFile $sublogictemplate2 `
+    -TemplateParameterObject @{ name = $httptriggersublogicname2;  location = $location; `
+        locationkey = $locationkey; 
+        accountsubscription = $subscription; }
+
+# HTTP Trigger
+New-AzResourceGroupDeployment -ResourceGroupName $group `
+    -TemplateFile $httptriggerlogictemplate2 `
+    -TemplateParameterObject @{ name = $httptriggerlogicname2;  location = $location; `
+        logicname = $httptriggersublogicname2; logicsubscription = $subscription; `
+        logicgroup = $group; }
+
+# EGD Trigger
+New-AzResourceGroupDeployment -ResourceGroupName $group `
+    -TemplateFile $egdtriggerlogictemplate2 `
+    -TemplateParameterObject @{ name = $egdtriggerlogicname2;  location = $location; `
+        logicname = $httptriggersublogicname2; logicsubscription = $subscription; `
+        logicgroup = $group; }
+#>
 
 
 Write-Host "============================="
 Write-Host "Stop Command Publish Function"
 Write-Host "============================="
 
-Stop-AzFunctionApp -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -Force
+Stop-AzFunctionApp -Name $fncname -ResourceGroupName $group -Force
 
 
 
@@ -215,41 +312,41 @@ Write-Host "Create Command Publish Function Settings"
 Write-Host "========================================"
 
 
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"AzureWebJobsStorage" = "DefaultEndpointsProtocol=https;AccountName=" + "apicobartco000000bsa1gps" + ";AccountKey=" + (Get-AzStorageAccountKey -ResourceGroupName apicobartco000000bga1gps -AccountName apicobartco000000bsa1gps)[0].Value + ";EndpointSuffix=core.windows.net" } -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"FUNCTIONS_EXTENSION_VERSION" = "~3"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"FUNCTIONS_WORKER_RUNTIME" = "dotnet"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"AzureWebJobsStorage" = "DefaultEndpointsProtocol=https;AccountName=" + $sacname + ";AccountKey=" + (Get-AzStorageAccountKey -ResourceGroupName $group -AccountName $sacname)[0].Value + ";EndpointSuffix=core.windows.net" } -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"FUNCTIONS_EXTENSION_VERSION" = "~3"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"FUNCTIONS_WORKER_RUNTIME" = "dotnet"} -Force | Out-Null
 
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-url-rm" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-url-cl" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-url-in" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-url-up" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-url-cr" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-url-de" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-url-re" = "xxx"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-url-li" = "xxx"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-rm" = "$commandurl"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-cl" = "$commandurl"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-in" = "$commandurl"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-up" = "$commandurl"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-cr" = "$commandurl"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-de" = "$commandurl"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-re" = "xxx"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-li" = "xxx"} -Force | Out-Null
 
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-key-re" = "xxx"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"x-apico-operation-key-li" = "xxx"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-key-re" = "xxx"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-key-li" = "xxx"} -Force | Out-Null
 
-$dbconn = (Get-AzCosmosDBAccountKey -ResourceGroupName apicobartco000000dg01000 -Name apicobartco000000dc01000 -Type "ConnectionStrings")['Primary SQL Connection String']
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_ConnectionString" = "$dbconn"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_LeaseConnectionString" = "$dbconn"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_DatabaseName" = "apicobartco000000dd01000"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_LeaseDatabaseName" = "apicobartco000000dd01000"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_CollectionName" = "apicobartco000c00coc1000"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_LeaseCollectionName" = "apicobartco000cpbcol1gps"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_LeaseCollectionPrefix" = "apicobartco000cpbcp01gps"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_PreferrredLocations" = "Southeast Asia"} -Force | Out-Null
+$cmddbconn = (Get-AzCosmosDBAccountKey -ResourceGroupName $cmdgroup -Name $cmdcdbaccount -Type "ConnectionStrings")['Primary SQL Connection String']
+$leasedbconn = (Get-AzCosmosDBAccountKey -ResourceGroupName $group -Name $leasecdbaccount -Type "ConnectionStrings")['Primary SQL Connection String']
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_ConnectionString" = $cmddbconn} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_LeaseConnectionString" = $leasedbconn} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_DatabaseName" = $cmddatabase} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_LeaseDatabaseName" = $leasedatabase} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_CollectionName" = $cmdcollection} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_LeaseCollectionName" = $leasecollection} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_LeaseCollectionPrefix" = $leasecollectionprefix} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_PreferrredLocations" = $location} -Force | Out-Null
 
-$egdkey = (Get-AzEventGridDomainKey -ResourceGroupName apicobartco000c00cg01gps -Name apicobartco000cpbce01gps).Key1
-$egdendpoint = (Get-AzEventGridDomain -ResourceGroupName apicobartco000c00cg01gps -Name apicobartco000cpbce01gps).Endpoint
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_Event_TopicEndpoint" = "$egdendpoint"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps -AppSetting @{"CDBPF_Event_TopicKey" = "$egdkey"} -Force | Out-Null
+$egdkey = (Get-AzEventGridDomainKey -ResourceGroupName $group -Name $egdname).Key1
+$egdendpoint = (Get-AzEventGridDomain -ResourceGroupName $group -Name $egdname).Endpoint
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_Event_TopicEndpoint" = "$egdendpoint"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_Event_TopicKey" = "$egdkey"} -Force | Out-Null
 
 Write-Host "=============================="
 Write-Host "Start Command Publish Function"
 Write-Host "=============================="
 
-Start-AzFunctionApp -Name apicobartco000000baa1gps -ResourceGroupName apicobartco000000bga1gps
+Start-AzFunctionApp -Name $fncname -ResourceGroupName $group
 
-#>

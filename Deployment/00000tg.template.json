@@ -11,13 +11,16 @@
         "locationkey": {
             "type": "String"
         },
-        "account": {
+        "clientId": {
             "type": "String"
         },
-        "accountsubscription": {
+        "clientSecret": {
             "type": "String"
         },
-        "accountgroup": {
+        "tenantId": {
+            "type": "String"
+        },
+        "subscription": {
             "type": "String"
         }
     },
@@ -29,19 +32,16 @@
             "location": "[parameters('location')]",
             "kind": "V1",
             "properties": {
+                "parameterValues": {
+                    "token:clientId": "[parameters('clientId')]",
+                    "token:clientSecret": "[parameters('clientSecret')]",
+                    "token:TenantId": "[parameters('tenantId')]",
+                    "token:grantType": "client_credentials"
+                },
                 "displayName": "[parameters('name')]",
                 "customParameterValues": {},
-                "statuses": [
-                    {
-                        "status": "Connected"
-                    }
-                ],
-                "parameterValues": {
-                    "databaseAccount": "[parameters('account')]",
-                     "accessKey": "[listKeys(concat('/subscriptions/',parameters('accountsubscription'),'/resourceGroups/',parameters('accountgroup'),'/providers/Microsoft.DocumentDB/databaseAccounts/',parameters('account')), '2015-04-08').primaryMasterKey]"
-                },
                 "api": {
-                    "id": "[concat('/subscriptions/',parameters('accountsubscription'),'/providers/Microsoft.Web/locations/',parameters('locationkey'),'/managedApis/documentdb')]"
+                    "id": "[concat('/subscriptions/',parameters('subscription'),'/providers/Microsoft.Web/locations/',parameters('locationkey'),'/managedApis/azureeventgrid')]"
                 }
             }
         }

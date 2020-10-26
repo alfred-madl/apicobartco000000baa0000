@@ -13,6 +13,12 @@ if (Get-Module -Name Az.CosmosDB -ListAvailable) {
     Install-Module -Name Az.CosmosDB -AllowClobber -Scope AllUsers
 }
 
+if (Get-Module -Name AzureAD -ListAvailable) {
+    Write-Host -Message ('AzureAD module already installed.')
+} else {
+    Install-Module -Name AzureAD -AllowClobber -Scope AllUsers
+}
+
 $context = Get-AzSubscription -SubscriptionId $subscription
 Set-AzContext $context
 

@@ -1,0 +1,248 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        },
+        "locationkey": {
+            "type": "String"
+        },
+        "accountsubscription": {
+            "type": "String"
+        },
+        "accountgroup": {
+            "type": "String"
+        },
+        "accountconnection": {
+            "type": "String"
+        },
+        "database": {
+            "type": "String"
+        },
+        "collection": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "actions": {
+                        "Create_or_update_document": {
+                            "inputs": {
+                                "body": {
+                                    "_ci": "@{coalesce(triggerOutputs()?['headers']?['X-Correlation-ID'],triggerOutputs()?['headers']?['x-ms-client-tracking-id'],variables('guid'))}",
+                                    "_cx": "@workflow()",
+                                    "_dv": "1.0",
+                                    "_ei": "@{triggerOutputs()['headers']?['x-apico-entity-id']}",
+                                    "_gi": "@{coalesce(triggerOutputs()?['headers']?['X-Event-Group-ID'],variables('guid'))}",
+                                    "_oi": "@{variables('guid')}",
+                                    "_ot": "*",
+                                    "_pf": "yyyyMMddHHZ",
+                                    "_pk": "@{concat('C',variables('partitionkey'))}",
+                                    "_pp": "C",
+                                    "_ri": "@{coalesce(triggerOutputs()?['headers']?['X-Request-ID'],triggerOutputs()?['headers']?['x-ms-client-request-id'],variables('guid'))}",
+                                    "_rq": {
+                                        "_bj": "@{triggerBody()}",
+                                        "_hd": "@triggerOutputs()['headers']",
+                                        "_ho": "@{triggerOutputs()['headers']?['x-apico-prx-request-headers-Host']}",
+                                        "_ip": "@{triggerOutputs()['headers']?['x-apico-prx-request-headers-CLIENT-IP']}",
+                                        "_mt": "@{triggerOutputs()['headers']?['x-apico-prx-request-method']}",
+                                        "_pt": "@{triggerOutputs()['headers']?['x-apico-prx-match-route']}"
+                                    },
+                                    "_vi": "@{coalesce(triggerOutputs()?['headers']?['X-Event-ID'],variables('guid'))}",
+                                    "_wp": "C",
+                                    "_wt": "@{concat('C',variables('now'))}",
+                                    "id": "@{variables('guid')}"
+                                },
+                                "headers": {
+                                    "x-ms-activity-id": "@{coalesce(triggerOutputs()?['headers']?['X-Request-ID'],triggerOutputs()?['headers']?['x-ms-client-request-id'],variables('guid'))}",
+                                    "x-ms-documentdb-is-upsert": false,
+                                    "x-ms-documentdb-raw-partitionkey": "\"@{concat('C',variables('partitionkey'))}\""
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "[concat('@parameters(''$connections'')[''',parameters('accountconnection'),'''][''connectionId'']')]"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "[concat('/dbs/@{encodeURIComponent(''',parameters('database'),''')}/colls/@{encodeURIComponent(''',parameters('collection'),''')}/docs')]"
+                            },
+                            "runAfter": {
+                                "set_variable_guid": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection"
+                        },
+                        "Create_or_update_document_2": {
+                            "inputs": {
+                                "body": {
+                                    "_ci": "@{coalesce(triggerOutputs()?['headers']?['X-Correlation-ID'],triggerOutputs()?['headers']?['x-ms-client-tracking-id'],variables('guid'))}",
+                                    "_cx": "@workflow()",
+                                    "_di": "@{coalesce(triggerOutputs()?['headers']?['X-Request-ID'],triggerOutputs()?['headers']?['x-ms-client-request-id'],variables('guid'))}",
+                                    "_dv": "1.0",
+                                    "_ei": "@{triggerOutputs()['headers']?['x-apico-entity-id']}",
+                                    "_gi": "@{coalesce(triggerOutputs()?['headers']?['X-Event-Group-ID'],variables('guid'))}",
+                                    "_oi": "@{variables('guid')}",
+                                    "_ot": "*",
+                                    "_pf": "yyyyMMddHHZ",
+                                    "_pk": "@{concat('C',variables('partitionkey'))}",
+                                    "_pp": "C",
+                                    "_ri": "@{variables('guid')}",
+                                    "_rq": {
+                                        "_bj": "@{triggerBody()}",
+                                        "_hd": "@triggerOutputs()['headers']",
+                                        "_ho": "@{triggerOutputs()['headers']?['x-apico-prx-request-headers-Host']}",
+                                        "_ip": "@{triggerOutputs()['headers']?['x-apico-prx-request-headers-CLIENT-IP']}",
+                                        "_mt": "@{triggerOutputs()['headers']?['x-apico-prx-request-method']}",
+                                        "_pt": "@{triggerOutputs()['headers']?['x-apico-prx-match-route']}"
+                                    },
+                                    "_vi": "@{coalesce(triggerOutputs()?['headers']?['X-Event-ID'],variables('guid'))}",
+                                    "_wp": "C",
+                                    "_wt": "@{concat('C',variables('now'))}",
+                                    "id": "@{variables('guid')}"
+                                },
+                                "headers": {
+                                    "x-ms-activity-id": "@{coalesce(triggerOutputs()?['headers']?['X-Request-ID'],triggerOutputs()?['headers']?['x-ms-client-request-id'],variables('guid'))}",
+                                    "x-ms-documentdb-is-upsert": false,
+                                    "x-ms-documentdb-raw-partitionkey": "\"@{concat('C',variables('partitionkey'))}\""
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "[concat('@parameters(''$connections'')[''',parameters('accountconnection'),'''][''connectionId'']')]"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "[concat('/dbs/@{encodeURIComponent(''',parameters('database'),''')}/colls/@{encodeURIComponent(''',parameters('collection'),''')}/docs')]"
+                            },
+                            "runAfter": {
+                                "Create_or_update_document": [
+                                    "Failed"
+                                ],
+                                "Response": [
+                                    "Skipped"
+                                ]
+                            },
+                            "type": "ApiConnection"
+                        },
+                        "Response": {
+                            "inputs": {
+                                "body": "@body('Create_or_update_document')",
+                                "statusCode": "@outputs('Create_or_update_document')?['statusCode']"
+                            },
+                            "kind": "Http",
+                            "operationOptions": "Asynchronous",
+                            "runAfter": {
+                                "Create_or_update_document": [
+                                    "Succeeded",
+                                    "TimedOut"
+                                ]
+                            },
+                            "type": "Response"
+                        },
+                        "Response_2": {
+                            "inputs": {
+                                "body": "@body('Create_or_update_document_2')",
+                                "statusCode": "@outputs('Create_or_update_document_2')?['statusCode']"
+                            },
+                            "kind": "Http",
+                            "operationOptions": "Asynchronous",
+                            "runAfter": {
+                                "Create_or_update_document_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Response"
+                        },
+                        "Set_variable_now": {
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "now",
+                                        "type": "string",
+                                        "value": "@{utcNow()}"
+                                    }
+                                ]
+                            },
+                            "runAfter": {},
+                            "type": "InitializeVariable"
+                        },
+                        "Set_variable_partitionkey": {
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "partitionkey",
+                                        "type": "string",
+                                        "value": "@{convertFromUtc(variables('now'),'UTC','yyyyMMddHHZ')}"
+                                    }
+                                ]
+                            },
+                            "runAfter": {
+                                "Set_variable_now": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable"
+                        },
+                        "set_variable_guid": {
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "guid",
+                                        "type": "string",
+                                        "value": "@{guid()}"
+                                    }
+                                ]
+                            },
+                            "runAfter": {
+                                "Set_variable_partitionkey": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable"
+                        }
+                    },
+                    "contentVersion": "1.0.0.0",
+                    "outputs": {},
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "inputs": {
+                                "schema": {}
+                            },
+                            "kind": "Http",
+                            "type": "Request"
+                        }
+                    }
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "[parameters('accountconnection')]": {
+                                "connectionId": "[concat('/subscriptions/',parameters('accountsubscription'),'/resourceGroups/',parameters('accountgroup'),'/providers/Microsoft.Web/connections/',parameters('accountconnection'))]",
+                                "connectionName": "[parameters('accountconnection')]",
+                                "id": "[concat('/subscriptions/',parameters('accountsubscription'),'/providers/Microsoft.Web/locations/',parameters('locationkey'),'/managedApis/documentdb')]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
