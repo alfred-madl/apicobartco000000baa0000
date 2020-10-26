@@ -337,7 +337,7 @@ Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting
 Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_CollectionName" = $cmdcollection} -Force | Out-Null
 Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_LeaseCollectionName" = $leasecollection} -Force | Out-Null
 Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_LeaseCollectionPrefix" = $leasecollectionprefix} -Force | Out-Null
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_PreferrredLocations" = $location} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"CDBPF_PreferredLocations" = $location} -Force | Out-Null
 
 $egdkey = (Get-AzEventGridDomainKey -ResourceGroupName $group -Name $egdname).Key1
 $egdendpoint = (Get-AzEventGridDomain -ResourceGroupName $group -Name $egdname).Endpoint
