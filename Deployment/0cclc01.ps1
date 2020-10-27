@@ -14,7 +14,7 @@ if ($lane -ne 'z') {
     $cmdoperation = '00'
     $cmdarea = 'd'
     $cmdcdbaccount = `
-        -join ($tenant, $set, $project, $service, $version, $objecttype, $cmdoperation, $cmdarea, 'c', '0', $lane, $cmdslot, $cmdenvironment, $cmdegion)
+        -join ($tenant, $set, $project, $service, $version, $objecttype, $cmdoperation, $cmdarea, 'c', '0', $lane, $cmdslot, $cmdenvironment, $cmdregion)
     $cmddatabase = `
         -join ($tenant, $set, $project, $service, $version, $objecttype, $cmdoperation, $cmdarea, 'd', '0', $lane, $cmdslot, $cmdenvironment, $cmdregion)
     $cmdcollection = `
@@ -43,6 +43,11 @@ if ($lane -ne 'z') {
     $egdname = `
         -join ($tenant, $set, $project, $service, $version, $objecttype, '00', $area, 'e', '0', $lane, $slot, $environment, $region)
 
+    $egdtopicname = `
+        -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'b', '0', $lane, $slot, $environment, $region)
+
+    $egdsubscrname = `
+        -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'u', '0', $lane, $slot, $environment, $region)
 
     # EGD API connection for Clear Command processing Logic App Trigger
     $egdconname = `
@@ -55,77 +60,33 @@ if ($lane -ne 'z') {
 
     Remove-AzResourceGroup -Name $group -Force -ErrorAction SilentlyContinue
 
-
-    Write-Host "=================================="
-    Write-Host "Create RG Command Clear Processing"
-    Write-Host "=================================="
-
-    New-AzResourceGroup -Name $group -Location $location
-
-    Write-Host "=============================================================="
-    Write-Host "Create CosmosDB API Connection for Logic App to Clear Commands"
-    Write-Host "=============================================================="
-
-    New-AzResourceGroupDeployment -ResourceGroupName $group `
-        -TemplateFile $cmdcontemplate `
-        -TemplateParameterObject @{ name = $cmdconname; location = $location; locationkey = $locationkey; `
-            account = $cmdcdbaccount; accountsubscription = $subscription; `
-            accountgroup = $cmdgroup; 
-    }
-
-
-    Write-Host "============================"
-    Write-Host "Logic Apps to Clear Commands"
-    Write-Host "============================"
-
-    $httptriggerlogictemplate = -join ('00', '00', '0', 'l', 'h', '.template.json')
-
-    $sublogictemplate = -join ('0c', 'cl', 'c', 'l', 'e', '.template.json')
-
-    $httptriggerlogicname = `
-        -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'l', 'h', $lane, $slot, $environment, $region)
-
-    $httptriggersublogicname = `
-        -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'l', 'e', $lane, $slot, $environment, $region)
-
-    # Execute
-    New-AzResourceGroupDeployment -ResourceGroupName $group `
-        -TemplateFile $sublogictemplate `
-        -TemplateParameterObject @{ name = $httptriggersublogicname; location = $location; `
-            locationkey = $locationkey; 
-            accountsubscription = $subscription; `
-            accountgroup = $cmdgroup; accountconnection = $cmdconname; `
-            database = $cmddatabase; collection = $cmdcollection; 
-    }
-
-    # HTTP Trigger
-    New-AzResourceGroupDeployment -ResourceGroupName $group `
-        -TemplateFile $httptriggerlogictemplate `
-        -TemplateParameterObject @{ name = $httptriggerlogicname; location = $location; `
-            logicname = $httptriggersublogicname; logicsubscription = $subscription; `
-            logicgroup = $group; 
-    }
-
-
     Write-Host "==========================================================================================="
-    Write-Host "Create AAD Application for Event Grid Domain API Connection for Logic App to Clear Commands"
+    Write-Host "Delete AAD Application for Event Grid Domain API Connection for Logic App to Clear Commands"
     Write-Host "==========================================================================================="
 
 
     $aadappname = `
         -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'r', 'g', $lane, $slot, $environment, $region)
 
+    Remove-AzADServicePrincipal -DisplayName $aadappname -Force -ErrorAction SilentlyContinue
+
+
     Remove-AzADApplication -DisplayName $aadappname -Force -ErrorAction SilentlyContinue
+
+
+    Write-Host "==========================================================================================="
+    Write-Host "Create AAD Application for Event Grid Domain API Connection for Logic App to Clear Commands"
+    Write-Host "==========================================================================================="
 
     $aadappuri = -join ('https://', $aadappname, '.apico.io')
 
     $aadapp = New-AzADApplication -DisplayName $aadappname -IdentifierUris $aadappuri
 
     $aadappid = $aadapp.ApplicationId.Guid
-    $aadappid
+    #$aadappid
 
     $aadapppwd = [guid]::NewGuid().Guid
-    $aadapppwd
+    #$aadapppwd
 
     $aadapppwdsecure = ConvertTo-SecureString -String $aadapppwd -AsPlainText -Force 
 
@@ -139,6 +100,26 @@ if ($lane -ne 'z') {
 
     $egdcontemplate = -join ('00', '00', '0', 't', 'g', '.template.json')
 
+    Write-Host "=================================="
+    Write-Host "Create RG Command Clear Processing"
+    Write-Host "=================================="
+
+    New-AzResourceGroup -Name $group -Location $location
+
+    Write-Host "=============================================================="
+    Write-Host "Create CosmosDB API Connection for Logic App to Clear Commands"
+    Write-Host "=============================================================="
+
+    New-AzResourceGroupDeployment -ResourceGroupName $group `
+    -TemplateFile $cmdcontemplate `
+    -TemplateParameterObject @{ name = $cmdconname;  location = $location; locationkey = $locationkey; `
+            account = $cmdcdbaccount; accountsubscription = $subscription; `
+            accountgroup = $cmdgroup; }
+
+    Write-Host "==========================================================================================="
+    Write-Host "Create AAD Application for Event Grid Domain API Connection for Logic App to Clear Commands"
+    Write-Host "==========================================================================================="
+
     New-AzResourceGroupDeployment -ResourceGroupName $group `
         -TemplateFile $egdcontemplate `
         -TemplateParameterObject @{ name = $egdconname; location = $location; locationkey = $locationkey; subscription = $subscription; `
@@ -146,51 +127,52 @@ if ($lane -ne 'z') {
             tenantId = $tenantid; 
     }
 
-    <#
 
-Write-Host "============================"
-Write-Host "Logic Apps to Clear Commands"
-Write-Host "============================"
+    Write-Host "============================"
+    Write-Host "Logic Apps to Clear Commands"
+    Write-Host "============================"
 
-$httptriggerlogictemplate2=-join('00','00','0','l','h','.template.json')
+    $httptriggerlogictemplate = -join ('00', '00', '0', 'l', 'h', '.template.json')
 
-$egdtriggerlogictemplate2=-join('00','00','0','l','g','.template.json')
+    $egdtriggerlogictemplate = -join ('00', '00', '0', 'l', 'g', '.template.json')
 
-$sublogictemplate2=-join('0c','cl','c','l','e','.template.json')
+    $sublogictemplate = -join ('0c', 'cl', 'c', 'l', 'e', '.template.json')
 
-$httptriggerlogicname2 = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','h',$lane,$slot,$environment,$region)
+    $httptriggerlogicname = `
+        -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'l', 'h', $lane, $slot, $environment, $region)
 
-$egdtriggerlogicname2 = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','g',$lane,$slot,$environment,$region)
+    $egdtriggerlogicname = `
+        -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'l', 'g', $lane, $slot, $environment, $region)
 
-$httptriggersublogicname2 = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,'cl',$area,'l','e',$lane,$slot,$environment,$region)
+    $triggersublogicname = `
+        -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'l', 'e', $lane, $slot, $environment, $region)
 
-# Execute
-New-AzResourceGroupDeployment -ResourceGroupName $group `
-    -TemplateFile $sublogictemplate2 `
-    -TemplateParameterObject @{ name = $httptriggersublogicname2;  location = $location; `
-        locationkey = $locationkey; 
-        accountsubscription = $subscription; }
+    # Execute
+    New-AzResourceGroupDeployment -ResourceGroupName $group `
+        -TemplateFile $sublogictemplate `
+        -TemplateParameterObject @{ name = $triggersublogicname; location = $location; `
+            locationkey = $locationkey; 
+            accountsubscription = $subscription; `
+            accountconnection = $cmdconname; `
+            database = $cmddatabase; collection = $cmdcollection; 
+    }
 
-# HTTP Trigger
-New-AzResourceGroupDeployment -ResourceGroupName $group `
-    -TemplateFile $httptriggerlogictemplate2 `
-    -TemplateParameterObject @{ name = $httptriggerlogicname2;  location = $location; `
-        logicname = $httptriggersublogicname2; logicsubscription = $subscription; `
-        logicgroup = $group; }
+    # HTTP Trigger
+    New-AzResourceGroupDeployment -ResourceGroupName $group `
+        -TemplateFile $httptriggerlogictemplate `
+        -TemplateParameterObject @{ name = $httptriggerlogicname; location = $location; `
+            logicname = $triggersublogicname; logicsubscription = $subscription; `
+            logicgroup = $group; 
+    }
 
-# EGD Trigger
-New-AzResourceGroupDeployment -ResourceGroupName $group `
-    -TemplateFile $egdtriggerlogictemplate2 `
-    -TemplateParameterObject @{ name = $egdtriggerlogicname2;  location = $location; `
-        logicname = $httptriggersublogicname2; logicsubscription = $subscription; `
-        logicgroup = $group; }
-#>
-
-
-
+    # EGD Trigger
+    New-AzResourceGroupDeployment -ResourceGroupName $group `
+        -TemplateFile $egdtriggerlogictemplate `
+        -TemplateParameterObject @{ name = $egdtriggerlogicname;  location = $location; `
+            locationkey = $locationkey; domainname = $egdname; topicname = $egdtopicname; `
+            egdconname = $egdconname; egdsubscrname = $egdsubscrname;
+            logicname = $triggersublogicname; logicsubscription = $subscription; `
+            logicgroup = $group; }
 }
 else {
 }

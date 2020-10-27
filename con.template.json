@@ -8,6 +8,9 @@
         "location": {
             "type": "String"
         },
+        "locationkey": {
+            "type": "String"
+        },
         "clientId": {
             "type": "String"
         },
@@ -38,7 +41,7 @@
                 "displayName": "[parameters('name')]",
                 "customParameterValues": {},
                 "api": {
-                    "id": "[concat('/subscriptions/',parameters('subscription'),'/providers/Microsoft.Web/locations/southeastasia/managedApis/azureeventgrid')]"
+                    "id": "[concat('/subscriptions/',parameters('subscription'),'/providers/Microsoft.Web/locations/',parameters('locationkey'),'/managedApis/azureeventgrid')]"
                 }
             }
         }

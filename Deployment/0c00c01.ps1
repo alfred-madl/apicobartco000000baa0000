@@ -186,7 +186,7 @@ New-AzResourceGroupDeployment -ResourceGroupName $group `
     -TemplateParameterObject @{ name = $httptriggersublogicname;  location = $location; `
         locationkey = $locationkey; 
         accountsubscription = $subscription; `
-        accountgroup = $cmdgroup; accountconnection=$cmdconname; `
+        accountconnection=$cmdconname; `
         database = $cmddatabase; collection=$cmdcollection; }
 
 # HTTP Trigger
