@@ -235,7 +235,7 @@
                     "$connections": {
                         "value": {
                             "[parameters('accountconnection')]": {
-                                "connectionId": "[concat('/subscriptions/',parameters('accountsubscription'),'/resourceGroups/',parameters('accountgroup'),'/providers/Microsoft.Web/connections/',parameters('accountconnection'))]",
+                                "connectionId": "[concat('/subscriptions/',parameters('accountsubscription'),'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/connections/',parameters('accountconnection'))]",
                                 "connectionName": "[parameters('accountconnection')]",
                                 "id": "[concat('/subscriptions/',parameters('accountsubscription'),'/providers/Microsoft.Web/locations/',parameters('locationkey'),'/managedApis/documentdb')]"
                             }

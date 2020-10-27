@@ -95,12 +95,22 @@ Write-Host "==========================="
 
 New-AzResourceGroup -Name $group -Location $location
 
+
+Write-Host "============================================================="
+Write-Host "Create CosmosDB API Connection for Logic App to Store Command"
+Write-Host "============================================================="
+
+New-AzResourceGroupDeployment -ResourceGroupName $group `
+    -TemplateFile $cmdcontemplate `
+    -TemplateParameterObject @{ name = $cmdconname;  location = $location; locationkey = $locationkey; `
+            account = $cmdcdbaccount; accountsubscription = $subscription; `
+            accountgroup = $cmdgroup; }
+            
 Write-Host "================================="
 Write-Host "Create CDB Command Publish Lease"
 Write-Host "================================="
 
 New-AzResourceGroupDeployment -ResourceGroupName $group -TemplateFile $cdbleasetemplate -TemplateParameterObject @{ name = $leasecdbaccount;  location = $location; database = $leasedatabase; collection = $leasecollection; }
-
 
 Write-Host "==========================="
 Write-Host "Create EGD Command Publish"
@@ -154,17 +164,6 @@ New-AzResourceGroupDeployment `
             plan = $plnname; plansubscription = $subscription; `
             plangroup = $group; repo = $fncrepo; `
             branch = $fncbranch; }
-
-
-Write-Host "============================================================="
-Write-Host "Create CosmosDB API Connection for Logic App to Store Command"
-Write-Host "============================================================="
-
-New-AzResourceGroupDeployment -ResourceGroupName $group `
-    -TemplateFile $cmdcontemplate `
-    -TemplateParameterObject @{ name = $cmdconname;  location = $location; locationkey = $locationkey; `
-            account = $cmdcdbaccount; accountsubscription = $subscription; `
-            accountgroup = $cmdgroup; }
 
 
 Write-Host "==========================="
