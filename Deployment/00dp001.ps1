@@ -48,9 +48,9 @@ if (($slot -eq 'g') -AND ($environment -eq 'p') -AND ($region -eq $defaultregion
     # Deploy Commands Clearance
     & "./0cclc01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane  -slot $slot -environment $environment -region $region -subscription $subscription
 }
-# Deploy API Function App
-# & "./0000b01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
 # Deploy Read View
 # & "./0000r01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
+# Deploy API Function App
+& "./0000a01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
 # Start API Function App
-# & "./00stb01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
+# & "./00sta01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
