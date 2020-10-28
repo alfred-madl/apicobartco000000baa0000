@@ -71,15 +71,15 @@ $fnctemplate=-join('00','00','0','a','0','.template.json')
 $fncname = `
     -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
 
-#$fncrepo = `
-#    -join($gitpath, $tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0','0','0','0','0','.git')
+$fncrepo = `
+    -join($gitpath, $tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0','0','0','0','0','.git')
 
-$fncrepo = -join($gitpath,'apicobartco000cpbca00000','.git')
+#$fncrepo = -join($gitpath,'apicobartco000cpbca00000','.git')
 
-#$fncbranch = `
-#    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
+$fncbranch = `
+    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
     
-$fncbranch = 'apicobartco000cpbca01gps'
+#$fncbranch = 'apicobartco000cpbca01gps'
 
 
 Write-Host "==========================="
