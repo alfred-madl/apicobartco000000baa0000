@@ -1,5 +1,5 @@
 # Main deployment script
-param ($tenant = 'apico', $set = 'ba', $project = 'rt', $service = 'co', $version = '00', $lane = '1', $slot = 'g', $environment = 'p', $region = 's', $defaultregion = 's', $subscription = 'aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken = '')
+param ($tenant = 'apico', $set = 'ba', $project = 'rt', $service = 'co', $version = '00', $lane = '1', $slot = 'g', $environment = 'p', $region = 's', $defaultregion = 's', $subscription = 'aec9ffa0-e92d-492d-87b7-a26053b2e22c', $defaultsubscription = 'aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken = '')
 
 if (Get-Module -Name Az -ListAvailable) {
     Write-Host -Message ('Az module already installed.')
@@ -25,13 +25,17 @@ else {
 $context = Get-AzSubscription -SubscriptionId $subscription
 Set-AzContext $context
 
-
 if ($gittoken -eq '') {
     $gittoken = Get-Content -Path gittoken.txt | Out-String
 }
 else {
 }
 
+$params = Invoke-Expression -Command ".\00pm001.ps1 -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion" -subscription $subscription -defaultsubscription $defaultsubscription
+
+$params
+
+<#
 # Stop API Function App
 & "./00spa01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion
 
@@ -43,14 +47,16 @@ if (($slot -eq 'g') -AND ($environment -eq 'p') -AND ($region -eq $defaultregion
 # Deploy Commands Processing
 & "./0c00c01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -subscription $subscription -gittoken $gittoken
 
-# only one clear command processing per lane
-if (($slot -eq 'g') -AND ($environment -eq 'p') -AND ($region -eq $defaultregion)) {
+# only one clear command processing per lane and NOT in production !
+if (($slot -eq 'g') -AND ($environment -eq 'p') -AND ($region -eq $defaultregion) -AND ($lane -ne 'z')) {
     # Deploy Commands Clearance
     & "./0cclc01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane  -slot $slot -environment $environment -region $region -subscription $subscription
 }
 # Deploy Read View
-# & "./0000r01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
+& "./0000r01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
 # Deploy API Function App
 & "./0000a01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
 # Start API Function App
 # & "./00sta01.ps1" -tenant $tenant -set $set -project $project -service $service -version $version -lane $lane -slot $slot -environment $environment -region $region -defaultregion $defaultregion -subscription $subscription
+
+#>
