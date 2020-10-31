@@ -1,28 +1,11 @@
 # Deploy CDB Commands...slot environment and region is covered by CDB redundancy mechanisms
-param ($tenant = 'apico', $set = 'ba', $project = 'rt', $service = 'co', $version = '00', $lane = '1', $defaultregion = 's')
+param ($params)
 
-$slot = '0'
-$environment = '0'
-$region = '0'
-
-$objecttype = '0c'
-$operation = '00'
-$area = 'd'
-$name = `
-    -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'c', '0', $lane, $slot, $environment, $region)
-$database = `
-    -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'd', '0', $lane, $slot, $environment, $region)
-$collection = `
-    -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'o', '0', $lane, $slot, $environment, $region)
-$group = `
-    -join ($tenant, $set, $project, $service, $version, $objecttype, $operation, $area, 'g', '0', $lane, $slot, $environment, $region)
-
-$location = switch ($defaultregion) {
-    's' { 'Southeast Asia'; break } 
-    'e' { 'East Asia'; break } 
+if (((Get-AzContext).subscription).id -ne $params.command_storage_group_sub_0c00dg0s)
+{
+    $context = Get-AzSubscription -SubscriptionId $params.command_storage_group_sub_0c00dg0s
+    Set-AzContext $context
 }
-
-$template = -join ('00', '00', '0', 'c', '0', '.template.json')
 
 # not in production !
 if ($lane -ne 'z') {
@@ -30,17 +13,31 @@ if ($lane -ne 'z') {
     Write-Host "Delete RG Commands Data"
     Write-Host "======================="
 
-    Remove-AzResourceGroup -Name $group -Force -ErrorAction SilentlyContinue
+    Remove-AzResourceGroup `
+        -Name $params.command_storage_group_0c00dg0 `
+        -Force -ErrorAction SilentlyContinue
 }
 
 Write-Host "======================="
 Write-Host "Create RG Commands Data"
 Write-Host "======================="
 
-New-AzResourceGroup -Name $group -Location $location
+New-AzResourceGroup `
+    -Name $params.command_storage_group_0c00dg0 `
+    -Location $params.command_storage_group_loc_0c00dg0l
 
 Write-Host "========================"
 Write-Host "Create CDB Commands Data"
 Write-Host "========================"
 
-New-AzResourceGroupDeployment -ResourceGroupName $group -TemplateFile $template -TemplateParameterObject @{ name = $name; location = $location; database = $database; collection = $collection; }
+New-AzResourceGroupDeployment `
+    -ResourceGroupName $params.command_storage_group_0c00dg0 `
+    -TemplateFile $params.command_storage_cdb_tpl_0c00dc0t `
+    -TemplateParameterObject @{
+        name = $params.command_storage_cdb_account_0c00dc0;
+        location = $params.command_storage_group_loc_0c00dg0l;
+        database = $params.command_storage_cdb_database_0c00dd0;
+        collection = $params.command_storage_cdb_collection_0c00do0;
+    }
+
+return $params

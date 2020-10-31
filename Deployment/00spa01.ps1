@@ -1,14 +1,20 @@
 # Stop API Function App
-param ($tenant='apico', $set='ba', $project='rt', $service='co', $version='00', $lane='1', $slot='g', $environment='p', $region='s', $defaultregion='s')
+param ($params)
 
-$objecttype = '00'
-$operation = '00'
-$area = 'a'
-$function = -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
-$group = -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'g','0',$lane,$slot,$environment,$region)
+if (((Get-AzContext).subscription).id -ne $params.api_proxy_group_sub_0000ag0s)
+{
+    $context = Get-AzSubscription -SubscriptionId $params.api_proxy_group_sub_0000ag0s
+    Set-AzContext $context
+}
 
 Write-Host "====================="
 Write-Host "Stop API Function App"
 Write-Host "====================="
+Write-Host $params.api_proxy_app_0000aa0
 
-Stop-AzFunctionApp -Name $function -ResourceGroupName $group -Force -ErrorAction SilentlyContinue
+Stop-AzFunctionApp `
+    -Name $params.api_proxy_app_0000aa0 `
+    -ResourceGroupName $params.api_proxy_group_0000ag0 `
+    -Force -ErrorAction SilentlyContinue
+
+return $params
