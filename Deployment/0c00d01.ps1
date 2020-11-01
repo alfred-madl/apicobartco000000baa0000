@@ -40,4 +40,17 @@ New-AzResourceGroupDeployment `
         collection = $params.command_storage_cdb_collection_0c00do0;
     }
 
+# Connection string into params for leasers (command handling and publishing)
+$cmddbconn = 
+    (
+        Get-AzCosmosDBAccountKey `
+            -ResourceGroupName $params.command_storage_group_0c00dg0 `
+            -Name $params.command_storage_cdb_account_0c00dc0 `
+            -Type "ConnectionStrings"
+    )['Primary SQL Connection String']
+
+$params = $params + @{
+    command_storage_cdb_connstr_0c00dc0c = $cmddbconn;
+}
+
 return $params

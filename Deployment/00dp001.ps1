@@ -1,5 +1,7 @@
 # Main deployment script
-param ($tenant = 'apico', $set = 'ba', $project = 'rt', $service = 'co', $version = '00', $lane = '1', $slot = 'g', $environment = 'p', $region = 's', $defaultregion = 's', $subscription = 'aec9ffa0-e92d-492d-87b7-a26053b2e22c', $defaultsubscription = 'aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken = '', $now = (Get-Date))
+param ($tenant = 'apico', $set = 'ba', $project = 'rt', $service = 'co', $version = '00', $lane = '1', $slot = 'g', $environment = 'p', $region = 's', `
+    $defaultregion = 's', $subscription = 'aec9ffa0-e92d-492d-87b7-a26053b2e22c', $defaultsubscription = 'aec9ffa0-e92d-492d-87b7-a26053b2e22c', `
+    $gittoken = '', $now = (Get-Date), $reposprefix = 'https://github.com/alfred-madl/')
 if (Get-Module -Name Az -ListAvailable) {
     Write-Host -Message ('Az module already installed.')
 }
@@ -27,12 +29,6 @@ if (((get-azcontext).subscription).id -ne $subscription)
     Set-AzContext $context
 }
 
-if ($gittoken -eq '') {
-    $gittoken = Get-Content -Path gittoken.txt | Out-String
-}
-else {
-}
-
 $params = @{
     now = $now;
     tenant = $tenant;
@@ -47,7 +43,7 @@ $params = @{
     defaultregion = $defaultregion;
     subscription = $subscription;
     defaultsubscription = $defaultsubscription;
-    gittoken = $gittoken;
+    reposprefix = $reposprefix;
 }
 
 $params = &"./00pm001.ps1" -params $params

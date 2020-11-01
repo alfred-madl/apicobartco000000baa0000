@@ -30,6 +30,7 @@ $params = $params + @{
     defaultlocationkey = $defaultlocationkey;
     gittoken = $gittoken;
     gitprovider = '/providers/Microsoft.Web/sourcecontrols/GitHub';
+
     # ==================
     # API Function Proxy
     # ==================
@@ -50,6 +51,8 @@ $params = $params + @{
     command_storage_group_sub_0c00dg0s =            $params.defaultsubscription;
 
     command_storage_cdb_account_0c00dc0 =           -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','00','d','c','0',$params.lane,'0','0','0');
+    # Connection String
+    # command_storage_cdb_connstr_0c00dc0c
     command_storage_cdb_database_0c00dd0 =          -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','00','d','d','0',$params.lane,'0','0','0');
     command_storage_cdb_collection_0c00do0 =        -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','00','d','o','0',$params.lane,'0','0','0');
     command_storage_cdb_tpl_0c00dc0t =              -join ('00', '00', '0', 'c', '0', '.template.json');
@@ -66,6 +69,8 @@ $params = $params + @{
     # Logic Apps to store commands coming in from the function proxy in the global command storage - HTTP trigger wrapper
     command_create_logapp_httptrig_0ccrclh =        -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','cr','c','l','h',$params.lane,$params.slot,$params.environment,$params.region);
     command_create_logapp_httptrig_tpl_0ccrlht =    -join('00','00','0','l','h','.template.json');
+    # trigger name for reading the start URL to put it into afunction app settings for the proxies
+    command_create_logapp_httptrig_name_0ccrclhn =       'manual';
     # Logic Apps to store commands coming in from the function proxy in the global command storage - Storage
     command_create_logapp_storage_0ccrcls =         -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','cr','c','l','s',$params.lane,$params.slot,$params.environment,$params.region);
     command_create_logapp_storage_tpl_0ccrlst =     -join('0c','cr','c','l','s','.template.json');
@@ -90,12 +95,14 @@ $params = $params + @{
     command_publishing_funcapp_name_0cpbca0 =       -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','a','0',$params.lane,$params.slot,$params.environment,$params.region);
     command_publishing_funcapp_tpl_0cpbca0t =       -join('00','00','0','a','0','.template.json')
     # Github Repository and Branch for Publishing Function (App) and its Function with CDB Changefeed trigger, Logic Apps have no CDB Changefeed triggers
-    command_publishing_funcapp_repos_0cpbca0r =     -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','a','0','0','0','0','0','.git')
+    command_publishing_funcapp_repos_0cpbca0r =     -join($params.reposprefix,$params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','a','0','0','0','0','0','.git')
     command_publishing_funcapp_branch_0cpbca0b =    -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','a','0',$params.lane,$params.slot,$params.environment,$params.region);
     # Specific CosmosDB trigger lease prefix because different functions could use the same lease collection (we dont do that, but who knows)
     # same as function app name
     command_publishing_lease_prefix_0cpbca0f =      -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','a','0',$params.lane,$params.slot,$params.environment,$params.region);
-
+    # Function App Settings
+    command_publishing_funcapp_extvers_0cpbca0v =   '~3'
+    command_publishing_funcapp_runtime_0cpbca0n =   'dotnet'
     # Lease CDB Account / database and collection for Publishing Function and its CDB Changefeed trigger
     command_publishing_lease_account_0cpbccl =      -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','c','l',$params.lane,$params.slot,$params.environment,$params.region);
     command_publishing_lease_database_0cpbdcl =     -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','d','l',$params.lane,$params.slot,$params.environment,$params.region);
