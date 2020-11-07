@@ -20,6 +20,12 @@
         "egdconname": {
             "type": "String"
         },
+        "egdgroup": {
+            "type": "String"
+        },
+        "egdsubscription": {
+            "type": "String"
+        },
         "egdsubscrname": {
             "type": "String"
         },
@@ -78,7 +84,7 @@
                                                 "endpointUrl": "@{listCallbackUrl()}"
                                             }
                                         },
-                                        "topic": "[concat('/subscriptions/',parameters('logicsubscription'),'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.EventGrid/domains/',parameters('domainname'),'/topic/',parameters('topicname'))]"
+                                        "topic": "[concat('/subscriptions/',parameters('egdsubscription'),'/resourceGroups/',parameters('egdgroup'),'/providers/Microsoft.EventGrid/domains/',parameters('domainname'),'/topics/',parameters('topicname'))]"
                                     }
                                 },
                                 "host": {

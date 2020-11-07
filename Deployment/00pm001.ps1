@@ -23,7 +23,7 @@ $defaultlocation = switch($params.defaultregion) {
 
 $gittoken = Get-Content -Path gittoken.txt | Out-String
 
-$params = $params + @{
+$params = $params + @{ 
     location = $location;
     locationkey = $locationkey;
     defaultlocation = $defaultlocation;
@@ -39,11 +39,26 @@ $params = $params + @{
     api_proxy_group_lkey_0000ag0k =                 $locationkey;
     api_proxy_group_sub_0000ag0s =                  $params.subscription;
 
-    # API Proxy Function App
-    api_proxy_app_0000aa0 =                         -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','a','a','0',$params.lane,$params.slot,$params.environment,$params.region); 
+    # App Service Plan for API Function (App) and its Proxies
+    api_proxy_appsvcpln_name_0000ap0 =     -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','a','p','0',$params.lane,$params.slot,$params.environment,$params.region);
+    api_proxy_appsvcpln_tpl_0000ap0t =     -join('00','00','0','p','0','.template.json')
+    
+    # Storage Account for API Function (App)
+    api_proxy_storage_account_0000as0 =    -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','a','s','0',$params.lane,$params.slot,$params.environment,$params.region);
+    api_proxy_storage_tpl_0000as0t =       -join('00','00','0','s','0','.template.json')
+
+    # API Function (App)
+    api_proxy_funcapp_name_0000aa0 =       -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','a','a','0',$params.lane,$params.slot,$params.environment,$params.region);
+    api_proxy_funcapp_tpl_0000aa0t =       -join('00','00','0','a','0','.template.json')
+    # Github Repository and Branch for API Function (App)
+    api_proxy_funcapp_repos_0000aa0r =     -join($params.reposprefix,$params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','a','a','0','0','0','0','0','.git')
+    api_proxy_funcapp_branch_0000aa0b =    -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','a','a','0',$params.lane,$params.slot,$params.environment,$params.region);
+    # Function App Settings
+    api_proxy_funcapp_extvers_0000aa0v =   '~3'
+    api_proxy_funcapp_runtime_0000aa0n =   'dotnet'
 
     # ===============================
-    # CosmosDB Global Command Storage
+    # CosmosDB Global Command Data
     # ===============================
     command_storage_group_0c00dg0 =                 -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','00','d','g','0',$params.lane,'0','0','0');
     command_storage_group_loc_0c00dg0l =            $defaultlocation;
@@ -55,7 +70,7 @@ $params = $params + @{
     # command_storage_cdb_connstr_0c00dc0c
     command_storage_cdb_database_0c00dd0 =          -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','00','d','d','0',$params.lane,'0','0','0');
     command_storage_cdb_collection_0c00do0 =        -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','00','d','o','0',$params.lane,'0','0','0');
-    command_storage_cdb_tpl_0c00dc0t =              -join ('00', '00', '0', 'c', '0', '.template.json');
+    command_storage_cdb_tpl_0c00dc0t =              -join ('0c', '00', 'd', 'c', '0', '.template.json');
 
     # ===============================
     # Command Handling and Publishing
@@ -107,7 +122,7 @@ $params = $params + @{
     command_publishing_lease_account_0cpbccl =      -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','c','l',$params.lane,$params.slot,$params.environment,$params.region);
     command_publishing_lease_database_0cpbdcl =     -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','d','l',$params.lane,$params.slot,$params.environment,$params.region);
     command_publishing_lease_collection_0cpbcol =   -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','o','l',$params.lane,$params.slot,$params.environment,$params.region);
-    command_publishing_lease_tpl_0cpbcclt =         -join ('00', '00', '0', 'c', 'l', '.template.json');
+    command_publishing_lease_tpl_0cpbcclt =         -join ('0c', 'pb', 'c', 'c', 'l', '.template.json');
 
     # ===============================
     # Command Clearing
@@ -162,6 +177,14 @@ $params = $params + @{
     read_view_group_lkey_0000rg0k =             $locationkey;
     read_view_group_sub_0000rg0s =              $params.subscription;
 
+    read_view_cdb_account_0000rc0 =           -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','r','c','0',$params.lane,'0','0','0');
+    # Connection String
+    # read_view_cdb_connstr_0000rc0c
+    read_view_cdb_database_0000rd0 =          -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','r','d','0',$params.lane,'0','0','0');
+    read_view_cdb_collection_0000ro0 =        -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','r','o','0',$params.lane,'0','0','0');
+    read_view_cdb_tpl_0000rc0t =              -join ('00', '00', 'r', 'c', '0', '.template.json');
+
+
     # Logic Apps to process commands from the global command storage - HTTP trigger wrapper
     read_view_logapp_httptrig_00prrlh =         -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','pr','r','l','h',$params.lane,$params.slot,$params.environment,$params.region);
     read_view_logapp_httptrig_tpl_00prlht =     -join('00','00','0','l','h','.template.json');
@@ -190,8 +213,8 @@ $params = $params + @{
     # Logic Apps - API EGD API connection for processing commands to the command publishing event grid domain
     read_view_egd_apiconn_00prrtg =             -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','pr','r','t','g',$params.lane,$params.slot,$params.environment,$params.region);
     read_view_egd_apiconn_tpl_00prrtgt =        -join('00','00','0','t','g','.template.json');
-    # Logic Apps EGD topic for clearing commands
-    read_view_egd_topic_00prrtg =               -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','00','c','b','0',$params.lane,$params.slot,$params.environment,$params.region);
+    # Logic Apps EGD topic for processing commands
+    read_view_egd_topic_00prrtg =               -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pr','c','b','0',$params.lane,$params.slot,$params.environment,$params.region);
 
     # Logic Apps EGD topic subscription
     # same as logic app name

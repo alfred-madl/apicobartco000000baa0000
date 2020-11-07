@@ -1,9 +1,10 @@
-param ($params)
+# Command handling
+param ([hashtable]$params = @{})
 
 if (((Get-AzContext).subscription).id -ne $params.command_handling_group_sub_0c00cg0s)
 {
     $context = Get-AzSubscription -SubscriptionId $params.command_handling_group_sub_0c00cg0s
-    Set-AzContext $context
+    Set-AzContext $context | Out-Null
 }
 
 Write-Host "==========================="
@@ -12,7 +13,7 @@ Write-Host "==========================="
 
 Remove-AzResourceGroup `
     -Name $params.command_handling_group_0c00cg0 `
-    -Force -ErrorAction SilentlyContinue
+    -Force -ErrorAction SilentlyContinue | Out-Null
 
 
 Write-Host "==========================="
@@ -21,7 +22,7 @@ Write-Host "==========================="
 
 New-AzResourceGroup `
     -Name $params.command_handling_group_0c00cg0 `
-    -Location $params.command_handling_group_loc_0c00cg0l 
+    -Location $params.command_handling_group_loc_0c00cg0l  | Out-Null
 
 
 Write-Host "================="
@@ -31,7 +32,7 @@ Write-Host "================="
 # no idea why thats necessary...and all that must happen LONG before FUnction is created...othwise we get STRANGE errors...
 $gittoken = $params.gittoken
 
-Set-AzResource -PropertyObject @{ token = "$gittoken"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force #| Out-Null
+Set-AzResource -PropertyObject @{ token = "$gittoken"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force | Out-Null
 
 Write-Host "============================================================="
 Write-Host "Create CosmosDB API Connection for Logic App to Store Command"
@@ -47,7 +48,7 @@ New-AzResourceGroupDeployment `
         account = $params.command_storage_cdb_account_0c00dc0 ; 
         accountsubscription = $params.command_storage_group_sub_0c00dg0s ;
         accountgroup = $params.command_storage_group_0c00dg0 ; 
-    }
+    } | Out-Null
             
 Write-Host "================================="
 Write-Host "Create CDB Command Publish Lease"
@@ -61,7 +62,7 @@ New-AzResourceGroupDeployment `
         location = $params.command_handling_group_loc_0c00cg0l ; 
         database = $params.command_publishing_lease_database_0cpbdcl ; 
         collection = $params.command_publishing_lease_collection_0cpbcol ; 
-    }
+    } | Out-Null
 
 Write-Host "==========================="
 Write-Host "Create EGD Command Publish"
@@ -73,7 +74,7 @@ New-AzResourceGroupDeployment `
     -TemplateParameterObject @{ 
         name = $params.command_publishing_egd_name_0cpbce0;  
         location = $params.command_handling_group_loc_0c00cg0l; 
-    }
+    } | Out-Null
 
 Write-Host "==============================="
 Write-Host "Create Command Publish App Plan"
@@ -85,7 +86,7 @@ New-AzResourceGroupDeployment `
     -TemplateParameterObject @{ 
         name = $params.command_publishing_appsvcpln_name_0cpbcp0;  
         location = $params.command_handling_group_loc_0c00cg0l; 
-    }
+    } | Out-Null
 
 Write-Host "=================================="
 Write-Host "Create Command Publish App Storage"
@@ -97,7 +98,7 @@ New-AzResourceGroupDeployment `
     -TemplateParameterObject @{ 
         name = $params.command_publishing_storage_account_0cpbcs0;  
         location = $params.command_handling_group_loc_0c00cg0l; 
-    }
+    } | Out-Null
 
 
 Write-Host "==============================="
@@ -115,7 +116,7 @@ New-AzResourceGroupDeployment `
         plangroup = $params.command_handling_group_0c00cg0; 
         repo = $params.command_publishing_funcapp_repos_0cpbca0r;
         branch = $params.command_publishing_funcapp_branch_0cpbca0b; 
-    }
+    } | Out-Null
 
 
 Write-Host "==========================="
@@ -134,7 +135,7 @@ New-AzResourceGroupDeployment `
         accountconnection=$params.command_create_cdb_apiconn_0ccrctc;
         database = $params.command_storage_cdb_database_0c00dd0; 
         collection=$params.command_storage_cdb_collection_0c00do0; 
-    }
+    } | Out-Null
 
 # HTTP Trigger
 New-AzResourceGroupDeployment `
@@ -146,7 +147,7 @@ New-AzResourceGroupDeployment `
         logicname = $params.command_create_logapp_storage_0ccrcls; 
         logicsubscription = $params.command_handling_group_sub_0c00cg0s;
         logicgroup = $params.command_handling_group_0c00cg0; 
-    }
+    } | Out-Null
 
 Write-Host "============================="
 Write-Host "Stop Command Publish Function"
@@ -155,7 +156,7 @@ Write-Host "============================="
 Stop-AzFunctionApp `
     -Name $params.command_publishing_funcapp_name_0cpbca0 `
     -ResourceGroupName $params.command_handling_group_0c00cg0 `
-    -Force
+    -Force | Out-Null
 
     # Prepare some params
 $egdkey = (Get-AzEventGridDomainKey -ResourceGroupName $params.command_handling_group_0c00cg0  -Name $params.command_publishing_egd_name_0cpbce0 ).Key1
@@ -210,10 +211,9 @@ Write-Host "=============================="
 
 Start-AzFunctionApp `
     -Name $params.command_publishing_funcapp_name_0cpbca0 `
-    -ResourceGroupName $params.command_handling_group_0c00cg0
+    -ResourceGroupName $params.command_handling_group_0c00cg0 | Out-Null
 
 # Get URL for Proxy App Settings
 # $commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName $params.command_handling_group_0c00cg0 -Name $params.command_create_logapp_httptrig_0ccrclh -TriggerName $params.command_create_logapp_httptrig_name_0ccrclhn).Value.TrimStart("https:").TrimStart("/")
-
 
 return $params

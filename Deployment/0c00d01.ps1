@@ -1,10 +1,10 @@
 # Deploy CDB Commands...slot environment and region is covered by CDB redundancy mechanisms
-param ($params)
+param ([hashtable]$params = @{})
 
 if (((Get-AzContext).subscription).id -ne $params.command_storage_group_sub_0c00dg0s)
 {
     $context = Get-AzSubscription -SubscriptionId $params.command_storage_group_sub_0c00dg0s
-    Set-AzContext $context
+    Set-AzContext $context | Out-Null
 }
 
 # not in production !
@@ -15,7 +15,7 @@ if ($lane -ne 'z') {
 
     Remove-AzResourceGroup `
         -Name $params.command_storage_group_0c00dg0 `
-        -Force -ErrorAction SilentlyContinue
+        -Force -ErrorAction SilentlyContinue | Out-Null
 }
 
 Write-Host "======================="
@@ -24,7 +24,7 @@ Write-Host "======================="
 
 New-AzResourceGroup `
     -Name $params.command_storage_group_0c00dg0 `
-    -Location $params.command_storage_group_loc_0c00dg0l
+    -Location $params.command_storage_group_loc_0c00dg0l | Out-Null
 
 Write-Host "========================"
 Write-Host "Create CDB Commands Data"
@@ -38,7 +38,7 @@ New-AzResourceGroupDeployment `
         location = $params.command_storage_group_loc_0c00dg0l;
         database = $params.command_storage_cdb_database_0c00dd0;
         collection = $params.command_storage_cdb_collection_0c00do0;
-    }
+    } | Out-Null
 
 # Connection string into params for leasers (command handling and publishing)
 $cmddbconn = 
@@ -49,8 +49,6 @@ $cmddbconn =
             -Type "ConnectionStrings"
     )['Primary SQL Connection String']
 
-$params = $params + @{
-    command_storage_cdb_connstr_0c00dc0c = $cmddbconn;
-}
+$params.Add("command_storage_cdb_connstr_0c00dc0c",$cmddbconn)
 
 return $params

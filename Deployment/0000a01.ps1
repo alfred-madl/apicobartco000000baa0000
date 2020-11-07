@@ -1,88 +1,55 @@
-param ($tenant='apico', $set='ba', $project='rt', $service='co', $version='00', $lane='1', $slot='g', $environment='p', $region='s', $subscription='aec9ffa0-e92d-492d-87b7-a26053b2e22c', $gittoken='', $gitpath='https://github.com/alfred-madl/', $tenantid='36459f7c-f2a9-49f0-845f-eead0c94bd39')
+# API Proxy
+param ([hashtable]$params = @{})
 
-$objecttype = '00'
-# Publish commands
-$operation = '00'
-# Commands handling
-$area = 'a'
-
-$group = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'g','0',$lane,$slot,$environment,$region)
-
-$location = switch($region) {
-    's' {'Southeast Asia'; break} 
-    'e' {'East Asia'; break} 
+if (((Get-AzContext).subscription).id -ne $params.api_proxy_group_sub_0000ag0s)
+{
+    $context = Get-AzSubscription -SubscriptionId $params.api_proxy_group_sub_0000ag0s
+    Set-AzContext $context | Out-Null
 }
-
- $locationkey = switch($region) {
-    's' {'southeastasia'; break} 
-    'e' {'eastasia'; break} 
-}
-
-$plntemplate=-join('00','00','0','p','0','.template.json')
-
-$plnname = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'p','0',$lane,$slot,$environment,$region)
-    
-$sactemplate=-join('00','00','0','s','0','.template.json')
-
-$sacname = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'s','0',$lane,$slot,$environment,$region)
-
-$fnctemplate=-join('00','00','0','a','0','.template.json')
-
-$fncname = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
-
-$fncrepo = `
-    -join($gitpath, $tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0','0','0','0','0','.git')
-
-$fncbranch = `
-    -join($tenant,$set,$project,$service,$version,$objecttype,$operation,$area,'a','0',$lane,$slot,$environment,$region)
-   
 
 Write-Host "============================"
 Write-Host "Delete RG API Function Proxy"
 Write-Host "============================"
 
-Remove-AzResourceGroup -Name $group -Force -ErrorAction SilentlyContinue
+Remove-AzResourceGroup -Name $params.api_proxy_group_0000ag0 -Force -ErrorAction SilentlyContinue | Out-Null
+
 
 
 Write-Host "============================"
-Write-Host "Create RG API FUnction Proxy"
+Write-Host "Create RG API Function Proxy"
 Write-Host "============================"
 
-New-AzResourceGroup -Name $group -Location $location
+New-AzResourceGroup -Name $params.api_proxy_group_0000ag0 -Location $params.api_proxy_group_loc_0000ag0l | Out-Null
+
 
 Write-Host "================="
 Write-Host "Set GitHub Token"
 Write-Host "================="
 
-if ($gittoken -eq '') {
-    $gittoken = Get-Content -Path gittoken.txt | Out-String
-} else {
-}
+# no idea why thats necessary...and all that must happen LONG before Function is created...othwise we get STRANGE errors...
+$gittoken = $params.gittoken
 
-Set-AzResource -PropertyObject @{ token = "$gittoken"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force #| Out-Null
-
+Set-AzResource -PropertyObject @{ token = "$gittoken"; } -ResourceId /providers/Microsoft.Web/sourcecontrols/GitHub -ApiVersion 2015-08-01 -Force | Out-Null
 
 Write-Host "=================================="
 Write-Host "Create API Function Proxy App Plan"
 Write-Host "=================================="
 
 New-AzResourceGroupDeployment `
-    -ResourceGroupName $group `
-    -TemplateFile $plntemplate `
-    -TemplateParameterObject @{ name = $plnname;  location = $location; }
+    -ResourceGroupName $params.api_proxy_group_0000ag0 `
+    -TemplateFile $params.api_proxy_appsvcpln_tpl_0000ap0t `
+    -TemplateParameterObject @{ name = $params.api_proxy_appsvcpln_name_0000ap0;  location = $params.api_proxy_group_loc_0000ag0l; } | Out-Null
+
 
 Write-Host "====================================="
 Write-Host "Create API Function Proxy App Storage"
 Write-Host "====================================="
 
 New-AzResourceGroupDeployment `
-    -ResourceGroupName $group `
-    -TemplateFile $sactemplate `
-    -TemplateParameterObject @{ name = $sacname;  location = $location; }
+    -ResourceGroupName $params.api_proxy_group_0000ag0 `
+    -TemplateFile $params.api_proxy_storage_tpl_0000as0t `
+    -TemplateParameterObject @{ name = $params.api_proxy_storage_account_0000as0;  location = $params.api_proxy_group_loc_0000ag0l; } | Out-Null
+
 
 
 Write-Host "==============================="
@@ -90,54 +57,53 @@ Write-Host "Create API Proxy Function App"
 Write-Host "==============================="
 
 New-AzResourceGroupDeployment `
-    -ResourceGroupName $group `
-    -TemplateFile $fnctemplate `
-    -TemplateParameterObject @{ name = $fncname;  location = $location; `
-            plan = $plnname; plansubscription = $subscription; `
-            plangroup = $group; repo = $fncrepo; `
-            branch = $fncbranch; }
+    -ResourceGroupName $params.api_proxy_group_0000ag0 `
+    -TemplateFile $params.api_proxy_funcapp_tpl_0000aa0t `
+    -TemplateParameterObject @{ name = $params.api_proxy_funcapp_name_0000aa0;  location = $params.api_proxy_group_loc_0000ag0l; `
+            plan = $params.api_proxy_appsvcpln_name_0000ap0; plansubscription = $params.api_proxy_group_sub_0000ag0s; `
+            plangroup = $params.api_proxy_group_0000ag0; repo = $params.api_proxy_funcapp_repos_0000aa0r; `
+            branch = $params.api_proxy_funcapp_branch_0000aa0b; } | Out-Null
+
 
 
 Write-Host "============================="
-Write-Host "Stop Command Publish Function"
+Write-Host "Stop API Proxy Function"
 Write-Host "============================="
 
-Stop-AzFunctionApp -Name $fncname -ResourceGroupName $group -Force
+Stop-AzFunctionApp -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -Force | Out-Null
+
 
 
 
 Write-Host "========================================"
-Write-Host "Create Command Publish Function Settings"
+Write-Host "Create API Proxy Function Settings"
 Write-Host "========================================"
 
-# Get URL for Proxy App Settings
-$commandgroup = `
-    -join($tenant,$set,$project,$service,$version,'0c','00','c','g','0',$lane,$slot,$environment,$region)
+$commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName $params.command_handling_group_0c00cg0 -Name $params.command_create_logapp_httptrig_0ccrclh -TriggerName $params.command_create_logapp_httptrig_name_0ccrclhn).Value.TrimStart("https:").TrimStart("/")
 
-$httptriggerlogicname = `
-    -join($tenant,$set,$project,$service,$version,'0c','cr','c','l','h',$lane,$slot,$environment,$region)
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 `
+    -ResourceGroupName $params.api_proxy_group_0000ag0 `
+    -AppSetting @{"AzureWebJobsStorage" = "DefaultEndpointsProtocol=https;AccountName=" + $params.api_proxy_storage_account_0000as0 + ";AccountKey=" + (Get-AzStorageAccountKey -ResourceGroupName $params.api_proxy_group_0000ag0 -AccountName $params.api_proxy_storage_account_0000as0)[0].Value + ";EndpointSuffix=core.windows.net" } -Force | Out-Null
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"FUNCTIONS_EXTENSION_VERSION" = $params.api_proxy_funcapp_extvers_0000aa0v} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"FUNCTIONS_WORKER_RUNTIME" = $params.api_proxy_funcapp_runtime_0000aa0n} -Force | Out-Null
 
-$commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName $commandgroup -Name $httptriggerlogicname -TriggerName "manual").Value.TrimStart("https:").TrimStart("/")
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-url-rm" = "$commandurl"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-url-cl" = "$commandurl"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-url-in" = "$commandurl"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-url-up" = "$commandurl"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-url-cr" = "$commandurl"} -Force | Out-Null
+Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-url-de" = "$commandurl"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-url-re" = "xxx"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-url-li" = "xxx"} -Force | Out-Null
 
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"AzureWebJobsStorage" = "DefaultEndpointsProtocol=https;AccountName=" + $sacname + ";AccountKey=" + (Get-AzStorageAccountKey -ResourceGroupName $group -AccountName $sacname)[0].Value + ";EndpointSuffix=core.windows.net" } -Force | Out-Null
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"FUNCTIONS_EXTENSION_VERSION" = "~3"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"FUNCTIONS_WORKER_RUNTIME" = "dotnet"} -Force | Out-Null
-
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-rm" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-cl" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-in" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-up" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-cr" = "$commandurl"} -Force | Out-Null
-Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-de" = "$commandurl"} -Force | Out-Null
-#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-re" = "xxx"} -Force | Out-Null
-#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-url-li" = "xxx"} -Force | Out-Null
-
-#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-key-re" = "xxx"} -Force | Out-Null
-#Update-AzFunctionAppSetting -Name $fncname -ResourceGroupName $group -AppSetting @{"x-apico-operation-key-li" = "xxx"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-key-re" = "xxx"} -Force | Out-Null
+#Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-key-li" = "xxx"} -Force | Out-Null
 
 Write-Host "=============================="
-Write-Host "Start Command Publish Function"
+Write-Host "Start API Proxy Function"
 Write-Host "=============================="
 
-Start-AzFunctionApp -Name $fncname -ResourceGroupName $group
+Start-AzFunctionApp -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 | Out-Null
 
+
+return $params
