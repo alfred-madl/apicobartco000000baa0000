@@ -23,9 +23,7 @@ Write-Host "====================================================================
 Write-Host "Create AAD ServicePrincipal for Event Grid Domain API Connection for Logic App to Clear Commands"
 Write-Host "================================================================================================"
 
-$egdscope = -join("/subscriptions/",$params.command_handling_group_sub_0c00cg0s,"/resourceGroups/",$params.command_handling_group_0c00cg0,"/providers/Microsoft.EventGrid/domains/",$params.command_publishing_egd_name_0cpbce0)
-
-New-AzADServicePrincipal -ApplicationId $aadappid -StartDate $params.command_clear_logapp_egdtrig_0cclclgb -Enddate $params.command_clear_logapp_egdtrig_0cclclge -Scope $egdscope | Out-Null 
+New-AzADServicePrincipal -ApplicationId $aadappid -StartDate $params.command_clear_logapp_egdtrig_0cclclgb -Enddate $params.command_clear_logapp_egdtrig_0cclclge -Scope $params.command_publishing_egd_scope_0cpbce0s | Out-Null
 
 Write-Host "=================================="
 Write-Host "Create RG Command Clear Processing"

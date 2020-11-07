@@ -246,4 +246,12 @@ $params = $params + @{
     read_view_logapp_egdtrig_00prrlge =         $params.now.AddYears(2);
 }
 
+# Level 2 name and params
+$params = $params + @{ 
+    # ===============================
+    # Command Handling and Publishing
+    # ===============================
+    # Event Grid Domain for publishing commands to e.g. view processors SCOPE for role assignments of AAD App
+    command_publishing_egd_scope_0cpbce0s =  -join("/subscriptions/",$params.command_handling_group_sub_0c00cg0s,"/resourceGroups/",$params.command_handling_group_0c00cg0,"/providers/Microsoft.EventGrid/domains/",$params.command_publishing_egd_name_0cpbce0);
+}
 return $params
