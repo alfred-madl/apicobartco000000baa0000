@@ -1,4 +1,4 @@
-# Command handling
+# Command clear handling
 param ([hashtable]$params = @{})
 
 if (((Get-AzContext).subscription).id -ne $params.command_clear_group_sub_0cclcg0s)
@@ -6,14 +6,6 @@ if (((Get-AzContext).subscription).id -ne $params.command_clear_group_sub_0cclcg
     $context = Get-AzSubscription -SubscriptionId $params.command_clear_group_sub_0cclcg0s
     Set-AzContext $context | Out-Null
 }
-
-Write-Host "==========================================================================================="
-Write-Host "Delete AAD Application for Event Grid Domain API Connection for Logic App to Clear Commands"
-Write-Host "==========================================================================================="
-
-Remove-AzADServicePrincipal -DisplayName $params.command_clear_logapp_egdtrig_0cclclgr -Force -ErrorAction SilentlyContinue | Out-Null
-
-Remove-AzADApplication -DisplayName $params.command_clear_logapp_egdtrig_0cclclgr -Force -ErrorAction SilentlyContinue | Out-Null
 
 Write-Host "==========================================================================================="
 Write-Host "Create AAD Application for Event Grid Domain API Connection for Logic App to Clear Commands"
@@ -34,13 +26,6 @@ Write-Host "====================================================================
 $egdscope = -join("/subscriptions/",$params.command_handling_group_sub_0c00cg0s,"/resourceGroups/",$params.command_handling_group_0c00cg0,"/providers/Microsoft.EventGrid/domains/",$params.command_publishing_egd_name_0cpbce0)
 
 New-AzADServicePrincipal -ApplicationId $aadappid -StartDate $params.command_clear_logapp_egdtrig_0cclclgb -Enddate $params.command_clear_logapp_egdtrig_0cclclge -Scope $egdscope | Out-Null 
-
-Write-Host "=================================="
-Write-Host "Delete RG Command Clear Processing"
-Write-Host "=================================="
-
-Remove-AzResourceGroup -Name $params.command_clear_group_0cclcg0 -Force -ErrorAction SilentlyContinue | Out-Null
-
 
 Write-Host "=================================="
 Write-Host "Create RG Command Clear Processing"

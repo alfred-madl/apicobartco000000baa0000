@@ -8,15 +8,6 @@ if (((Get-AzContext).subscription).id -ne $params.read_view_group_sub_0000rg0s)
 }
 
 Write-Host "==========================="
-Write-Host "Delete RG Read View"
-Write-Host "==========================="
-
-Remove-AzResourceGroup `
-    -Name $params.read_view_group_0000rg0 `
-    -Force -ErrorAction SilentlyContinue | Out-Null
-
-
-Write-Host "==========================="
 Write-Host "Create RG Read View"
 Write-Host "==========================="
 

@@ -8,14 +8,6 @@ if (((Get-AzContext).subscription).id -ne $params.api_proxy_group_sub_0000ag0s)
 }
 
 Write-Host "============================"
-Write-Host "Delete RG API Function Proxy"
-Write-Host "============================"
-
-Remove-AzResourceGroup -Name $params.api_proxy_group_0000ag0 -Force -ErrorAction SilentlyContinue | Out-Null
-
-
-
-Write-Host "============================"
 Write-Host "Create RG API Function Proxy"
 Write-Host "============================"
 
@@ -98,12 +90,5 @@ Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -Resour
 
 #Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-key-re" = "xxx"} -Force | Out-Null
 #Update-AzFunctionAppSetting -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 -AppSetting @{"x-apico-operation-key-li" = "xxx"} -Force | Out-Null
-
-Write-Host "=============================="
-Write-Host "Start API Proxy Function"
-Write-Host "=============================="
-
-Start-AzFunctionApp -Name $params.api_proxy_funcapp_name_0000aa0 -ResourceGroupName $params.api_proxy_group_0000ag0 | Out-Null
-
 
 return $params

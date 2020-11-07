@@ -8,15 +8,6 @@ if (((Get-AzContext).subscription).id -ne $params.command_handling_group_sub_0c0
 }
 
 Write-Host "==========================="
-Write-Host "Delete RG Command Handling"
-Write-Host "==========================="
-
-Remove-AzResourceGroup `
-    -Name $params.command_handling_group_0c00cg0 `
-    -Force -ErrorAction SilentlyContinue | Out-Null
-
-
-Write-Host "==========================="
 Write-Host "Create RG Command Handling"
 Write-Host "==========================="
 

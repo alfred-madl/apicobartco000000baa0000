@@ -7,17 +7,6 @@ if (((Get-AzContext).subscription).id -ne $params.command_storage_group_sub_0c00
     Set-AzContext $context | Out-Null
 }
 
-# not in production !
-if ($lane -ne 'z') {
-    Write-Host "======================="
-    Write-Host "Delete RG Commands Data"
-    Write-Host "======================="
-
-    Remove-AzResourceGroup `
-        -Name $params.command_storage_group_0c00dg0 `
-        -Force -ErrorAction SilentlyContinue | Out-Null
-}
-
 Write-Host "======================="
 Write-Host "Create RG Commands Data"
 Write-Host "======================="

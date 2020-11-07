@@ -1,6 +1,9 @@
-# Main deployment script
+# Set all names and params
 param ([hashtable]$params = @{})
 
+# ==================
+# Locations
+# ==================
 $location = switch($params.region) {
     's' {'Southeast Asia'; break} 
     'e' {'East Asia'; break} 
@@ -21,9 +24,18 @@ $defaultlocation = switch($params.defaultregion) {
     'e' {'eastasia'; break} 
 }
 
+# ==================
+# Read Git token
+# ==================
 $gittoken = Get-Content -Path gittoken.txt | Out-String
 
+# ========================
+# Set all params and names
+# ========================
 $params = $params + @{ 
+    # ==================
+    # Common params
+    # ==================
     location = $location;
     locationkey = $locationkey;
     defaultlocation = $defaultlocation;

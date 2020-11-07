@@ -1,4 +1,4 @@
-@hostname = apicobartco000000baa1gps.azurewebsites.net
+@hostname = apicobartco000000aa01gps.azurewebsites.net
 @port = 443
 @host = {{hostname}}:{{port}}
 @contentType = application/json
