@@ -204,7 +204,4 @@ Start-AzFunctionApp `
     -Name $params.command_publishing_funcapp_name_0cpbca0 `
     -ResourceGroupName $params.command_handling_group_0c00cg0 | Out-Null
 
-# Get URL for Proxy App Settings
-# $commandurl = (Get-AzLogicAppTriggerCallbackUrl -ResourceGroupName $params.command_handling_group_0c00cg0 -Name $params.command_create_logapp_httptrig_0ccrclh -TriggerName $params.command_create_logapp_httptrig_name_0ccrclhn).Value.TrimStart("https:").TrimStart("/")
-
 return $params
