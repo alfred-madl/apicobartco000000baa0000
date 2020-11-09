@@ -117,6 +117,12 @@ $params = &"./0000r01.ps1" -params $params
 # Deploy API Function Proxy App
 $params = &"./0000a01.ps1" -params $params
 
+Write-Host "==========================="
+Write-Host "Deploy Level 2"
+Write-Host "==========================="
+# Start Commands Processing Publishing
+$params = &"./0c00c02.ps1" -params $params
+
 Write-Host "============================"
 Write-Host "Start API Function Proxy App"
 Write-Host "============================"

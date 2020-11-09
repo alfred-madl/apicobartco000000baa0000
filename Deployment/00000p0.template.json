@@ -16,13 +16,13 @@
             "name": "[parameters('name')]",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "F1",
-                "tier": "Free",
-                "size": "F1",
-                "family": "F",
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
                 "capacity": 0
             },
-            "kind": "app",
+            "kind": "functionapp",
             "properties": {
                 "perSiteScaling": false,
                 "maximumElasticWorkerCount": 1,

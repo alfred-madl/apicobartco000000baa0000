@@ -68,6 +68,8 @@ $params = $params + @{
     # Function App Settings
     api_proxy_funcapp_extvers_0000aa0v =   '~3'
     api_proxy_funcapp_runtime_0000aa0n =   'dotnet'
+    # file share name, same as function name
+    api_proxy_funcapp_share_0000aa0s =      -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','00','a','a','0',$params.lane,$params.slot,$params.environment,$params.region);
 
     # ===============================
     # CosmosDB Global Command Data
@@ -130,6 +132,9 @@ $params = $params + @{
     # Function App Settings
     command_publishing_funcapp_extvers_0cpbca0v =   '~3'
     command_publishing_funcapp_runtime_0cpbca0n =   'dotnet'
+    # file share name, same as function name
+    command_publishing_funcapp_share_0000aa0s =      -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','a','0',$params.lane,$params.slot,$params.environment,$params.region);
+
     # Lease CDB Account / database and collection for Publishing Function and its CDB Changefeed trigger
     command_publishing_lease_account_0cpbccl =      -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','c','l',$params.lane,$params.slot,$params.environment,$params.region);
     command_publishing_lease_database_0cpbdcl =     -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'0c','pb','c','d','l',$params.lane,$params.slot,$params.environment,$params.region);

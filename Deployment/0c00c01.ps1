@@ -107,7 +107,11 @@ New-AzResourceGroupDeployment `
         plangroup = $params.command_handling_group_0c00cg0; 
         repo = $params.command_publishing_funcapp_repos_0cpbca0r;
         branch = $params.command_publishing_funcapp_branch_0cpbca0b; 
-    } | Out-Null
+        storageconnstring = "DefaultEndpointsProtocol=https;AccountName=" + $params.command_publishing_storage_account_0cpbcs0 + ";AccountKey=" + (Get-AzStorageAccountKey -ResourceGroupName $params.command_handling_group_0c00cg0 -AccountName $params.command_publishing_storage_account_0cpbcs0)[0].Value + ";EndpointSuffix=core.windows.net";
+        storagesharename = $params.command_publishing_funcapp_share_0000aa0s;
+        runtime = $params.command_publishing_funcapp_runtime_0cpbca0n;
+        extversion = $params.command_publishing_funcapp_extvers_0cpbca0v;
+} | Out-Null
 
 
 Write-Host "==========================="
@@ -167,24 +171,6 @@ Write-Host "========================================"
 Write-Host "Create Command Publish Function Settings"
 Write-Host "========================================"
 
-
-Update-AzFunctionAppSetting `
-    -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0 `
-    -AppSetting @{"AzureWebJobsStorage" = "DefaultEndpointsProtocol=https;AccountName=" + $params.command_publishing_storage_account_0cpbcs0  + ";AccountKey=" + `
-        (
-            Get-AzStorageAccountKey -ResourceGroupName $params.command_handling_group_0c00cg0  -AccountName $params.command_publishing_storage_account_0cpbcs0 
-        )[0].Value + ";EndpointSuffix=core.windows.net" } `
-    -Force | Out-Null
-
-Update-AzFunctionAppSetting `
-    -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0 `
-    -AppSetting @{"FUNCTIONS_EXTENSION_VERSION" = $params.command_publishing_funcapp_extvers_0cpbca0v} -Force | Out-Null
-
-Update-AzFunctionAppSetting `
-    -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0 `
-    -AppSetting @{"FUNCTIONS_WORKER_RUNTIME" = $params.command_publishing_funcapp_runtime_0cpbca0n} -Force | Out-Null
-
-
 Update-AzFunctionAppSetting -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0  -AppSetting @{"CDBPF_ConnectionString" = $params.command_storage_cdb_connstr_0c00dc0c } -Force | Out-Null
 Update-AzFunctionAppSetting -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0  -AppSetting @{"CDBPF_LeaseConnectionString" = $leasedbconn } -Force | Out-Null
 Update-AzFunctionAppSetting -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0  -AppSetting @{"CDBPF_DatabaseName" = $params.command_storage_cdb_database_0c00dd0 } -Force | Out-Null
@@ -195,13 +181,5 @@ Update-AzFunctionAppSetting -Name $params.command_publishing_funcapp_name_0cpbca
 Update-AzFunctionAppSetting -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0  -AppSetting @{"CDBPF_PreferredLocations" = $params.command_handling_group_loc_0c00cg0l } -Force | Out-Null
 Update-AzFunctionAppSetting -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0  -AppSetting @{"CDBPF_Event_TopicEndpoint" = "$egdendpoint"} -Force | Out-Null
 Update-AzFunctionAppSetting -Name $params.command_publishing_funcapp_name_0cpbca0 -ResourceGroupName $params.command_handling_group_0c00cg0  -AppSetting @{"CDBPF_Event_TopicKey" = "$egdkey"} -Force | Out-Null
-
-Write-Host "=============================="
-Write-Host "Start Command Publish Function"
-Write-Host "=============================="
-
-Start-AzFunctionApp `
-    -Name $params.command_publishing_funcapp_name_0cpbca0 `
-    -ResourceGroupName $params.command_handling_group_0c00cg0 | Out-Null
 
 return $params
