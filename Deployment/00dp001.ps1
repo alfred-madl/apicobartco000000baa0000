@@ -114,6 +114,19 @@ if ($lane -ne 'z') {
 # Deploy Read View - not complete yet...
 $params = &"./0000r01.ps1" -params $params
 
+<#
+# Deploy Search View
+$params = &"./0000s01.ps1" -params $params
+#>
+
+<#
+# Deploy Read View remove command - NO deployment in production !
+if ($lane -ne 'z') {
+    # Deploy Read View Remove Data
+    $params = &"./00rmr01.ps1" -params $params
+}
+#>
+
 # Deploy API Function Proxy App
 $params = &"./0000a01.ps1" -params $params
 
