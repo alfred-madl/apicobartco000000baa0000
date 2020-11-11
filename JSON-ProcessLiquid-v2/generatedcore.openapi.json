@@ -11,7 +11,7 @@
             "dom": "apico.io"
         },
         "prj": {
-            "cod": "rt",
+            "cod": "rt","rs"
             "nam": "Root",
             "sdm": "api"
         },

@@ -34,14 +34,14 @@
         },
         "ver": {
             "cod": "0.1.0",
-            "nam": "Version0",
+            "nam": "Version010",
             "cmt": "Very first try",
             "maj": {
                 "cod": "00",
                 "num": 0,
                 "pth": "v0"
             },
-            "min": 0,
+            "min": 1,
             "pat": 0,
             "pth": "v0.1.0"
         },
@@ -107,7 +107,7 @@
                 "cod": "subscr1",
                 "nam": "Subscription1",
                 "azure-id": "aec9ffa0-e92d-492d-87b7-a26053b2e22c",
-                "cmt": "xxxx"
+                "cmt": "Development"
             }
         }
     },
@@ -809,9 +809,7 @@
                                             "cr": true,
                                             "re": true,
                                             "up": true,
-                                            "de": true,
-                                            "gn": true,
-                                            "dp": true
+                                            "de": true
                                         },
                                         "examples": {
                                             "f1gp": "{\"cod\": \"1gp\",\"nam\": \"Dev-Plg-Maj-Int-Green-Primary\",\"lan\": \"1\",\"slt\": \"g\",\"env\": \"p\",\"cmt\": \"Fam1\"}",
@@ -833,9 +831,7 @@
                                                     "cr": true,
                                                     "re": true,
                                                     "up": true,
-                                                    "de": true,
-                                                    "gn": true,
-                                                    "dp": true
+                                                    "de": true
                                                 },
                                                 "examples": {
                                                     "i1gps": "{\"cod\": \"1gp\",\"nam\": \"Dev-Plg-Maj-Int-Green-Primary-SouthEastAsia\",\"fam\": \"1gp\",\"reg\": \"s\",\"sbs\": \"subscr1\",\"cmt\": \"Instance11\"}",
@@ -904,11 +900,10 @@
                                                             "li": true,
                                                             "rs": true,
                                                             "rm": true,
-                                                            "cr": false,
+                                                            "cr": true,
                                                             "re": true,
-                                                            "up": true,
-                                                            "de": true,
-                                                            "dp": true
+                                                            "up": false,
+                                                            "de": true
                                                         },
                                                         "ent": [
                                                             {
@@ -922,9 +917,9 @@
                                                                     "li": true,
                                                                     "rs": true,
                                                                     "rm": true,
-                                                                    "cr": false,
+                                                                    "cr": true,
                                                                     "re": true,
-                                                                    "up": true,
+                                                                    "up": false,
                                                                     "de": true
                                                                 }
                                                             }
