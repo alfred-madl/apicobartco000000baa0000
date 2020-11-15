@@ -1,0 +1,282 @@
+[
+    // Such an object model is used to generate an entity application model that is used to generate an OpenAPI model...which is used to generate e.g. a proxy
+    // Missing: Multilang support, Object Versioning
+    // Packages with Features add e.g. attributes to metaclasses to add functionality per class 
+    // The metclass of "Object" could hold a pointer to the class that start the entity hierarchy for the App API
+    // All entity classes need a pointer to the "parent" for the API hierarchy
+    // The App could provide a ReadOnly MetaAPI at runtime
+    // Pointers can be used to navigate objects from both sides (navigability settings) and support from/to nullability and multiplicity
+    {
+        // ORIGIN OBJECT - OF THE KERNEL = APICo
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b80", //Object ID
+        "_oc": "or.mt.kn", //Object Class = Origin (root of origin service)
+        "cmt": "APICo Kernel Origin", // Comment
+        "nam": "Kernel", // Name
+        "cod": "kn" // Code of the origin Object ID in the local installation, must be unique !
+    },
+    {
+        // SOFTWARE COMPONENT - Kernel Metamodel Core
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b81", //Object ID
+        "_oc": "sc.mt.kn", //Object Class = Software Component (Submodel)
+        "cmt": "Kernel Metamodel Software Component (Submodel)", // Comment
+        "nam": "Metamodel", // Name
+        "seq": 0, // In which order are the SWCs interpreted / loaded when building the model, 0 -> n
+        "cod": "mt", /// code of the SWC at the origin, can not be changed locally
+        "ori": "kn" // local origin code of origin service Object ID where swc is coming from
+    },
+    // 
+    //  Object (ob) - Object Id (_oi), Object Class (_oc)
+    //      |
+    //      |- Meta Object (me), Meta Object Class (mo)...all objects descring the data objects and tehir functionality
+    //      |   |
+    //      |   |- Origin (or), Origin Class (oc)....an origin (id) of a service where a feature package is coming from
+    //      |   |- Package (pk), Package Class (pc)....a collection of features
+    //      |   |- Feature (fe), Feature Object Class (fc)...object model description components
+    //      |       |
+    //      |       |- Class (cl), Class Class (cc)...a class object that can create instances and / or lets subclasses inherit features
+    //      |       |   |
+    //      |       |   |- Object Class (oc), Class Class (cc)...the meta class of class "Object"
+    //      |       |   |- Meta Class (mc), Class Class (cc)...the superclass of all "Meta Object" meta classes
+    //      |       |   |   |
+    //      |       |   |   |- Meta Object Class (mo), Class Class (cc)....the meta class of class "Meta Object"
+    //      |       |   |   |- Origin Class (oc), Class Class (cc)....the meta class of class "Origin"
+    //      |       |   |   |- Package Class (pc), Class Class (cc)....the meta class of class "Package"
+    //      |       |   |   |- Feature Class (fc), Class Class (cc)....the superclass of all "Feature" meta classes
+    //      |       |   |       |
+    //      |       |   |       |- Feature Object Class (fo), Class Class (cc)....the meta class of class "Feature"
+    //      |       |   |       |- Class Class (cc), Class Class (cc)....the meta class of class "Class"
+    //      |       |   |       |- Method Class (ml), Class Class (cc)....the meta class of class "Method"
+    //      |       |   |       |- Attribute Class (ac), Class Class (cc)....the superclass of all "Attribute" meta classes
+    //      |       |   |       |   |
+    //      |       |   |       |   |- Attribute Object Class (ao), Class Class (cc)....the meta class of class "Attribute"
+    //      |       |   |       |   |- Pointer Class (po), Class Class (cc)....the meta class of class "Pointer"
+    //      |       |   |       |   |- Boolean Class (bc), Class Class (cc)....the meta class of class "Boolean"
+    //      |       |   |       |   |- String Class (sc), Class Class (cc)....the meta class of class "String"
+    //      |       |   |       |   |- Number Class (nc), Class Class (cc)....the meta class of class "Number"
+    //      |       |   |       |   |- Compound Class (cc), Class Class (cc)....the meta class of class "Compound"
+    //      |       |   |       |   |- Enumeration Class (ec), Class Class (cc)....the meta class of class "Enumeration"
+    //      |       |   |       |   
+    //      |       |   |       |- Taxonomy Class (tc), Class Class (cc)....the meta class of class "Taxonomy"
+    //      |       |   |       |- Entry Class (ec), Class Class (cc)....the superclass of all "Entry" meta classes
+    //      |       |   |           |   
+    //      |       |   |           |- Entry Object Class, Class Class (eo)....the meta class of class "Entry"
+    //      |       |   |           |- Language Class, Class Class (lc)....the meta class of class "Language"
+    //      |       |   |           |- Currency Class, Class Class (uc)....the meta class of class "Currency"
+    //      |       |   |           |- Country Class, Class Class (yc)....the meta class of class "Country"
+    //      |       |   |   
+    //      |       |   |- Data Class (dc), Class Class (cc)....the superclass of all "Data" meta classes
+    //      |       |       |
+    //      |       |       |- Data Object Class (dl), Class Class (cc)....the meta class of class "Data Object"
+    //      |       |       |- Entity Class (ec), Class Class (cc)....the superclass of all "Entity" meta classes
+    //      |       |       |   |- Entity Object Class (eo), Class Class (cc).......the meta class of class "Entity"
+    //      |       |       |   |
+    //      |       |       |   |
+    //      |       |       |   |
+    //      |       |       |   |- Tenant Class (eo), Class Class (cc).......the meta class of class "Tenant"
+    //      |       |       |   |- Set Class (so), Class Class (cc).......the meta class of class "Set"
+    //      |       |       
+    //      |       |- Method (mt), Method Class (mo)
+    //      |       |- Attribute (at), Attribute Object Class (ac)...nullability and multiplicity in association to class / compound
+    //      |       |   |
+    //      |       |   |-Pointer (pt), Pointer Class (po)
+    //      |       |   |-Boolean (bl), Boolean Class (bc)
+    //      |       |   |-String (st), String Class (sc)
+    //      |       |   |-Number (nm), Number Class (nc)
+    //      |       |   |-Compound (cp), Compound Class (cc)...(JSON object)
+    //      |       |   |-Enumeration (en), Enumeration Class (ec)...based on taxonomy
+    //      |       |   
+    //      |       |- Taxonomy (tx), Taxonomy Class (tc)...defines the class of the entries...
+    //      |       |   
+    //      |       |- Entry (et), Entry Object Class ()
+    //      |       |   |
+    //      |       |   |- Language, Language Class
+    //      |       |   |- Currency, Currency Class
+    //      |       |   |- Country, Country Class
+    //      |    
+    //      |- Data Object (do), Data Object CLass
+    //          |
+    //          |- Entity (en), Entity Object Class
+    //              |
+    //              |
+    //              |
+    //              |-Tenant (te), Tenant Class
+    //              |-Set (se), Set Class
+    // 
+    // Taxonomies: Language, Currency, Country, CallCodey, Continent, Gender, MailType, PhoneType, AddressType, IdentificationType, BankAccountType, SICCode, FileFormat, FileExtension, FaxType, LinkType, ChatType,...each in a Feature
+    // 
+    // ACL feature... adds owner + group + ACLS to Data Object ?
+    // Log feature...add createdby/at changed by/at deleted by/at to....
+    // SWC can DELETE a component object...delete-swc reference
+    // SWC can add/disable a taxonomy entry
+    // SWC can add / remove method, attribute to class
+    // SWC can add / remove class to allowed classes in pointer
+    // SWC can add / remove attribute to compound
+    // 
+    // Installed classes and methods can get "local" codes...to avoid collisions in 2-char codes !
+    // Same for "features" ?
+    {
+        // METACLASS - Class of all Metaclasses (non-data classes) - is its own instance
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b82", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        // "soc": "mt.kn", // The software component that defines the class association, can be overriden by another swc, default is the current swc
+        "cmt": "Class for all Metaclasses, this object is its own instance", // Comment
+        "nam": "MetaClass", // Name
+        "cod": "mc", // code of the components object, a class is a componets object
+        "scl": "cl.mt.kn", // SuperClass of this class: Class, the superclass for all object classses no matter if metaclass or not
+        "ins": "n", // instance: 0...abstract, 1...singleton, n...many
+        // "ssc": "mt.kn", // The software component that defines the superclass association, can be overriden by another swc,, default is the current swc
+        "swc": "mt.kn" // The software component where this class belongs to as SWC code + . + local origin code 
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b83", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Class for all NonMeta Data classes", // Comment
+        "nam": "DataClass", // Name
+        "cod": "dc",
+        "scl": "cl.mt.kn", // SuperClass
+        "ins": "1", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b84", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Superclass of all classes, no matter if metaclass or data class", // Comment
+        "nam": "Class", // Name
+        "cod": "cl",
+        "scl": "co.mt.kn", // SuperClass = Software ComponentObject
+        "ins": "0", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b85", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Software Component Object, class, method or attribute", // Comment
+        "nam": "ComponentObject", // Name
+        "cod": "co",
+        "scl": "mo.mt.kn", // SuperClass
+        "ins": "0", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b86", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Software Component, collection of component objects", // Comment
+        "nam": "SoftwareComponent", // Name
+        "cod": "sc",
+        "scl": "mo.mt.kn", // SuperClass
+        "ins": "n", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b87", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Origin, foreign domain, creates a local reference to a foreign service _oi, cod and nam must be unique", // Comment
+        "nam": "Origin", // Name
+        "cod": "or",
+        "scl": "mo.mt.kn", // SuperClass
+        "ins": "n", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b88", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Meta Object", // Comment
+        "nam": "MetaObject", // Name
+        "cod": "mo",
+        "scl": "ob.mt.kn", // SuperClass
+        "ins": "0", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b89", //Object ID
+        "_oc": "oc.mt.kn", //Object Class = Class for Object class
+        "cmt": "Object, root of the class tree", // Comment
+        "nam": "Object", // Name
+        "cod": "ob",
+        "scl": null, // SuperClass
+        "ins": "0", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b90", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Metaclass for Class 'Object'", // Comment
+        "nam": "ObjectClass", // Name
+        "cod": "oc",
+        "scl": "cl.mt.kn", // SuperClass
+        "ins": "1", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b91", //Object ID
+        "_oc": "dc.mt.kn", //Object Class = Dataclass
+        "cmt": "Non Meta Data Object", // Comment
+        "nam": "DataObject", // Name
+        "cod": "do",
+        "scl": "ob.mt.kn", // SuperClass
+        "ins": "0", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        // All entity classes need a nullable parent pointer reference to build the API hierarchy
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b92", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Class for all Entity classes", // Comment
+        "nam": "EntityClass", // Name
+        "cod": "ec",
+        "scl": "dc.mt.kn", // SuperClass
+        "ins": "n", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        // All entity classes need a nullable parent pointer reference to build the API hierarchy
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b93", //Object ID
+        "_oc": "ec.mt.kn", //Object Class = Entity Class
+        "cmt": "Entity, or also called a Collection", // Comment
+        "nam": "Entity", // Name
+        "cod": "en",
+        "scl": "do.mt.kn", // SuperClass
+        "ins": "0", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b94", //Object ID
+        "_oc": "mc.mt.kn", //Object Class = Metaclass
+        "cmt": "Class for the Attribute class", // Comment
+        "nam": "AttributeClass", // Name
+        "cod": "ac",
+        "scl": "cl.mt.kn", // SuperClass
+        "ins": "1", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b95", //Object ID
+        "_oc": "ac.mt.kn", //Object Class = Attribute Class
+        "cmt": "Attribute, or also called a Property", // Comment
+        "nam": "Attribute", // Name
+        "cod": "at",
+        "scl": "co.mt.kn", // SuperClass = COmponent Object
+        "ins": "0", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b96", //Object ID
+        "_oc": "ac.mt.kn", //Object Class = Metaclass
+        "cmt": "Class for the Pointer class", // Comment
+        "nam": "PointerClass", // Name
+        "cod": "pc",
+        "scl": "ac.mt.kn", // SuperClass
+        "ins": "1", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+    {
+        "_oi": "458e850c-35bd-42dd-abcd-6591793a5b97", //Object ID
+        "_oc": "pc.mt.kn", //Object Class = Pointer Class
+        "cmt": "Pointer Attribute, or also called an Object Property", // Comment
+        "nam": "Pointer", // Name
+        "cod": "pt",
+        "scl": "at.mt.kn", // SuperClass = Attribute
+        "ins": "n", // instance: 0...abstract, 1...singleton, n...many
+        "swc": "mt.kn"
+    },
+]
