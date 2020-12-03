@@ -1,0 +1,120 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        },
+        "locationkey": {
+            "type": "String"
+        },
+        "domainname": {
+            "type": "String"
+        },
+        "topicname": {
+            "type": "String"
+        },
+        "egdconname": {
+            "type": "String"
+        },
+        "egdgroup": {
+            "type": "String"
+        },
+        "egdsubscription": {
+            "type": "String"
+        },
+        "egdsubscrname": {
+            "type": "String"
+        },
+        "logicname": {
+            "type": "String"
+        },
+        "logicsubscription": {
+            "type": "String"
+        },
+        "logicgroup": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "actions": {
+                        "Execute": {
+                            "inputs": {
+                                "body": "@triggerBody()?['data']",
+                                "host": {
+                                    "triggerName": "manual",
+                                    "workflow": {
+                                        "id": "[concat('/subscriptions/',parameters('logicsubscription'),'/resourceGroups/',parameters('logicgroup'),'/providers/Microsoft.Logic/workflows/',parameters('logicname'))]"
+                                    }
+                                }
+                            },
+                            "runAfter": {},
+                            "type": "Workflow"
+                        }
+                    },
+                    "contentVersion": "1.0.0.0",
+                    "outputs": {},
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "When_a_resource_event_occurs": {
+                            "correlation": {},
+                            "inputs": {
+                                "body": {
+                                    "properties": {
+                                        "destination": {
+                                            "endpointType": "webhook",
+                                            "properties": {
+                                                "endpointUrl": "@{listCallbackUrl()}"
+                                            }
+                                        },
+                                        "topic": "[concat('/subscriptions/',parameters('egdsubscription'),'/resourceGroups/',parameters('egdgroup'),'/providers/Microsoft.EventGrid/domains/',parameters('domainname'),'/topics/',parameters('topicname'))]"
+                                    }
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "[concat('@parameters(''$connections'')[''',parameters('egdconname'),'''][''connectionId'']')]"
+                                    }
+                                },
+                                "path": "[concat('/subscriptions/@{encodeURIComponent(''',parameters('logicsubscription'),''')}/providers/@{encodeURIComponent(''Microsoft.EventGrid.Domains'')}/resource/eventSubscriptions')]",
+                                "queries": {
+                                    "subscriptionName": "[parameters('egdsubscrname')]",
+                                    "x-ms-api-version": "2017-09-15-preview"
+                                }
+                            },
+                            "splitOn": "@triggerBody()",
+                            "type": "ApiConnectionWebhook"
+                        }
+                    }
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "[parameters('egdconname')]": {
+                                "connectionId": "[concat('/subscriptions/',parameters('logicsubscription'),'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Web/connections/',parameters('egdconname'))]",
+                                "connectionName": "[parameters('egdconname')]",
+                                "id": "[concat('/subscriptions/',parameters('logicsubscription'),'/providers/Microsoft.Web/locations/',parameters('locationkey'),'/managedApis/azureeventgrid')]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

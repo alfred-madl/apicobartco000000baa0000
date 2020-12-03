@@ -7,7 +7,7 @@ if (((Get-AzContext).subscription).id -ne $params.command_storage_group_sub_0c00
     Set-AzContext $context | Out-Null
 }
 
-# not in production !
+# do NOT delete in production !
 if ($lane -ne 'z') {
     Write-Host "======================="
     Write-Host "Delete RG Commands Data"

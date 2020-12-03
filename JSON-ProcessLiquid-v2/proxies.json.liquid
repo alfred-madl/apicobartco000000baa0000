@@ -1,17 +1,23 @@
----
----
 {%- comment %} ================================= Transform OpenAPI to Azure Function App proxies.json ============================================= {% endcomment -%}
 {% if site.time == nil -%}
 {% assign pths = paths -%}
 {% assign xapicoinfo = x-apico-info -%}
+{% assign inf = info -%}
+{% assign srvs = servers -%}
 {% else -%}
 {% assign pths = site.data.openapi.paths -%}
 {% assign xapicoinfo = site.data.openapi.x-apico-info -%}
+{% assign inf = site.data.openapi.info -%}
+{% assign srvs = site.data.openapi.servers -%}
 {% endif -%}
-{%- comment %} ================================= Fixed Proxies ============================================= {% endcomment %}
+{% assign parts = srvs[0].url | split: "/" -%}
+{% assign prt = parts[0] | remove: ":" -%}
+{% assign hst = parts[2] -%}
+{% assign pth =  srvs[0].url | remove_first: prt | remove_first: "://" | remove_first: hst -%}
 {
     "$schema": "http://json.schemastore.org/proxies",
     "proxies": {
+        {%- comment %} ================================= Fixed Proxies ============================================= {% endcomment %}
         {%- comment %}
         "directory_signup": {
             "desc": [
@@ -88,7 +94,7 @@
         {%- for path in pths %}{% for method in path[1] %}
         {%- if method[0]=="get" or method[0]=="put" or method[0]=="post" or method[0]=="delete" or method[0]=="options" or method[0]=="head" or method[0]=="patch" or method[0]=="trace" %}
         {%- comment %} ================================= Proxy name ============================================= {% endcomment %}
-        "{{ xapicoinfo.svc.nam | downcase }}_{{ xapicoinfo.ver.maj.pth -}}
+        "{{ pth | replace_first: "/", "" | replace: "/", "_" -}}
             {{- path[0] | replace: "(", "_" | remove: a | remove: ")" | remove: b | remove: d | remove: "-" | replace: c, "_" | downcase -}}
             {% if path[0] == "/" %}root{% endif %}_{{ method[0] }}": {
             {%- comment %} ================================= Proxy description ============================================= {% endcomment %}
@@ -96,284 +102,80 @@
                 "{{ method[1].description }}"
             ],
             "matchCondition": {
-                "route": "/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.maj.pth }}{{ path[0] }}",
+                "route": "{{ pth }}{{ path[0] }}",
                 "methods": [
                     "{{ method[0] | upcase }}"
                 ]
             },
             {%- comment %} ================================= Proxy backend url ============================================= {% endcomment %}
             "backendUri": "https://%x-apico-operation-url-
-                {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}li
-                {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}in
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}rm
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}cl
-                {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" %}re
-                {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" %}up
-                {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" %}cr
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" %}de
-                {%- endif %}%",                
-                {%- comment %}
-                {{- xapicoinfo.ten.cod }}{{ xapicoinfo.set.cod }}{{ xapicoinfo.prj.cod }}{{ xapicoinfo.svc.cod }}{{ xapicoinfo.ver.cod -}}
-                nnnbfa0{{ xapicoinfo.ins.lan.cod }}{{ xapicoinfo.ins.slt.cod }}{{ xapicoinfo.ins.env.cod }}
-                {{- xapicoinfo.ins.reg.cod }}.azurewebsites.net/api/
-                {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}
-                    AzureTable-QueryEntities-v2
-                {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}
-                    AzureCosmosDB-StoreAPICall-v2
-                {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}
-                    Azure-Read-xxxx
-                {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}
-                    AzureCosmosDB-StoreAPICall-v2
-                {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}
-                    AzureCosmosDB-StoreAPICall-v2
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}
-                    AzureCosmosDB-StoreAPICall-v2
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}
-                    AzureCosmosDB-StoreAPICall-v2
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}
-                    AzureCosmosDB-StoreAPICall-v2
-                {%- endif %}",
-                {% endcomment %}
+            {%- assign reverse =  path[0] | split: "" | reverse -%}
+            {% assign last = reverse[0] -%}
+            {%- if method[0]=="get" and last==")" %}read
+                {%- elsif method[0]=="get" %}list
+                {%- else %}command
+            {%- endif %}%",                
             {%- comment %} ================================= Proxy overrides ============================================= {% endcomment %}
             "requestOverrides": {
-                {%- comment %}
-                "backend.request.headers.x-functions-key": "%x-apico-
-                {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}
-                    list
-                {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}
-                    command
-                {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}
-                    read
-                {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}
-                    command
-                {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}
-                    command
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}
-                    command
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}
-                    command
-                {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}
-                    command
-                {%- endif -%}
-                    -functions-key%",
-                {% endcomment %}
-                "backend.request.headers.x-apico-prx-request-method": "{request.method}",
+                "backend.request.headers.x-apico-request-format-version": "1",
+                "backend.request.headers.x-apico-event-data-version": "1",
+                "backend.request.headers.x-apico-api-version": "{{ inf.version }}",
                 "backend.request.method": "POST",
                 "backend.request.headers.Authorization": "",
-                "backend.request.headers.x-apico-prx-request-headers-Authorization": "{request.headers.Authorization}",
-                {%- comment %}
-                "backend.request.headers.x-apico-app-reg-aad-cli-id": "%apico-app-reg-aad-cli-id%",
-                "backend.request.headers.x-apico-app-reg-aad-ten-id": "%apico-app-reg-aad-ten-id%",
-                {%- endcomment %}
-                "backend.request.headers.x-apico-app-home": "https://{{ xapicoinfo.prj.sdm }}.{{ xapicoinfo.set.dom }}",
-                "backend.request.headers.x-apico-prx-match-route": "/{{ xapicoinfo.svc.nam | downcase }}/{{ xapicoinfo.ver.maj.pth }}{{ path[0] }}",
-                "backend.request.headers.x-apico-prx-match-methods": "{{ method[0] }}",
-                "backend.request.headers.x-apico-event-subject": "https://
-                    {{- xapicoinfo.prj.sdm }}.
-                    {{- xapicoinfo.set.dom }}/
-                    {{- xapicoinfo.svc.nam | downcase }}/
-                    {{- xapicoinfo.ver.maj.pth }}
-                    {{- path[0] }}",
-                "backend.request.headers.x-apico-event-type": "
-                    {{- xapicoinfo.ten.nam | downcase }}.
-                    {{- xapicoinfo.set.nam | downcase }}.
-                    {{- xapicoinfo.prj.nam | downcase }}.
-                    {{- xapicoinfo.svc.nam | downcase }}.
-                    {{- xapicoinfo.ver.maj.pth }}
-                    {{- path[1].x-apico-parent-entity-path }}.
-                    {{- path[1].x-apico-collection-name | downcase }}.
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}
-                        query
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}
-                        command
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}
-                        query
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}
-                        command
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}
-                        command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}
-                        command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}
-                        command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}
-                        command
-                    {%- endif -%}.
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}
-                        list
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}
-                        insert
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}
-                        remove
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}
-                        clear
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}
-                        read
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}
-                        update
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}
-                        create
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}
-                        delete
-                    {%- endif %}",
-                "backend.request.headers.x-apico-event-topic": "
-                    {{- xapicoinfo.ten.cod }}{{ xapicoinfo.set.cod }}{{ xapicoinfo.prj.cod }}
-                    {{- xapicoinfo.svc.cod }}{{ xapicoinfo.ver.cod }}
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" -%}00lilb0
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" -%}0cpbcb0
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" -%}00rerb0
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" -%}0cpbcb0
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" -%}0cpbcb0
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" -%}0cpbcb0
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" -%}0cpbcb0
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" -%}0cclcb0
-                    {%- endif %}{{ xapicoinfo.ins.lan.cod }}{{ xapicoinfo.ins.slt.cod -}}
-                    {{ xapicoinfo.ins.env.cod }}{{ xapicoinfo.ins.reg.cod }}",
-                "backend.request.headers.x-apico-event-data-version": "1",
-                "backend.request.headers.x-apico-tenant-code": "{{ xapicoinfo.ten.cod }}",
-                "backend.request.headers.x-apico-tenant-name": "{{ xapicoinfo.ten.nam }}",
-                "backend.request.headers.x-apico-tenant-key": "{{ xapicoinfo.ten.nam | downcase }}",
-                "backend.request.headers.x-apico-set-code": "{{ xapicoinfo.set.cod }}",
-                "backend.request.headers.x-apico-set-name": "{{ xapicoinfo.set.nam }}",
-                "backend.request.headers.x-apico-set-key": "{{ xapicoinfo.set.nam | downcase }}",
-                "backend.request.headers.x-apico-set-domain": "{{ xapicoinfo.set.dom }}",
-                "backend.request.headers.x-apico-project-code": "{{ xapicoinfo.prj.cod }}",
-                "backend.request.headers.x-apico-project-name": "{{ xapicoinfo.prj.nam }}",
-                "backend.request.headers.x-apico-project-key": "{{ xapicoinfo.prj.nam | downcase }}",
-                "backend.request.headers.x-apico-project-sub-domain": "{{ xapicoinfo.prj.sdm }}",
-                "backend.request.headers.x-apico-service-code": "{{ xapicoinfo.svc.cod }}",
-                "backend.request.headers.x-apico-service-name": "{{ xapicoinfo.svc.nam }}",
-                "backend.request.headers.x-apico-service-key": "{{ xapicoinfo.svc.nam | downcase }}",
-                "backend.request.headers.x-apico-version-code": "{{ xapicoinfo.ver.cod }}",
-                "backend.request.headers.x-apico-version-name": "{{ xapicoinfo.ver.nam }}",
-                "backend.request.headers.x-apico-version-key": "{{ xapicoinfo.ver.nam | downcase }}",
-                "backend.request.headers.x-apico-version-number": "{{ xapicoinfo.ver.num }}",
-                "backend.request.headers.x-apico-version-path": "{{ xapicoinfo.ver.maj.pth }}",
-                "backend.request.headers.x-apico-generation-id": "{{ xapicoinfo.gen.id }}",
-                "backend.request.headers.x-apico-generation-wt": "{{ xapicoinfo.gen.cti }}",
-                "backend.request.headers.x-apico-generation-template": "{{ xapicoinfo.gen.tpl }}",
-                "backend.request.headers.x-apico-deployment-id": "{{ xapicoinfo.dpl.id }}",
-                "backend.request.headers.x-apico-deployment-wt": "{{ xapicoinfo.dpl.cti }}",
-                "backend.request.headers.x-apico-path-type-code": "{{ path[1].x-apico-path-type-code }}",
-                "backend.request.headers.x-apico-path-type-name": "{{ path[1].x-apico-path-type-name }}",
-                "backend.request.headers.x-apico-collection-code": "{{ path[1].x-apico-collection-code }}",
-                "backend.request.headers.x-apico-collection-name": "{{ path[1].x-apico-collection-name }}",
-                "backend.request.headers.x-apico-collection-key": "{{ path[1].x-apico-collection-name | downcase }}",
-                "backend.request.headers.x-apico-collection-relative-path": "{{ path[1].x-apico-collection-name | downcase }}",
-                "backend.request.headers.x-apico-collection-absolute-path": "{{ path[1].x-apico-collection-absolute-path }}",
-                "backend.request.headers.x-apico-partition-key": "{{ path[1].x-apico-collection-absolute-path }}",
-                "backend.request.headers.x-apico-collection-qualified-path": "https://
-                    {{- xapicoinfo.prj.sdm }}.
-                    {{- xapicoinfo.set.dom }}/
-                    {{- xapicoinfo.svc.nam | downcase }}/
-                    {{- xapicoinfo.ver.maj.pth }}
-                    {{- path[1].x-apico-collection-absolute-path }}",
-                "backend.request.headers.x-apico-parent-collection-code": "{{ path[1].x-apico-parent-collection-code }}",
-                "backend.request.headers.x-apico-parent-collection-name": "{{ path[1].x-apico-parent-collection-name }}",
-                "backend.request.headers.x-apico-parent-collection-key": "{{ path[1].x-apico-parent-collection-name | downcase }}",
-                "backend.request.headers.x-apico-parent-collection-absolute-path": "{{ path[1].x-apico-parent-collection-absolute-path }}",
-                "backend.request.headers.x-apico-parent-partition-key": "{{ path[1].x-apico-parent-collection-absolute-path }}",
-                "backend.request.headers.x-apico-entity-code": "{{ path[1].x-apico-entity-code }}",
-                "backend.request.headers.x-apico-entity-name": "{{ path[1].x-apico-entity-name }}",
-                "backend.request.headers.x-apico-entity-key": "{{ path[1].x-apico-entity-name | downcase }}",
-                "backend.request.headers.x-apico-parent-entity-code": "{{ path[1].x-apico-parent-entity-code }}",
-                "backend.request.headers.x-apico-parent-entity-name": "{{ path[1].x-apico-parent-entity-name }}",
-                "backend.request.headers.x-apico-parent-entity-key": "{{ path[1].x-apico-parent-entity-name | downcase }}",
-                {%- if path[1].x-apico-parent-collection-path == "/" -%}
-                "backend.request.headers.x-apico-parent-object-id": "00000000-0000-0000-0000-000000000000",
-                {%- endif %}
-                "backend.request.headers.x-apico-root-object-id": "00000000-0000-0000-0000-000000000000",
-                "backend.request.headers.x-apico-root-partition-key": "/",
-                "backend.request.headers.x-apico-operation-code": "
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}li
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}in
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}rm
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}cl
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" %}re
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" %}up
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" %}cr
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" %}de
-                    {%- endif %}",
-                "backend.request.headers.x-apico-operation-name": "
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}List
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}Insert
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}Remove
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}Clear
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" %}Read
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" %}Upsert
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" %}Create
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" %}Delete
-                    {%- endif %}",
-                "backend.request.headers.x-apico-operation-key": "
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}list
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}insert
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}remove
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}clear
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" %}read
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" %}update
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" %}create
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" %}delete
-                    {%- endif %}",
-                "backend.request.headers.x-apico-operation-type-code": "
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}qu
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}co
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}co
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}co
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" %}qu
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" %}co
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" %}co
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" %}co
-                    {%- endif %}",
-                "backend.request.headers.x-apico-operation-type-name": "
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}Query
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}Command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}Command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}Command
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" %}Query
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" %}Command
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" %}Command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" %}Command
-                    {%- endif %}",
-                "backend.request.headers.x-apico-operation-type-key": "
-                    {%- if method[0]=="get" and path[1].x-apico-path-type-code=="c" %}query
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="c" %}command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="r" %}command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="m" %}command
-                    {%- elsif method[0]=="get" and path[1].x-apico-path-type-code=="o" %}query
-                    {%- elsif method[0]=="put" and path[1].x-apico-path-type-code=="o" %}command
-                    {%- elsif method[0]=="post" and path[1].x-apico-path-type-code=="o" %}command
-                    {%- elsif method[0]=="delete" and path[1].x-apico-path-type-code=="o" %}command
-                    {%- endif %}",
-                {%- for parameter in path[1].parameters -%}
-                {% if parameter.in == "path" %}
-                "backend.request.headers.x-apico-{{ parameter.in }}-parameter-{{ parameter.name }}": "{ {{- parameter.name -}} }",
-                {%- endif -%}
-                {%- if parameter.x-apico-object-identifier == true %}
-                "backend.request.headers.x-apico-object-id": "{ {{- parameter.name -}} }",
-                {%- endif -%}
-                {% if parameter.x-apico-parent-object-identifier == true %}
-                "backend.request.headers.x-apico-parent-object-id": "{ {{- parameter.name -}} }",
-                {%- endif -%}
-                {%- endfor %}
-                "backend.request.headers.x-apico-family-code": "{{ xapicoinfo.ins.fam.cod }}",
-                "backend.request.headers.x-apico-family-name": "{{ xapicoinfo.ins.fam.nam }}",
-                "backend.request.headers.x-apico-family-key": "{{ xapicoinfo.ins.fam.nam | downcase }}",
-                "backend.request.headers.x-apico-lane-code": "{{ xapicoinfo.ins.lan.cod }}",
-                "backend.request.headers.x-apico-lane-name": "{{ xapicoinfo.ins.lan.nam }}",
-                "backend.request.headers.x-apico-lane-key": "{{ xapicoinfo.ins.lan.nam | downcase }}",
-                "backend.request.headers.x-apico-slot-code": "{{ xapicoinfo.ins.slt.cod }}",
-                "backend.request.headers.x-apico-slot-name": "{{ xapicoinfo.ins.slt.nam }}",
-                "backend.request.headers.x-apico-slot-key": "{{ xapicoinfo.ins.slt.nam | downcase }}",
-                "backend.request.headers.x-apico-environment-code": "{{ xapicoinfo.ins.env.cod }}",
-                "backend.request.headers.x-apico-environment-name": "{{ xapicoinfo.ins.env.nam }}",
-                "backend.request.headers.x-apico-environment-key": "{{ xapicoinfo.ins.env.nam | downcase }}",
-                "backend.request.headers.x-apico-region-code": "{{ xapicoinfo.ins.reg.cod }}",
-                "backend.request.headers.x-apico-region-name": "{{ xapicoinfo.ins.reg.nam }}",
-                "backend.request.headers.x-apico-region-key": "{{ xapicoinfo.ins.reg.nam | downcase }}",
-                "backend.request.headers.x-apico-subscription-id": "{{ xapicoinfo.ins.sbs.azure-id }}",
-                "backend.request.headers.x-apico-request-format-version": "1",
-                "backend.request.headers.x-apico-prx-request-headers-Host": "{request.headers.Host}",
-                "backend.request.headers.x-apico-prx-request-headers-CLIENT-IP": "{request.headers.CLIENT-IP}"            
+                "backend.request.headers.x-apico-request-method": "{request.method}",
+                "backend.request.headers.x-apico-request-headers-Authorization": "{request.headers.Authorization}",
+                "backend.request.headers.x-apico-request-headers-Host": "{request.headers.Host}",
+                "backend.request.headers.x-apico-request-headers-CLIENT-IP": "{request.headers.CLIENT-IP}"            
+                "backend.request.headers.x-apico-event-subject": "{{ srvs[0].url }}{{ path[0] }}",
+                "backend.request.headers.x-apico-event-subject-type-code": "{% if last==")" %}o{% else %}c{% endif %}",
+                "backend.request.headers.x-apico-server-url": "{{ srvs[0].url }}",
+                "backend.request.headers.x-apico-path": "{{ path[0] }}",
+                "backend.request.headers.x-apico-protocol": "{{ prt }}",
+                "backend.request.headers.x-apico-host": "{{ hst }}",
+                "backend.request.headers.x-apico-root-path": "{{ pth }}",
+                "backend.request.headers.x-apico-event-topic": "%x-apico-event-topic%",
+                "backend.request.headers.x-apico-api-operation-id": "{{ method[1].operationId }}"
+            {%- comment %} ================================= All these settings following should got to APp Sett9imgs of the Logic App ============================================= 
+                "backend.request.headers.x-apico-tenant-code": "%x-apico-tenant-code%",
+                "backend.request.headers.x-apico-tenant-name": "%x-apico-tenant-name%",
+                "backend.request.headers.x-apico-tenant-key": "%x-apico-tenant-key%",
+                "backend.request.headers.x-apico-set-code": "%x-apico-set-code%",
+                "backend.request.headers.x-apico-set-name": "%x-apico-set-name%",
+                "backend.request.headers.x-apico-set-key": "%x-apico-set-key%",
+                "backend.request.headers.x-apico-set-domain": "%x-apico-set-domain%",
+                "backend.request.headers.x-apico-project-code": "%x-apico-project-code%",
+                "backend.request.headers.x-apico-project-name": "%x-apico-project-name%",
+                "backend.request.headers.x-apico-project-key": "%x-apico-project-key%",
+                "backend.request.headers.x-apico-project-sub-domain": "%x-apico-project-sub-domain%",
+                "backend.request.headers.x-apico-service-code": "%x-apico-service-code%",
+                "backend.request.headers.x-apico-service-name": "%x-apico-service-name%",
+                "backend.request.headers.x-apico-service-key": "%x-apico-service-key%",
+                "backend.request.headers.x-apico-version-code": "%x-apico-version-code%",
+                "backend.request.headers.x-apico-version-name": "%x-apico-version-name%",
+                "backend.request.headers.x-apico-version-key": "%x-apico-version-key%",
+                "backend.request.headers.x-apico-version-number": "%x-apico-version-number%",
+                "backend.request.headers.x-apico-version-path": "%x-apico-version-path%",
+                "backend.request.headers.x-apico-generation-id": "%x-apico-generation-id%",
+                "backend.request.headers.x-apico-generation-wt": "%x-apico-generation-wt%",
+                "backend.request.headers.x-apico-generation-template": "%x-apico-generation-template%",
+                "backend.request.headers.x-apico-deployment-id": "%x-apico-deployment-id%",
+                "backend.request.headers.x-apico-deployment-wt":"%x-apico-deployment-wt%",
+                "backend.request.headers.x-apico-family-code": "%x-apico-family-code%",
+                "backend.request.headers.x-apico-family-name": "%x-apico-family-codename
+                "backend.request.headers.x-apico-family-key": "%x-apico-family-key%",
+                "backend.request.headers.x-apico-lane-code": "%x-apico-lane-code%",
+                "backend.request.headers.x-apico-lane-name": "%x-apico-lane-name%",
+                "backend.request.headers.x-apico-lane-key": "%x-apico-lane-key%",
+                "backend.request.headers.x-apico-slot-code": "%x-apico-slot-code%",
+                "backend.request.headers.x-apico-slot-name": "%x-apico-slot-name%",
+                "backend.request.headers.x-apico-slot-key": "%x-apico-slot-key%",
+                "backend.request.headers.x-apico-environment-code": "%x-apico-environment-code%",
+                "backend.request.headers.x-apico-environment-name": "%x-apico-environment-name%",
+                "backend.request.headers.x-apico-environment-key": "%x-apico-environment-key%",
+                "backend.request.headers.x-apico-region-code": "%x-apico-region-code%",
+                "backend.request.headers.x-apico-region-name": "%x-apico-region-name%",
+                "backend.request.headers.x-apico-region-key": "%x-apico-region-key%"
+                {% endcomment %}
             }
         }
         {%- if forloop.last == false -%},{% endif -%}

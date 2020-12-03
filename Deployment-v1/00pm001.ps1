@@ -208,7 +208,7 @@ $params = $params + @{
     # Logic Apps to process commands from the global command storage - EGD trigger wrapper
     read_view_logapp_egdtrig_00prrlg =          -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','pr','r','l','g',$params.lane,$params.slot,$params.environment,$params.region);
     read_view_logapp_egdtrig_tpl_00prlgt =      -join('00','00','0','l','g','.template.json');
-    # Logic Apps to process commands in the global command storage - Sync
+    # Logic Apps to process commands from the global command storage - Sync
     read_view_logapp_sync_00prrls =             -join($params.tenant,$params.set,$params.project,$params.service,$params.version,'00','pr','r','l','s',$params.lane,$params.slot,$params.environment,$params.region);
     read_view_logapp_sync_tpl_00prlst =         -join('00','pr','r','l','s','.template.json');
 

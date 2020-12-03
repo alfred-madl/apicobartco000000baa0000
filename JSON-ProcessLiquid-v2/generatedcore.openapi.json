@@ -11,7 +11,7 @@
             "dom": "apico.io"
         },
         "prj": {
-            "cod": "rt","rs"
+            "cod": "rt",
             "nam": "Root",
             "sdm": "api"
         },
@@ -37,12 +37,12 @@
             "cod": "????",
             "id": "af80036a-7999-4571-8875-e99c19998acb",
             "tpl": "apicobartma-azr-evt-src-fpr-cdb-egd-v1.0.0",
-            "cti": "C2020xxxxx" 
+            "_wt": "C2020xxxxx" 
         },
         "dpl": {
             "cod": "????",
             "id": "fa1cf075-3c0b-436b-a024-e1d88ea9d3f0",
-            "cti": "C2020xxxxx" 
+            "_wt": "C2020xxxxx" 
         },
         "ins": {
             "cod": "1gps",
@@ -289,6 +289,13 @@
             "delete": {
                 "description": "Delete all objects in all collections",
                 "tags": ["root"],
+                "operationId": "apico.base.root.core.v0.root.command.remove",
+                "x-apico-operation-code": "rm",
+                "x-apico-operation-name": "Remove",
+                "x-apico-operation-key": "remove",
+                "x-apico-operation-type-code": "co",
+                "x-apico-operation-type-name": "Command",
+                "x-apico-operation-type-key": "command",
                 "responses": {
                     "202": {
                         "description": "Accepted"

@@ -49,13 +49,13 @@
             "cod": "????",
             "id": "af80036a-7999-4571-8875-e99c19998acb",
             "tpl": "apicobartma-azr-evt-src-fpr-cdb-egd-v1.0.0",
-            "cti": "C2020xxxxx",
+            "_wt": "C2020xxxxx",
             "cmt": "xxxxxxxxxxx"
         },
         "dpl": {
             "cod": "????",
             "id": "fa1cf075-3c0b-436b-a024-e1d88ea9d3f0",
-            "cti": "C2020xxxxx",
+            "_wt": "C2020xxxxx",
             "cmt": "xxxxxxxxxxx"
         },
         "ins": {

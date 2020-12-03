@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        },
+        "locationkey": {
+            "type": "String"
+        },
+        "clientId": {
+            "type": "String"
+        },
+        "clientSecret": {
+            "type": "String"
+        },
+        "tenantId": {
+            "type": "String"
+        },
+        "subscription": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
+            "kind": "V1",
+            "properties": {
+                "parameterValues": {
+                    "token:clientId": "[parameters('clientId')]",
+                    "token:clientSecret": "[parameters('clientSecret')]",
+                    "token:TenantId": "[parameters('tenantId')]",
+                    "token:grantType": "client_credentials"
+                },
+                "displayName": "[parameters('name')]",
+                "customParameterValues": {},
+                "api": {
+                    "id": "[concat('/subscriptions/',parameters('subscription'),'/providers/Microsoft.Web/locations/',parameters('locationkey'),'/managedApis/azureeventgrid')]"
+                }
+            }
+        }
+    ]
+}

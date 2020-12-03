@@ -1,0 +1,82 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        },
+        "logicname": {
+            "type": "String"
+        },
+        "logicsubscription": {
+            "type": "String"
+        },
+        "logicgroup": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "actions": {
+                        "Response": {
+                            "inputs": {
+                                "body": "@body('Execute')",
+                                "headers": "@outputs('Execute')?['headers']",
+                                "statusCode": "@outputs('Execute')?['statusCode']"
+                            },
+                            "kind": "Http",
+                            "operationOptions": "Asynchronous",
+                            "runAfter": {
+                                "Execute": [
+                                    "Succeeded",
+                                    "Failed",
+                                    "Skipped",
+                                    "TimedOut"                                
+                                ]
+                            },
+                            "type": "Response"
+                        },
+                        "Execute": {
+                            "inputs": {
+                                "body": "@triggerBody()",
+                                "headers": "@triggerOutputs()?['headers']",
+                                "host": {
+                                    "triggerName": "manual",
+                                    "workflow": {
+                                        "id": "[concat('/subscriptions/',parameters('logicsubscription'),'/resourceGroups/',parameters('logicgroup'),'/providers/Microsoft.Logic/workflows/',parameters('logicname'))]"
+                                    }
+                                }
+                            },
+                            "runAfter": {},
+                            "type": "Workflow"
+                        }
+                    },
+                    "contentVersion": "1.0.0.0",
+                    "outputs": {},
+                    "parameters": {},
+                    "triggers": {
+                        "manual": {
+                            "inputs": {
+                                "schema": {}
+                            },
+                            "kind": "Http",
+                            "type": "Request"
+                        }
+                    }
+                },
+                "parameters": {}
+            }
+        }
+    ]
+}
