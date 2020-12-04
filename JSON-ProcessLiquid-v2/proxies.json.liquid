@@ -88,6 +88,8 @@
         {%- endcomment %}
         {%- comment %} ================================= Special chars ============================================= {% endcomment -%}
         {%- assign a = "{" -%}
+        {%- assign aa = "{{" -%}
+        {%- assign bb = "}}" -%} 
         {%- assign b = "}" -%} 
         {%- assign c = "/" -%}
         {%- assign d = "'" -%}
@@ -117,8 +119,7 @@
             {%- endif %}%",                
             {%- comment %} ================================= Proxy overrides ============================================= {% endcomment %}
             "requestOverrides": {
-                "backend.request.headers.x-apico-request-format-version": "1",
-                "backend.request.headers.x-apico-event-data-version": "1",
+                "backend.request.headers.x-apico-proxy-template-version": "1",
                 "backend.request.headers.x-apico-api-version": "{{ inf.version }}",
                 "backend.request.method": "POST",
                 "backend.request.headers.Authorization": "",
@@ -126,15 +127,10 @@
                 "backend.request.headers.x-apico-request-headers-Authorization": "{request.headers.Authorization}",
                 "backend.request.headers.x-apico-request-headers-Host": "{request.headers.Host}",
                 "backend.request.headers.x-apico-request-headers-CLIENT-IP": "{request.headers.CLIENT-IP}"            
-                "backend.request.headers.x-apico-event-subject": "{{ srvs[0].url }}{{ path[0] }}",
-                "backend.request.headers.x-apico-event-subject-type-code": "{% if last==")" %}o{% else %}c{% endif %}",
                 "backend.request.headers.x-apico-server-url": "{{ srvs[0].url }}",
                 "backend.request.headers.x-apico-path": "{{ path[0] }}",
-                "backend.request.headers.x-apico-protocol": "{{ prt }}",
-                "backend.request.headers.x-apico-host": "{{ hst }}",
-                "backend.request.headers.x-apico-root-path": "{{ pth }}",
-                "backend.request.headers.x-apico-event-topic": "%x-apico-event-topic%",
-                "backend.request.headers.x-apico-api-operation-id": "{{ method[1].operationId }}"
+                "backend.request.headers.x-apico-proxy-route": "{{ path[0] | replace: a, aa | replace: b, bb }}",
+                "backend.request.headers.x-apico-operation-id": "{{ method[1].operationId }}"
             {%- comment %} ================================= All these settings following should got to APp Sett9imgs of the Logic App ============================================= 
                 "backend.request.headers.x-apico-tenant-code": "%x-apico-tenant-code%",
                 "backend.request.headers.x-apico-tenant-name": "%x-apico-tenant-name%",
