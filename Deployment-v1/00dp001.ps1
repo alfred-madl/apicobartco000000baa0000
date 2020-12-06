@@ -71,7 +71,7 @@ $params = &"./00spa01.ps1" -params $params
 Write-Host "==========================="
 Write-Host "Delete Resources"
 Write-Host "==========================="
-# Delete one CDB command storage per lane
+# Delete one CDB command storage per lane - is NOT executed in production !
 if (($slot -eq 'g') -AND ($environment -eq 'p') -AND ($region -eq $defaultregion)) {
     # Delete CDB Commands Data Storage
     $params = &"./0c00d0d.ps1" -params $params
@@ -80,7 +80,7 @@ if (($slot -eq 'g') -AND ($environment -eq 'p') -AND ($region -eq $defaultregion
 # Delete Commands Processing
 $params = &"./0c00c0d.ps1" -params $params
 
-# Delete clear command - NO deployment in production !
+# Delete clear command 
 if ($lane -ne 'z') {
     # Deploy Commands Clearance
     $params = &"./0cclc0d.ps1" -params $params
